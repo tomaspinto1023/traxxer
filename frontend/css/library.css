@@ -1,0 +1,59 @@
+#library {
+    position: fixed; left: 0; width: 100%; height: 356px; background-color: #303030;
+    top: 453px; display: flex; align-items: center; justify-content: center; }
+
+#music-library {
+    position: absolute; top: 0; left: 2px; width: 280px; height: 335px; background-color: #3e3e3e; flex-direction: column;
+    display: flex; align-items: center; justify-content: center; border: 1px solid #1A1A1A; border-top: none; } 
+
+#search-bar-btn {
+    position: absolute; top: 5px; width: 30px; left: 4px; height: 30px; background-color: #262626; border: 1px solid #8d8d8d;
+    display: flex; align-items: center; justify-content: center; }
+
+#search-bar-icon { color: #ededed; background: none; }
+
+#search-bar-btn:hover { background-color: rgb(100, 100, 100); }
+
+#music-folders {
+    position: absolute; top: 0; width: 240px; left: 40px; height: 334px; background: #090909; }
+
+#base-library {
+    display: flex; flex-direction: column; align-items: left; justify-content: flex-start; /* topo vertical */ position: absolute; 
+    top: 0; left: 280px; width: 1092px; height: 335px; background-color: #2c2c2c; border-left: 1px solid #9e9e9e; }
+
+/*#library-music-search-bar {
+    width: 1050px; height: 20px; background-color: #131315; border: 0.5px solid rgb(200, 200, 200); margin-top: 8px; margin-left: 10px; }*/
+ 
+#library-scroll-bar { 
+    position: absolute; top: 0; right: 44px; width: 20px; height: 335px; background: #151515; border: 1px solid #9e9e9e; 
+    border-top: none; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+#scroll-switch {
+    width: 20px; height: 50px; background: #e4e4e4; border: #9e9e9e; }
+
+#side-bar { 
+    position: absolute; top: 0; right: 0; width: 42px; height: 335px; background: #2C2C2C; border: 1px solid #1A1A1A; 
+    border-top: none; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+#side-bar-main-line {
+    width: 4px; height: 335px; background: #9e9e9e; position: relative; flex-shrink: 0;}
+
+#side-bar-app-classes, #side-bar-app-info { 
+    display: flex; align-items: center; justify-content: center; position: absolute; width: 20px; height: 20px; background-color: #9e9e9e; 
+    left: 50%; transform: translateX(-50%); /* centra horizontalmente */ } 
+    
+#side-bar-app-classes { bottom: 240px; }
+
+#classes-logo { color: #0e0e0e; background: none; }
+
+#classes-logo:hover { color: #3d3d3d; }
+
+#side-bar-app-info { bottom: 120px; }
+
+#info-logo { color: #0e0e0e; ; background: none; font-size: 20px;}
+
+#info-logo:hover { color: #3d3d3d; }
+
+.footer {
+    width: 100%; height: 21px; background: #363636; border: 1px solid #1A1A1A;  bottom: 0; left: 0; position: absolute;}
+

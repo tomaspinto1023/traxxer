@@ -1,0 +1,1 @@
+//Código para fazer upload da faixa -> tenho que ter um backend primeiro!

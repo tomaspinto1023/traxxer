@@ -1,0 +1,24 @@
+{
+  "name": "Traxxer",
+  "version": "1.0.0",
+  "description": "Software de DJing com Electron e C#",
+  "main": "frontend/electron/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msolot1023/traxxer.git"
+  },
+  "keywords": ["dj", "electron", "c#", "música"],
+  "author": "Tomás Pinto",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/msolot1023/traxxer/issues"
+  },
+  "homepage": "https://github.com/msolot1023/traxxer#readme",
+  "devDependencies": {
+    "electron": "^39.0.0"
+  }
+}

@@ -1,0 +1,94 @@
+#pitch-trk1 { /* Bpm do deck1 - e da trk1 (obviamente) */
+    height: 128px; width: 36px; top: 288px; left: 36.45%; position: fixed; background-color: #2b2c2f; display: flex;
+    justify-content: center; align-items: center; border: 1px solid #0F0F0F; border-radius: 3px; }
+
+#timer-bpm1 {
+    height: 16px; width: 32px; background-color: hsl(0, 0%, 13%); top: 291px; position: fixed; text-align: center; justify-content: center; 
+    align-items: center; border-radius: 3px; color: #d3d2d2; font-family: Arial, Helvetica, sans-serif; font-size: 78%; }
+
+#timer-bpm1-black-bar {
+    height: 100px; width: 4px; background-color: #0F0F0F; top: 311px; z-index: 2000; 
+    position: fixed; border-radius: 20px; justify-content: center; align-items: center; }
+
+#timer-bpm1-up-first-line {
+    width: 28px; height: 1px; top: 23px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm1-up-second-line {
+    width: 22px; height: 1px; top: 34px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm1-up-third-line {
+    width: 22px; height: 1px; top: 44.5px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm1-up-fourth-line {
+    width: 22px; height: 1px; top: 55px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm1-shift-btn { 
+    position: absolute; top: 62px; width: 30px; height: 17px; background-color: #212121; z-index: 2000; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;  } 
+    
+#timer-bpm1-dark-grey-line { 
+    display: flex; align-items: center; justify-content: center; width: 30px; height: 7px; background-color: #5c5c5c; }
+
+#timer-bpm1-light-grey-line {
+    width: 28px; height: 3px; background-color: #808080; }
+
+#timer-bpm1-down-first-line {
+    width: 22px; height: 1px; top: 86px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm1-down-second-line {
+    width: 22px; height: 1px; top: 97px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm1-down-third-line {
+    width: 22px; height: 1px; top: 108px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm1-down-fourth-line {
+    width: 28px; height: 1px; top: 119px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#pitch-trk2 { /* Bpm do deck2 - e da trk2 (obviamente) */
+    height: 128px; width: 36px; top: 288px; right: 36.45%; position: fixed; background-color: #2b2c2f; display: flex;
+    justify-content: center; align-items: center; border: 1px solid #0F0F0F; border-radius: 3px; }
+
+#timer-bpm2 {
+    height: 16px; width: 32px; background-color: #202020; top: 291px; position: fixed; text-align: center; justify-content: center; 
+    align-items: center; border-radius: 3px; color: #d3d2d2; font-family: Arial, Helvetica, sans-serif; font-size: 78%; }
+
+#timer-bpm2-black-bar {
+    height: 100px; width: 4px; background-color: #0F0F0F; top: 311px; z-index: 2000; position: fixed; 
+    border-radius: 20px; justify-content: center; align-items: center; }
+
+#timer-bpm2-up-first-line {
+    width: 28px; height: 1px; top: 23px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm2-up-second-line {
+    width: 22px; height: 1px; top: 34px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm2-up-third-line {
+    width: 22px; height: 1px; top: 44.5px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm2-up-fourth-line {
+    width: 22px; height: 1px; top: 55px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm2-shift-btn { 
+    position: absolute; top: 62px; width: 30px; height: 17px; background-color: #212121; z-index: 2000; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;  } 
+    
+#timer-bpm2-dark-grey-line { 
+    display: flex; align-items: center; justify-content: center; width: 30px; height: 7px; background-color: #5c5c5c; }
+
+#timer-bpm2-light-grey-line {
+    width: 28px; height: 3px; background-color: #808080; }
+
+#timer-bpm2-down-first-line {
+    width: 22px; height: 1px; top: 86px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm2-down-second-line {
+    width: 22px; height: 1px; top: 97px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm2-down-third-line {
+    width: 22px; height: 1px; top: 108px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#timer-bpm2-down-fourth-line {
+    width: 28px; height: 1px; top: 119px; background-color: #646464; position: absolute; z-index: 1000; }
+
+
+

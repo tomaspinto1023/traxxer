@@ -1,0 +1,79 @@
+* { /*What's general in the app*/
+    background-color: var(--cor-fundo);
+    cursor: default;
+}
+
+:root { /*Variáveis globais de cor*/
+  --branco: #fefefe; --preto: #191919; --cinzento: #575757; --cor-fundo: #2c2c2c; 
+  --header: #3B3B3B; --waveform: #191818; --mechanical: #232323; }
+
+#header { /*Header*/
+    position: fixed; top: 0; left: 0; width: 100%; height: 41.5px; background: var(--header); 
+    display: flex; align-items: center; border-bottom: #727272;}
+    
+#logo { /*Logotipo da página*/
+    height: 100%; display: flex; align-items: center; background-color: var(--header);} 
+
+#logo img { 
+    height: 120px; margin-left: -10px; width: 120px; background-color: var(--header);  }
+
+.header-text { /*Texto para elementos do header*/ 
+    position: relative; color: var(--branco); font-size: 12px; 
+    font-family: 'Inter', sans-serif; font-weight: 400; top: -26px; }
+
+#create-account, #on-air, #cpu-load, #recording, #time-box, #settings, #profile-box { /* Todos os botões e barras do header */
+    display: flex; align-items: center; height: 22px; background: var(--cor-fundo); border-radius: 2px; 
+    padding: 0 8px; position: absolute; /* Para que os elementos estejam todos alinhados horizontalmente */
+}
+
+#create-account { left: 220px; width: 105px; height: 24px;} /*Botão de criar conta*/
+#on-air { left: 360px; width: 65px; } /*Botão de realizar transmissão*/ 
+#cpu-load { left: 950px; width: 70px; text-align: center;} /*Barra de visualização da sobrecarga da CPU*/
+#recording { left: 1053px; width: 60px; } /*Botão para realizar gravações*/
+#time-box { left: 1145px; width: 93px; } /*Barra de visualização do horáro*/
+#settings { left: 1270px; width: 93px; } /*Botão das definições*/
+#profile-box { left: 1391px; background-color: var(--header); } /*"Foto de perfil" do utilizador*/
+
+#person-fill { /*Icon do bootstrap para a criação de conta*/ 
+    position: relative; background-color: var(--cor-fundo); 
+    color: var(--branco); font-size: 100%; right: 2px; }
+
+#live { /*Icon do bootstrap para a transmissão ao vivo*/ 
+    position: relative; background-color: var(--cor-fundo); 
+    color: var(--branco); font-size: 100%; top: 1px; right: 1px; }
+
+.bar {
+    width: 82%; height: 6px; position: absolute; top: 2px; left: 50%; transform: translateX(-50%); border: 1px solid var(--preto);
+    box-sizing: border-box; /* não permite alterar o tamanho total da borda */ background-image: repeating-linear-gradient( to right, 
+    var(--header), /* começa com a cor de fundo */
+    var(--header) 4px, 
+    var(--preto) 4px, 
+    var(--preto) 5px );
+     }
+
+#rec-circle { /*Icon do bootstrap para o botão das gravações*/   
+    position: relative; background-color: var(--cor-fundo); 
+    color: var(--branco); font-size: 70%; left: 3px; top: 1px; }  
+
+#caret-down { /*Icon do bootstrap para alterar o horário*/   
+    position: relative; background-color: var(--cor-fundo); color: var(--branco); 
+    font-size: 100%; bottom: -0.2px; left: 1px; }
+
+#gear { /*Deve estar na mesma posição do que o botão das definições*/
+    position: relative; background-color: var(--cor-fundo); 
+    color: var(--branco); font-size: 86%; top: 1px; left: -1px; }
+
+#person { /*Icon do bootstrap para perfil da pessoa*/
+    color: var(--branco); font-size: 160%; left: 8px; background-color: var(--header); }
+
+#waveform1 {
+    width: 100%; height: 72px; background-color : var(--waveform); position: fixed; top: 42px; left: 0; z-index: 1000;}
+
+#waveform2 {
+    width: 100%; height: 72px; background-color : var(--waveform); position: fixed; top: 114px; left: 0; border-bottom: 1px solid #727272; }
+
+#zoom-in {
+    width: 2%; height: 144px; background-color : var(--mechanical); position: fixed; top: 42px; right: 10px; z-index: 1000; /* border: 1px solid var(--cinzento);*/ }
+
+#waveforms-line {
+    position: fixed; top: 42px; left: 50%; transform: translateX(-50%); height: 144px; width: 0.75px; background-color: var(--branco); z-index: 2000; }
