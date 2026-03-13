@@ -2,7 +2,7 @@ Olá!
 
 O meu nome é Tomás Pinto e este é o meu projeto de PAP: um software de djing simples e intuitivo com o objetivo de tornar a prática do djing mais acessível a dj's iniciantes e/ou a utilizadores que procurem alternativas básicas no mercado.
 
-Admito que cometi alguns erros neste projeto, mas o principal foi ter perdido o histórico de commits do projeto. No entanto, tenho plena noção do que fiz e consegui ter acesso a alguns commits ao aceder à 
+Admito que cometi alguns erros neste projeto, mas o principal foi ter perdido o histórico de commits do projeto. No entanto, tenho plena noção do que fiz e consegui ter acesso a alguns commits ao aceder à pasta antiga que está no OneDrive. A partir daí, consegui ter uma ideia de algumas partes importantes do processo. Sei que foram 70 os commits que fiz antes deste erro e tenho 26; depois crio mais 44 modelos como explico abaixo. 
 
 Cá estão alguns deles:
 
