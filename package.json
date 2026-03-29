@@ -1,5 +1,5 @@
 {
-  "name": "Traxxer",
+  "name": "traxxer",
   "version": "1.0.0",
   "description": "Software de DJing com Electron e C#",
   "main": "frontend/electron/main.js",

@@ -1,29 +1,27 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const fs = require('fs');
 const { spawn } = require('child_process');
 
-let backendProcess; // Para guardar o processo do backend
+let win;
+let backendProcess = null;
 
-function createWindow () {
-  const win = new BrowserWindow({
-    width: 2880,
-    height: 1620,
+function createWindow() {
+  win = new BrowserWindow({
+    width: 1440,
+    height: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true
     },
-    icon: "frontend/assets/icon/icon.ico"
+    icon: path.join(__dirname, '..', 'assets', 'icon', 'icon.ico')
   });
 
-  win.loadFile('frontend/html/index.html');
+  win.loadFile(path.join(__dirname, '..', 'html', 'index.html'));
 
-  // Abrir DevTools automaticamente para debug
-  //win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
-  // --- EVENTOS DE LAYOUT ---
   win.on('maximize', () => {
     win.webContents.send('layout-change', 'maximized');
   });
@@ -41,13 +39,33 @@ function createWindow () {
   });
 }
 
-// Iniciar o backend automaticamente
 function startBackend() {
-  const backendPath = path.join(__dirname, '..', '..', 'backend', 'TraxxerApi');
-  backendProcess = spawn('dotnet', ['run', '--project', path.join(backendPath, 'TraxxerApi.csproj')], {
-    cwd: backendPath,
-    stdio: 'inherit', // Para ver logs no terminal
+  const backendExePath = path.join(
+    __dirname,
+    '..',
+    '..',
+    'backend',
+    'bin',
+    'TraxxerBackend.exe'
+  );
+
+  backendProcess = spawn(backendExePath, [], {
+    stdio: ['pipe', 'pipe', 'pipe'],
     detached: false
+  });
+
+  backendProcess.stdout.on('data', (data) => {
+    const output = data.toString().trim();
+    console.log('[C++ backend]', output);
+
+    if (win) {
+      win.webContents.send('backend-message', output);
+    }
+  });
+
+  backendProcess.stderr.on('data', (data) => {
+    const errorOutput = data.toString().trim();
+    console.error('[C++ backend error]', errorOutput);
   });
 
   backendProcess.on('close', (code) => {
@@ -57,21 +75,30 @@ function startBackend() {
   backendProcess.on('error', (err) => {
     console.error('Failed to start backend:', err);
   });
+
+  ipcMain.on('send-to-backend', (_, message) => {
+  if (backendProcess && backendProcess.stdin.writable) {
+    backendProcess.stdin.write(message + '\n'); }
+  });
 }
 
-// Parar o backend quando a app fecha
 function stopBackend() {
   if (backendProcess) {
+    backendProcess.stdin.write('exit\n');
     backendProcess.kill();
+    backendProcess = null;
   }
 }
 
 app.whenReady().then(() => {
-  startBackend(); // Iniciar backend primeiro
-  setTimeout(createWindow, 3000); // Esperar 3s para o backend iniciar
+  startBackend();
+  createWindow();
 });
 
 app.on('window-all-closed', () => {
-  stopBackend(); // Parar backend
-  if (process.platform !== 'darwin') app.quit();
+  stopBackend();
+
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
