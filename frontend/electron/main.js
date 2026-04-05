@@ -1,3 +1,5 @@
+//Ficheiro principal do Electron -> responsável por inicializar e correr aplicação
+
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -25,7 +27,7 @@ function createWindow() {
 
   win.loadFile(path.join(__dirname, '..', 'html', 'index.html'));
 
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   win.on('maximize', () => {
     win.webContents.send('layout-change', 'maximized');
