@@ -66,10 +66,10 @@
 #person { /*Icon do bootstrap para perfil da pessoa*/
     color: var(--branco); font-size: 160%; left: 8px; background-color: var(--header); }
 
-#waveform1 {
+#deck1-waveform {
     width: 100%; height: 72px; background-color : var(--waveform); position: fixed; top: 42px; left: 0; z-index: 1000;}
 
-#waveform2 {
+#deck2-waveform {
     width: 100%; height: 72px; background-color : var(--waveform); position: fixed; top: 114px; left: 0; border-bottom: 1px solid #727272; }
 
 #zoom-in {

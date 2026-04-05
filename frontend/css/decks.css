@@ -22,13 +22,16 @@
 #trk1-cover {
     width: 36px; height: 32px; position: fixed; background-color: #2f2f2f; left: 38px; top: 203px; border: 1px solid #5f5f5f; }
 
-#trk1-music-name {
+#trk1-track-title {
     width: 300px; height: 20px; position: fixed; left: 82px; top: 188px; font-weight: bolder; background-color: #131315; 
     color: #ffffff; font-size: 90%; font-family: Arial, Helvetica, sans-serif;}
 
-#trk1-music-channel-name {
+#trk1-track-artist {
     width: 300px; height: 12px; position: fixed; left: 82px; top: 208px; background-color: #131315; 
     color: #ffffff; font-size: 84%; font-family: Arial, Helvetica, sans-serif; }
+
+#trk1-waveform {
+    width: 389.6px; height: 28px; background-color: #131315; position: fixed; left: 29px; top: 248.5px; }
 
 #trk1-bpm {
     background-color: #131315; left: 432px; top: 168px; position: fixed; width: 16px; height: 10px; 

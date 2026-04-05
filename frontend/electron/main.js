@@ -1,6 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const { spawn } = require('child_process');
+
+require('electron-reload')(path.join(__dirname, '..'), {
+  electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron.cmd')
+});
 
 let win;
 let backendProcess = null;
@@ -20,7 +25,7 @@ function createWindow() {
 
   win.loadFile(path.join(__dirname, '..', 'html', 'index.html'));
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   win.on('maximize', () => {
     win.webContents.send('layout-change', 'maximized');

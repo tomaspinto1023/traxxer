@@ -10,7 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/msolot1023/traxxer.git"
   },
-  "keywords": ["dj", "electron", "c#", "música"],
+  "keywords": [
+    "dj",
+    "electron",
+    "c#",
+    "música"
+  ],
   "author": "Tomás Pinto",
   "license": "ISC",
   "type": "commonjs",
@@ -19,6 +24,11 @@
   },
   "homepage": "https://github.com/msolot1023/traxxer#readme",
   "devDependencies": {
-    "electron": "^39.0.0"
+    "electron": "^39.0.0",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "dependencies": {
+    "jsmediatags": "^3.9.7",
+    "wavesurfer.js": "^7.12.5"
   }
 }

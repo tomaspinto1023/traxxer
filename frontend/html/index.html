@@ -12,6 +12,8 @@
 	<script src="../js/uploadtracks.js"></script>
 	<script src="../electron/script.js"></script>
 	<script src="../electron/main.js"></script>
+	<script src="../../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
+	<script src="../../node_modules/jsmediatags/dist/jsmediatags.min.js"></script>
 	<script src="../js/uploadtracks.js"></script>
 	<style>
 		/* Remove TODAS as scrollbars do Chromium/Electron, de modo a permitir um design mais limpo quando colocado em full screen */
@@ -56,15 +58,17 @@
 			<i id="gear" class="bi bi-gear-fill"></i>
 			<p class="header-text" style="width: 66px; left: 7px; top: 0px;">DEFINIÇÕES</p>
 		</div>
-		<div id="profile-box"> <!--Caixa de perfil do usuário-->
+		<div id="profile-box"> <!--Caixa de perfil do utilizador-->
 			<i id="person" class="bi bi-person-circle"></i>
 		</div>
-		<button id="test-backend-btn">Testar backend</button>
-		<p id="backend-response">Sem resposta ainda.</p>
+		<div id="backend-header-tests" style="display: none;"> <!--Caixa de perfil do utilizador-->
+			<button id="test-backend-btn">Testar backend</button> 
+			<p id="backend-response">Sem resposta ainda.</p>
+		</div>
 	</header>
 	<section id="waveforms"> <!--Waveforms-->
-		<div id="waveform1"></div>
-		<div id="waveform2"></div>
+		<div id="deck1-waveform"></div>
+		<div id="deck2-waveform"></div>
 		<div id="zoom-in"></div> <!--Barra de fazer zoom in (para o futuro) -->
 		<div id="waveforms-line"></div> <!-- Linha vertical sobreposta entre ambos-->
 	</section>
@@ -79,11 +83,12 @@
 				<!--Div que contém a capa da música, nome da música e nome do canal que publicou a música-->
 				<section id="trk1-drop-zone">
 					<div id="trk1-loaded-music-intel">
-						<div id="trk1-cover" style="display: none;"></div>
+						<div img id="trk1-cover"></div>
 						<div>
-							<p id="trk1-music-name" style="display: none;"></p>
-							<p id="trk1-music-channel-name" style="display: none;"></p>
+							<p id="trk1-track-title"></p>
+							<p id="trk1-track-artist"></p>
 						</div>
+						<div id="trk1-waveform"></div>
 					</div>
 				</section>
 				<i id="trk1-master-sync" class="bi bi-music-note-list"></i> <!--Ícone de Master Sync, responsável por sincronizar os bpm da faixa mestre-->
