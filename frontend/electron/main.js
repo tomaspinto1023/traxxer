@@ -20,6 +20,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
+      fullscreen: true,
       sandbox: true
     },
     icon: path.join(__dirname, '..', 'assets', 'icon', 'icon.ico')

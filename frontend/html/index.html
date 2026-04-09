@@ -8,10 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Traxxer</title>
 	<!--Referências js-->
+	<!--<script src="../electron/main.js"></script>-->
 	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/uploadtracks.js"></script>
-	<script src="../electron/script.js"></script>
-	<script src="../electron/main.js"></script>
 	<script src="../../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
 	<script src="../../node_modules/jsmediatags/dist/jsmediatags.min.js"></script>
 	<script src="../js/uploadtracks.js"></script>
@@ -27,7 +25,6 @@
 	<link rel="stylesheet" href="../css/tracksbpms.css">
 	<link rel="stylesheet" href="../css/decks.css">
 	<link rel="stylesheet" href="../css/library.css">
-	<link rel="stylesheet" href="../css/events.css">
 </head>
 
 <body>
@@ -82,25 +79,25 @@
 				<div id="trk1-horizontal-line"></div>
 				<div id="trk1-vertical-line"></div>
 				<!--Div que contém a capa da música, nome da música e nome do canal que publicou a música-->
-				<section id="trk1-drop-zone">
+				<div id="trk1-drop-zone">
 					<div id="trk1-loaded-music-intel">
-						<div img id="trk1-cover"></div>
+						<div id="trk1-cover"></div>
 						<div>
 							<p id="trk1-track-title"></p>
 							<p id="trk1-track-artist"></p>
 						</div>
 						<div id="trk1-waveform"></div>
 					</div>
-				</section>
+				</div>
 				<i id="trk1-master-sync" class="bi bi-music-note-list"></i> <!--Ícone de Master Sync, responsável por sincronizar os bpm da faixa mestre-->
 				<p id="trk1-bpm">120.00</p> <!--Exibição dos BPMs da música carregada no deck 1; relativo à faixa mestre-->
 				<p id="trk1-indicator">TRK1</p> <!--Indicador de Track 1-->
-				<section id="trk1-scale"> <!--Seção de exibição da escala da música-->
+				<div id="trk1-scale"> <!--Seção de exibição da escala da música-->
 					<i style="background-color: #131315;" class="bi bi-caret-left-fill"></i>
 					<p id="trk1-scale-text">ESCALA</p>
 					<i style="background-color: #131315;" class="bi bi-caret-right-fill"></i>
 					<p id="trk1-scale-text">(...)</p>
-				</section>
+				</div>
 				<div id="trk1-music-length"> <!--Seção de exibição da duração da música da track 1-->
 					<div id="trk1-music-length-indicator">DURAÇÃO</div>
 					<div id="trk1-music-length-time">3:23:00</div>

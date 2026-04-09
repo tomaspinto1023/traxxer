@@ -20,7 +20,11 @@
     position: fixed; background-color: #131315; left: 36px; top: 197px; }
 
 #trk1-cover {
-    width: 36px; height: 32px; position: fixed; background-color: #2f2f2f; left: 38px; top: 203px; border: 1px solid #5f5f5f; }
+    width: 36px; height: 32px; position: fixed; background-position: center; background-repeat: no-repeat;
+    background-color: #2f2f2f; left: 38px; top: 203px; border: 1px solid #5f5f5f; }
+
+#trk1-drop-zone.drag-over {
+    outline: 2px dashed #e5e5e5; }
 
 #trk1-track-title {
     width: 300px; height: 20px; position: fixed; left: 82px; top: 188px; font-weight: bolder; background-color: #131315; 

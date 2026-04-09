@@ -1,4 +1,4 @@
-//Ficheiro JavaScript com a lógica de descarregamento de faixas frontend (evento) -> ligação backend ainda por fazer!
+// Ficheiro JavaScript com a lógica de descarregamento de faixas frontend (evento) -> ligação backend ainda por fazer!
 
 let trk1WaveSurfer = null;
 let trk1CurrentObjectUrl = null;
@@ -9,13 +9,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const dropZone = document.getElementById('trk1-drop-zone');
   const cover = document.getElementById('trk1-cover');
-  const musicName = document.getElementById('trk1-music-name');
-  const channelName = document.getElementById('trk1-music-channel-name');
+  const musicName = document.getElementById('trk1-track-title');
+  const channelName = document.getElementById('trk1-track-artist');
   const waveformContainer = document.getElementById('trk1-waveform');
   const playPauseBtn = document.getElementById('trk1-play-pause-btn');
+  const ejectBtn = document.getElementById('trk1-eject-btn');
 
   const playIcon = playPauseBtn?.querySelector('.bi-play-fill');
   const pauseIcon = playPauseBtn?.querySelector('.bi-pause-fill');
+  const ejectIcon = ejectBtn?.querySelector('.bi bi-eject-fill');
 
   if (testButton) {
     testButton.addEventListener('click', () => {
@@ -35,6 +37,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  console.log('dropZone:', dropZone);
+  console.log('cover:', cover);
+  console.log('musicName:', musicName);
+  console.log('channelName:', channelName);
+  console.log('waveformContainer:', waveformContainer);
+  console.log('playPauseBtn:', playPauseBtn);
+
   if (!dropZone || !cover || !musicName || !channelName || !waveformContainer || !playPauseBtn) {
     console.warn('Elementos do deck 1 não encontrados. A lógica de upload da faixa não foi inicializada.');
     return;
@@ -42,11 +51,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   trk1WaveSurfer = WaveSurfer.create({
     container: '#trk1-waveform',
-    waveColor: '#a12fb0',
-    progressColor: '#e5e5e5',
+    waveColor: '#dbdbdb',
+    progressColor: '#a12fb0',
     cursorColor: '#ffffff',
-    height: 28,
-    barWidth: 20,
+    height: 27.4,
+    barWidth: 2,
     barGap: 1,
     responsive: true
   });
