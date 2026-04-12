@@ -28,7 +28,7 @@ function createWindow() {
 
   win.loadFile(path.join(__dirname, '..', 'html', 'index.html'));
 
-  //win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   win.on('maximize', () => {
     win.webContents.send('layout-change', 'maximized');

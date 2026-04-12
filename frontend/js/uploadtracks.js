@@ -1,4 +1,5 @@
-// Ficheiro JavaScript com a lógica de descarregamento de faixas frontend (evento) -> ligação backend ainda por fazer!
+// Ficheiro JavaScript com a lógica de descarregamento de faixas 
+// Se começar a adicionar coisas a mais, pensar em como dividir o ficheiro em vários ficheiros menores
 
 let trk1WaveSurfer = null;
 let trk1CurrentObjectUrl = null;
@@ -44,7 +45,7 @@ window.addEventListener('DOMContentLoaded', () => {
   console.log('waveformContainer:', waveformContainer);
   console.log('playPauseBtn:', playPauseBtn);
 
-  if (!dropZone || !cover || !musicName || !channelName || !waveformContainer || !playPauseBtn) {
+  if (!dropZone || !cover || !musicName || !channelName || !waveformContainer || !playPauseBtn || !ejectBtn) {
     console.warn('Elementos do deck 1 não encontrados. A lógica de upload da faixa não foi inicializada.');
     return;
   }
@@ -99,6 +100,16 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!trk1WaveSurfer.getDuration()) return;
 
     trk1WaveSurfer.playPause();
+  });
+
+  ejectBtn.addEventListener('click', () => {
+    ejectTrack1({
+      cover,
+      musicName,
+      channelName,
+      playIcon,
+      pauseIcon
+    });
   });
 
   trk1WaveSurfer.on('play', () => {
@@ -165,6 +176,30 @@ function loadTrack1File(file, elements) {
       console.log('Erro ao ler metadata da faixa:', error);
     }
   });
+}
+
+function ejectTrack1(elements) {
+  const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
+
+  if (trk1WaveSurfer) {
+    trk1WaveSurfer.stop();
+    trk1WaveSurfer.empty();
+  }
+
+  if (trk1CurrentObjectUrl) {
+    URL.revokeObjectURL(trk1CurrentObjectUrl);
+    trk1CurrentObjectUrl = null;
+  }
+
+  musicName.textContent = '';
+  channelName.textContent = '';
+
+  cover.style.backgroundImage = '';
+  cover.style.backgroundSize = '';
+  cover.style.backgroundPosition = '';
+  cover.style.backgroundRepeat = '';
+
+  setPlayPauseVisual(false, playIcon, pauseIcon);
 }
 
 function removeMp3Extension(filename) {
