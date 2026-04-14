@@ -3,6 +3,7 @@
 
 let trk1WaveSurfer = null;
 let trk1CurrentObjectUrl = null;
+let trk1CuePoint = 0;
 
 function createTrack1WaveSurfer() {
   trk1WaveSurfer = WaveSurfer.create({
@@ -33,6 +34,7 @@ function loadTrack1File(file, elements) {
 
   trk1CurrentObjectUrl = URL.createObjectURL(file);
   trk1WaveSurfer.load(trk1CurrentObjectUrl);
+  trk1CuePoint = 0;
 
   musicName.textContent = removeMp3Extension(file.name);
   channelName.textContent = 'Artista desconhecido';
@@ -89,6 +91,8 @@ function ejectTrack1(elements) {
     trk1CurrentObjectUrl = null;
   }
 
+  trk1CuePoint = 0;
+
   musicName.textContent = '';
   channelName.textContent = '';
 
@@ -98,6 +102,33 @@ function ejectTrack1(elements) {
   cover.style.backgroundRepeat = '';
 
   setPlayPauseVisual(false, playIcon, pauseIcon);
+}
+
+function stopTrack1(playIcon, pauseIcon) {
+  if (!trk1WaveSurfer) return;
+  if (!trk1WaveSurfer.getDuration()) return;
+
+  trk1WaveSurfer.stop();
+  setPlayPauseVisual(false, playIcon, pauseIcon);
+}
+
+function handleCueTrack1(playIcon, pauseIcon) {
+  if (!trk1WaveSurfer) return;
+  if (!trk1WaveSurfer.getDuration()) return;
+
+  if (trk1WaveSurfer.isPlaying()) {
+    trk1WaveSurfer.pause();
+
+    const duration = trk1WaveSurfer.getDuration();
+    const cueProgress = duration > 0 ? trk1CuePoint / duration : 0;
+
+    trk1WaveSurfer.seekTo(cueProgress);
+    setPlayPauseVisual(false, playIcon, pauseIcon);
+    return;
+  }
+
+  trk1CuePoint = trk1WaveSurfer.getCurrentTime();
+  console.log('Novo cue point:', trk1CuePoint);
 }
 
 function removeMp3Extension(filename) {

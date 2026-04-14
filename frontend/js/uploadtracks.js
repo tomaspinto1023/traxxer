@@ -12,9 +12,10 @@ window.addEventListener('DOMContentLoaded', () => {
   const waveformContainer = document.getElementById('trk1-waveform');
   const playPauseBtn = document.getElementById('trk1-play-pause-btn');
   const ejectBtn = document.getElementById('trk1-eject-btn');
-
   const playIcon = playPauseBtn?.querySelector('.bi-play-fill');
   const pauseIcon = playPauseBtn?.querySelector('.bi-pause-fill');
+  const stopBtn = document.getElementById('trk1-stop-btn');
+  const cueBtn = document.getElementById('trk1-cue-btn');
 
   if (testButton) {
     testButton.addEventListener('click', () => {
@@ -41,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
   console.log('waveformContainer:', waveformContainer);
   console.log('playPauseBtn:', playPauseBtn);
 
-  if (!dropZone || !cover || !musicName || !channelName || !waveformContainer || !playPauseBtn || !ejectBtn) {
+  if (!dropZone || !cover || !musicName || !channelName || !waveformContainer || !playPauseBtn || !stopBtn || !ejectBtn || !cueBtn) {
     console.warn('Elementos do deck 1 não encontrados. A lógica de upload da faixa não foi inicializada.');
     return;
   }
@@ -89,6 +90,14 @@ window.addEventListener('DOMContentLoaded', () => {
     waveSurfer.playPause();
   });
 
+  stopBtn.addEventListener('click', () => {
+    stopTrack1(playIcon, pauseIcon);
+  });
+
+  cueBtn.addEventListener('click', () => {
+    handleCueTrack1(playIcon, pauseIcon);
+  });
+  
   ejectBtn.addEventListener('click', () => {
     ejectTrack1({
       cover,
