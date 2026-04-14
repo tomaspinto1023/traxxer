@@ -1,9 +1,6 @@
 // Ficheiro JavaScript com a lógica de descarregamento de faixas 
 // Se começar a adicionar coisas a mais, pensar em como dividir o ficheiro em vários ficheiros menores
 
-let trk1WaveSurfer = null;
-let trk1CurrentObjectUrl = null;
-
 window.addEventListener('DOMContentLoaded', () => {
   const testButton = document.getElementById('test-backend-btn');
   const responseText = document.getElementById('backend-response');
@@ -18,7 +15,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const playIcon = playPauseBtn?.querySelector('.bi-play-fill');
   const pauseIcon = playPauseBtn?.querySelector('.bi-pause-fill');
-  const ejectIcon = ejectBtn?.querySelector('.bi bi-eject-fill');
 
   if (testButton) {
     testButton.addEventListener('click', () => {
@@ -50,16 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  trk1WaveSurfer = WaveSurfer.create({
-    container: '#trk1-waveform',
-    waveColor: '#dbdbdb',
-    progressColor: '#a12fb0',
-    cursorColor: '#ffffff',
-    height: 27.4,
-    barWidth: 2,
-    barGap: 1,
-    responsive: true
-  });
+  const waveSurfer = createTrack1WaveSurfer();
 
   setPlayPauseVisual(false, playIcon, pauseIcon);
 
@@ -96,10 +83,10 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   playPauseBtn.addEventListener('click', () => {
-    if (!trk1WaveSurfer) return;
-    if (!trk1WaveSurfer.getDuration()) return;
+    if (!waveSurfer) return;
+    if (!waveSurfer.getDuration()) return;
 
-    trk1WaveSurfer.playPause();
+    waveSurfer.playPause();
   });
 
   ejectBtn.addEventListener('click', () => {
@@ -112,103 +99,15 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  trk1WaveSurfer.on('play', () => {
+  waveSurfer.on('play', () => {
     setPlayPauseVisual(true, playIcon, pauseIcon);
   });
 
-  trk1WaveSurfer.on('pause', () => {
+  waveSurfer.on('pause', () => {
     setPlayPauseVisual(false, playIcon, pauseIcon);
   });
 
-  trk1WaveSurfer.on('finish', () => {
+  waveSurfer.on('finish', () => {
     setPlayPauseVisual(false, playIcon, pauseIcon);
   });
 });
-
-function loadTrack1File(file, elements) {
-  const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
-
-  if (trk1CurrentObjectUrl) {
-    URL.revokeObjectURL(trk1CurrentObjectUrl);
-    trk1CurrentObjectUrl = null;
-  }
-
-  trk1CurrentObjectUrl = URL.createObjectURL(file);
-  trk1WaveSurfer.load(trk1CurrentObjectUrl);
-
-  musicName.textContent = removeMp3Extension(file.name);
-  channelName.textContent = 'Artista desconhecido';
-
-  cover.style.backgroundImage = '';
-  cover.style.backgroundSize = 'cover';
-  cover.style.backgroundPosition = 'center';
-  cover.style.backgroundRepeat = 'no-repeat';
-
-  setPlayPauseVisual(false, playIcon, pauseIcon);
-
-  window.jsmediatags.read(file, {
-    onSuccess: (tag) => {
-      const tags = tag.tags;
-
-      if (tags.title) {
-        musicName.textContent = tags.title;
-      }
-
-      if (tags.artist) {
-        channelName.textContent = tags.artist;
-      }
-
-      if (tags.picture) {
-        const { data, format } = tags.picture;
-        let binaryString = '';
-
-        for (let i = 0; i < data.length; i++) {
-          binaryString += String.fromCharCode(data[i]);
-        }
-
-        const base64String = window.btoa(binaryString);
-        const imageUrl = `data:${format};base64,${base64String}`;
-
-        cover.style.backgroundImage = `url("${imageUrl}")`;
-      }
-    },
-    onError: (error) => {
-      console.log('Erro ao ler metadata da faixa:', error);
-    }
-  });
-}
-
-function ejectTrack1(elements) {
-  const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
-
-  if (trk1WaveSurfer) {
-    trk1WaveSurfer.stop();
-    trk1WaveSurfer.empty();
-  }
-
-  if (trk1CurrentObjectUrl) {
-    URL.revokeObjectURL(trk1CurrentObjectUrl);
-    trk1CurrentObjectUrl = null;
-  }
-
-  musicName.textContent = '';
-  channelName.textContent = '';
-
-  cover.style.backgroundImage = '';
-  cover.style.backgroundSize = '';
-  cover.style.backgroundPosition = '';
-  cover.style.backgroundRepeat = '';
-
-  setPlayPauseVisual(false, playIcon, pauseIcon);
-}
-
-function removeMp3Extension(filename) {
-  return filename.replace(/\.mp3$/i, '');
-}
-
-function setPlayPauseVisual(isPlaying, playIcon, pauseIcon) {
-  if (!playIcon || !pauseIcon) return;
-
-  playIcon.style.display = isPlaying ? 'none' : 'inline-block';
-  pauseIcon.style.display = isPlaying ? 'inline-block' : 'none';
-}
