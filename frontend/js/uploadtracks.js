@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const pauseIcon = playPauseBtn?.querySelector('.bi-pause-fill');
   const stopBtn = document.getElementById('trk1-stop-btn');
   const cueBtn = document.getElementById('trk1-cue-btn');
+  const jogWheel = document.getElementById('trk1-jog-wheel');
 
   if (testButton) {
     testButton.addEventListener('click', () => {
