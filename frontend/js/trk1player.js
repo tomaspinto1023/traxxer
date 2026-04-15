@@ -2,10 +2,10 @@
 //Passar lógicas de ações que estão erradamente no uploadtracks.js!
 
 let trk1WaveSurfer = null;
-let trk1CurrentObjectUrl = null;
+let trk1CurrentObjectUrl = null;     //Variáveis 
 let trk1CuePoint = 0;
 
-function createTrack1WaveSurfer() {
+function createTrack1WaveSurfer() { //Função 
   trk1WaveSurfer = WaveSurfer.create({
     container: '#trk1-waveform',
     waveColor: '#dbdbdb',
