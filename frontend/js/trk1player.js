@@ -1,11 +1,12 @@
 //Este ficheiro é responsável por gerir funções de utilização dentro do deck uma vez que a musica estiver carregada!
 //Passar lógicas de ações que estão erradamente no uploadtracks.js!
 
-let trk1WaveSurfer = null;
-let trk1CurrentObjectUrl = null;     //Variáveis 
-let trk1CuePoint = 0;
+//Variáveis 
+let trk1WaveSurfer = null; //A onda não existe até o mp3 ser recebido e processado
+let trk1CurrentObjectUrl = null; //A capa não existe até o mp3 ser carregado
+let trk1CuePoint = 0; // O cue começa por definição no inicio da musica
 
-function createTrack1WaveSurfer() { //Função 
+function createTrack1WaveSurfer() { //Função que cria o onda de som com customizações definidas cá dentro
   trk1WaveSurfer = WaveSurfer.create({
     container: '#trk1-waveform',
     waveColor: '#dbdbdb',
