@@ -43,12 +43,13 @@ window.addEventListener('DOMContentLoaded', () => {
   console.log('waveformContainer:', waveformContainer);
   console.log('playPauseBtn:', playPauseBtn);
 
-  if (!dropZone || !cover || !musicName || !channelName || !waveformContainer || !playPauseBtn || !stopBtn || !ejectBtn || !cueBtn) {
+  if (!dropZone || !cover || !musicName || !channelName || !waveformContainer || !playPauseBtn || !stopBtn || !ejectBtn || !cueBtn || !jogWheel) {
     console.warn('Elementos do deck 1 não encontrados. A lógica de upload da faixa não foi inicializada.');
     return;
   }
 
   const waveSurfer = createTrack1WaveSurfer();
+  setupTrack1JogWheel(jogWheel);
 
   setPlayPauseVisual(false, playIcon, pauseIcon);
 
@@ -106,18 +107,21 @@ window.addEventListener('DOMContentLoaded', () => {
       channelName,
       playIcon,
       pauseIcon
-    });
+    }, jogWheel);
   });
 
   waveSurfer.on('play', () => {
     setPlayPauseVisual(true, playIcon, pauseIcon);
+    jogWheel.classList.add('is-playing');
   });
 
   waveSurfer.on('pause', () => {
     setPlayPauseVisual(false, playIcon, pauseIcon);
+    jogWheel.classList.remove('is-playing');
   });
 
   waveSurfer.on('finish', () => {
     setPlayPauseVisual(false, playIcon, pauseIcon);
+    jogWheel.classList.remove('is-playing');
   });
 });
