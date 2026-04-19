@@ -10,7 +10,7 @@ const TRK1_JOG_SENSITIVITY_PLAYING = 0.010;
 const TRK1_JOG_SENSITIVITY_PAUSED = 0.006;
 const TRK1_MAX_JOG_RATE_OFFSET = 0.22;
 
-let trk1JogData = {
+let trk1JogData = { // Dados relativos ao jogwheel
   isActive: false,
   mode: null, // 'scratch' | 'jog'
   pointerId: null,
@@ -21,7 +21,7 @@ let trk1JogData = {
   jogResetTimeout: null
 };
 
-function createTrack1WaveSurfer() { //Função que cria o onda de som com customizações definidas cá dentro
+function createTrack1WaveSurfer() { //Função que cria o onda de som com as customizações definidas cá dentro
   trk1WaveSurfer = WaveSurfer.create({
     container: '#trk1-waveform',
     waveColor: '#dbdbdb',
@@ -36,11 +36,11 @@ function createTrack1WaveSurfer() { //Função que cria o onda de som com custom
   return trk1WaveSurfer;
 }
 
-function getTrack1WaveSurfer() {
+function getTrack1WaveSurfer() { //Função que retorna o onda de som
   return trk1WaveSurfer;
 }
 
-function loadTrack1File(file, elements) {
+function loadTrack1File(file, elements) { //Função que carrega a musica
   const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
 
   if (trk1CurrentObjectUrl) {
@@ -94,7 +94,7 @@ function loadTrack1File(file, elements) {
   });
 }
 
-function ejectTrack1(elements, jogWheel) {
+function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a música é ejetada
   const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
 
   if (trk1WaveSurfer) {
@@ -121,7 +121,7 @@ function ejectTrack1(elements, jogWheel) {
   resetTrack1JogWheel(jogWheel);
 }
 
-function stopTrack1(playIcon, pauseIcon) {
+function stopTrack1(playIcon, pauseIcon) { //Função que para a musica
   if (!trk1WaveSurfer) return;
   if (!trk1WaveSurfer.getDuration()) return;
 
@@ -129,7 +129,7 @@ function stopTrack1(playIcon, pauseIcon) {
   setPlayPauseVisual(false, playIcon, pauseIcon);
 }
 
-function handleCueTrack1(playIcon, pauseIcon) {
+function handleCueTrack1(playIcon, pauseIcon) { //Função que pega o cue point da musica
   if (!trk1WaveSurfer) return;
   if (!trk1WaveSurfer.getDuration()) return;
 
@@ -148,18 +148,18 @@ function handleCueTrack1(playIcon, pauseIcon) {
   console.log('Novo cue point:', trk1CuePoint);
 }
 
-function removeMp3Extension(filename) {
+function removeMp3Extension(filename) { //Função que remove o ".mp3" do nome da musica, para facilitar a leitura e o resultado final
   return filename.replace(/\.mp3$/i, '');
 }
 
-function setPlayPauseVisual(isPlaying, playIcon, pauseIcon) {
+function setPlayPauseVisual(isPlaying, playIcon, pauseIcon) { //Função que altera o icone de play e pause tendo em conta as condições
   if (!playIcon || !pauseIcon) return;
 
   playIcon.style.display = isPlaying ? 'none' : 'inline-block';
   pauseIcon.style.display = isPlaying ? 'inline-block' : 'none';
 }
 
-function setupTrack1JogWheel(jogWheel) {
+function setupTrack1JogWheel(jogWheel) { //Função que configura a roda de jogos
   if (!jogWheel) return;
 
   jogWheel.addEventListener('pointerdown', (event) => {
