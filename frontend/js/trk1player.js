@@ -30,7 +30,6 @@ function createTrack1WaveSurfer() { //Função que cria o onda de som com as cus
     height: 27.4,
     barWidth: 2,
     barGap: 1,
-    responsive: true,
   });
 
   return trk1WaveSurfer;
@@ -98,8 +97,18 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
   const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
 
   if (trk1WaveSurfer) {
+    resetTrack1JogPlaybackRate();
+
+    const media = trk1WaveSurfer.getMediaElement?.();
+
     trk1WaveSurfer.stop();
     trk1WaveSurfer.empty();
+
+    if (media) {
+      media.pause();
+      media.removeAttribute('src');
+      media.load();
+    }
   }
 
   if (trk1CurrentObjectUrl) {
