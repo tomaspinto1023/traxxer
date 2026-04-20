@@ -87,6 +87,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   playPauseBtn.addEventListener('click', () => {
     if (!waveSurfer) return;
+    if (!trk1HasLoadedTrack) return;
     if (!waveSurfer.getDuration()) return;
 
     waveSurfer.playPause();

@@ -5,6 +5,7 @@
 let trk1WaveSurfer = null; //A onda não existe até o mp3 ser recebido e processado
 let trk1CurrentObjectUrl = null; //A capa não existe até o mp3 ser carregado
 let trk1CuePoint = 0; // O cue começa por definição no inicio da musica
+let trk1HasLoadedTrack = false; // Só fica true quando há uma música realmente carregada
 const TRK1_SCRATCH_SECONDS_PER_DEGREE = 0.0030;
 const TRK1_JOG_SENSITIVITY_PLAYING = 0.010;
 const TRK1_JOG_SENSITIVITY_PAUSED = 0.006;
@@ -50,6 +51,7 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
   trk1CurrentObjectUrl = URL.createObjectURL(file);
   trk1WaveSurfer.load(trk1CurrentObjectUrl);
   trk1CuePoint = 0;
+  trk1HasLoadedTrack = true;
 
   musicName.textContent = removeMp3Extension(file.name);
   channelName.textContent = 'Artista desconhecido';
@@ -117,6 +119,7 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
   }
 
   trk1CuePoint = 0;
+  trk1HasLoadedTrack = false;
 
   musicName.textContent = '';
   channelName.textContent = '';
@@ -130,8 +133,9 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
   resetTrack1JogWheel(jogWheel);
 }
 
-function stopTrack1(playIcon, pauseIcon) { //Função que para a musica
+function stopTrack1(playIcon, pauseIcon) {
   if (!trk1WaveSurfer) return;
+  if (!trk1HasLoadedTrack) return;
   if (!trk1WaveSurfer.getDuration()) return;
 
   trk1WaveSurfer.stop();
@@ -140,6 +144,7 @@ function stopTrack1(playIcon, pauseIcon) { //Função que para a musica
 
 function handleCueTrack1(playIcon, pauseIcon) { //Função que pega o cue point da musica
   if (!trk1WaveSurfer) return;
+  if (!trk1HasLoadedTrack) return;
   if (!trk1WaveSurfer.getDuration()) return;
 
   if (trk1WaveSurfer.isPlaying()) {
@@ -185,6 +190,10 @@ function setupTrack1JogWheel(jogWheel) { //Função que configura a roda de jogo
     trk1JogData.lastAngle = getTrack1PointerAngle(jogWheel, event);
     trk1JogData.lastMoveTime = performance.now();
     trk1JogData.wasPlayingBeforeScratch = mode === 'scratch' ? trk1WaveSurfer.isPlaying() : false;
+    
+    if (!trk1WaveSurfer) return;
+    if (!trk1HasLoadedTrack) return;
+    if (!trk1WaveSurfer.getDuration()) return;
 
     if (trk1JogData.scratchResumeTimeout) {
       clearTimeout(trk1JogData.scratchResumeTimeout);
