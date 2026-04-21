@@ -113,21 +113,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
   waveSurfer.on('play', () => {
     setPlayPauseVisual(true, playIcon, pauseIcon);
-    jogWheel.classList.add('is-playing');
     startTrack1JogWheelSync(jogWheel);
   });
 
   waveSurfer.on('pause', () => {
-    updateTrack1JogWheelFromAudio(jogWheel);
     stopTrack1JogWheelSync();
+    updateTrack1JogWheelFromAudio(jogWheel);
     setPlayPauseVisual(false, playIcon, pauseIcon);
-    jogWheel.classList.remove('is-playing');
   });
 
   waveSurfer.on('finish', () => {
-    updateTrack1JogWheelFromAudio(jogWheel);
     stopTrack1JogWheelSync();
+    updateTrack1JogWheelFromAudio(jogWheel);
     setPlayPauseVisual(false, playIcon, pauseIcon);
-    jogWheel.classList.remove('is-playing');
   });
 });

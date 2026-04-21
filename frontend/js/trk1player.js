@@ -144,8 +144,8 @@ function stopTrack1(playIcon, pauseIcon, jogWheel) {
   if (!trk1WaveSurfer.getDuration()) return;
 
   trk1WaveSurfer.stop();
-  updateTrack1JogWheelFromAudio(jogWheel);
   stopTrack1JogWheelSync();
+  updateTrack1JogWheelFromAudio(jogWheel);
   setPlayPauseVisual(false, playIcon, pauseIcon);
 }
 
@@ -242,11 +242,10 @@ function setupTrack1JogWheel(jogWheel) { //Função que configura a roda de jogo
     trk1JogData.lastMoveTime = now;
 
     if (trk1JogData.mode === 'scratch') {
-      applyTrack1Scratch(angleDelta);
-      rotateTrack1WheelVisual(jogWheel, trk1JogVisualRotation + angleDelta);
-      return;
-    }
-
+    applyTrack1Scratch(angleDelta);
+    setTrack1JogWheelRotation(jogWheel, trk1JogVisualRotation + angleDelta);
+    return;
+  }
     applyTrack1Jog(angleDelta, timeDeltaMs);
   });
 
@@ -389,6 +388,16 @@ function resetTrack1JogPlaybackRate() {
   media.playbackRate = 1;
 }
 
+function setTrack1JogWheelRotation(jogWheel, angle) {
+  const label = jogWheel.querySelector('.jog-wheel-label');
+  if (!label) return;
+
+  trk1JogVisualRotation = angle % 360;
+  if (trk1JogVisualRotation < 0) trk1JogVisualRotation += 360;
+
+  label.style.transform = `rotate(${trk1JogVisualRotation}deg)`;
+}
+
 function updateTrack1JogWheelFromAudio(jogWheel) {
   if (!jogWheel || !trk1WaveSurfer || !trk1HasLoadedTrack) return;
 
@@ -397,20 +406,26 @@ function updateTrack1JogWheelFromAudio(jogWheel) {
 
   const currentTime = trk1WaveSurfer.getCurrentTime();
 
-  // Ajusta este multiplicador à velocidade visual que quiseres
-  trk1JogVisualRotation = (currentTime * 180) % 360;
+  // velocidade visual do disco
+  const degreesPerSecond = 180;
 
-  rotateTrack1WheelVisual(jogWheel, trk1JogVisualRotation);
+  const exactRotation = currentTime * degreesPerSecond;
+  setTrack1JogWheelRotation(jogWheel, exactRotation);
 }
 
 function startTrack1JogWheelSync(jogWheel) {
   stopTrack1JogWheelSync();
+  trk1LastFrameTime = performance.now();
 
-  function animate() {
-    if (trk1WaveSurfer && trk1WaveSurfer.isPlaying() && trk1HasLoadedTrack) {
-      updateTrack1JogWheelFromAudio(jogWheel);
-      trk1JogAnimationFrame = requestAnimationFrame(animate);
+  function animate(now) {
+    if (!trk1WaveSurfer || !trk1HasLoadedTrack || !trk1WaveSurfer.isPlaying()) {
+      trk1JogAnimationFrame = null;
+      return;
     }
+
+    updateTrack1JogWheelFromAudio(jogWheel);
+    trk1LastFrameTime = now;
+    trk1JogAnimationFrame = requestAnimationFrame(animate);
   }
 
   trk1JogAnimationFrame = requestAnimationFrame(animate);
@@ -434,12 +449,9 @@ function rotateTrack1WheelVisual(jogWheel, angle) {
 function resetTrack1JogWheel(jogWheel) {
   if (!jogWheel) return;
 
-  jogWheel.classList.remove('is-scratching', 'is-jogging', 'is-playing');
+  jogWheel.classList.remove('is-scratching', 'is-jogging');
 
-  const label = jogWheel.querySelector('.jog-wheel-label');
-  if (label) {
-    label.style.transform = 'rotate(0deg)';
-  }
+  setTrack1JogWheelRotation(jogWheel, 0);
 
   if (trk1JogData.scratchResumeTimeout) {
     clearTimeout(trk1JogData.scratchResumeTimeout);
@@ -456,4 +468,5 @@ function resetTrack1JogWheel(jogWheel) {
   trk1JogData.pointerId = null;
 
   resetTrack1JogPlaybackRate();
+  trk1JogVisualRotation = 0;
 }
