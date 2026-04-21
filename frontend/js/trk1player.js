@@ -6,10 +6,13 @@ let trk1WaveSurfer = null; //A onda não existe até o mp3 ser recebido e proces
 let trk1CurrentObjectUrl = null; //A capa não existe até o mp3 ser carregado
 let trk1CuePoint = 0; // O cue começa por definição no inicio da musica
 let trk1HasLoadedTrack = false; // Só fica true quando há uma música realmente carregada
+let trk1JogVisualRotation = 0;
+let trk1JogAnimationFrame = null;
 const TRK1_SCRATCH_SECONDS_PER_DEGREE = 0.0030;
 const TRK1_JOG_SENSITIVITY_PLAYING = 0.010;
 const TRK1_JOG_SENSITIVITY_PAUSED = 0.006;
 const TRK1_MAX_JOG_RATE_OFFSET = 0.22;
+
 
 let trk1JogData = { // Dados relativos ao jogwheel
   isActive: false,
@@ -130,15 +133,19 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
   cover.style.backgroundRepeat = '';
 
   setPlayPauseVisual(false, playIcon, pauseIcon);
+  stopTrack1JogWheelSync();
+  trk1JogVisualRotation = 0;
   resetTrack1JogWheel(jogWheel);
 }
 
-function stopTrack1(playIcon, pauseIcon) {
+function stopTrack1(playIcon, pauseIcon, jogWheel) {
   if (!trk1WaveSurfer) return;
   if (!trk1HasLoadedTrack) return;
   if (!trk1WaveSurfer.getDuration()) return;
 
   trk1WaveSurfer.stop();
+  updateTrack1JogWheelFromAudio(jogWheel);
+  stopTrack1JogWheelSync();
   setPlayPauseVisual(false, playIcon, pauseIcon);
 }
 
@@ -236,7 +243,7 @@ function setupTrack1JogWheel(jogWheel) { //Função que configura a roda de jogo
 
     if (trk1JogData.mode === 'scratch') {
       applyTrack1Scratch(angleDelta);
-      rotateTrack1WheelVisual(jogWheel, currentAngle);
+      rotateTrack1WheelVisual(jogWheel, trk1JogVisualRotation + angleDelta);
       return;
     }
 
@@ -382,11 +389,46 @@ function resetTrack1JogPlaybackRate() {
   media.playbackRate = 1;
 }
 
+function updateTrack1JogWheelFromAudio(jogWheel) {
+  if (!jogWheel || !trk1WaveSurfer || !trk1HasLoadedTrack) return;
+
+  const duration = trk1WaveSurfer.getDuration();
+  if (!duration) return;
+
+  const currentTime = trk1WaveSurfer.getCurrentTime();
+
+  // Ajusta este multiplicador à velocidade visual que quiseres
+  trk1JogVisualRotation = (currentTime * 180) % 360;
+
+  rotateTrack1WheelVisual(jogWheel, trk1JogVisualRotation);
+}
+
+function startTrack1JogWheelSync(jogWheel) {
+  stopTrack1JogWheelSync();
+
+  function animate() {
+    if (trk1WaveSurfer && trk1WaveSurfer.isPlaying() && trk1HasLoadedTrack) {
+      updateTrack1JogWheelFromAudio(jogWheel);
+      trk1JogAnimationFrame = requestAnimationFrame(animate);
+    }
+  }
+
+  trk1JogAnimationFrame = requestAnimationFrame(animate);
+}
+
+function stopTrack1JogWheelSync() {
+  if (trk1JogAnimationFrame) {
+    cancelAnimationFrame(trk1JogAnimationFrame);
+    trk1JogAnimationFrame = null;
+  }
+}
+
 function rotateTrack1WheelVisual(jogWheel, angle) {
   const label = jogWheel.querySelector('.jog-wheel-label');
   if (!label) return;
 
-  label.style.transform = `rotate(${angle}deg)`;
+  trk1JogVisualRotation = angle;
+  label.style.transform = `rotate(${trk1JogVisualRotation}deg)`;
 }
 
 function resetTrack1JogWheel(jogWheel) {

@@ -94,7 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   stopBtn.addEventListener('click', () => {
-    stopTrack1(playIcon, pauseIcon);
+    stopTrack1(playIcon, pauseIcon, jogWheel);
   });
 
   cueBtn.addEventListener('click', () => {
@@ -114,14 +114,19 @@ window.addEventListener('DOMContentLoaded', () => {
   waveSurfer.on('play', () => {
     setPlayPauseVisual(true, playIcon, pauseIcon);
     jogWheel.classList.add('is-playing');
+    startTrack1JogWheelSync(jogWheel);
   });
 
   waveSurfer.on('pause', () => {
+    updateTrack1JogWheelFromAudio(jogWheel);
+    stopTrack1JogWheelSync();
     setPlayPauseVisual(false, playIcon, pauseIcon);
     jogWheel.classList.remove('is-playing');
   });
 
   waveSurfer.on('finish', () => {
+    updateTrack1JogWheelFromAudio(jogWheel);
+    stopTrack1JogWheelSync();
     setPlayPauseVisual(false, playIcon, pauseIcon);
     jogWheel.classList.remove('is-playing');
   });
