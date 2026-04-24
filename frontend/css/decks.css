@@ -57,38 +57,30 @@
 
 #trk1-scale-text { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
 
-#trk1-music-length {
+#trk1-music-elapsed {
     width: 36px; height: 24px; position: fixed; background-color: #131315; left: 428px; top: 251px; }
 
-#trk1-music-length-indicator {
-    width: 40px; height: 8px; left: 0px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 6px; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 42%; }
-
-#trk1-music-length-time {
-    width: 35px; height: 12px; left: 2px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
-
-#trk1-music-elapsed {
-    width: 36px; height: 24px; position: fixed; background-color: #131315; left: 475px; top: 251px; }
-
 #trk1-music-elapsed-indicator {
-    width: 40px; height: 8px; left: 0px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 6px; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 42%; }
+    width: 44px; height: 8px; left: -1px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
+    color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 45%; }
 
 #trk1-music-elapsed-time {
-    width: 35px; height: 12px; left: 2px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
+    width: 35px; height: 12px; left: -1px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
     color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
 
 #trk1-music-remaining {
-    width: 36px; height: 24px; position: fixed; background-color: #131315; left: 520px; top: 251px; }
+    width: 36px; height: 24px; position: fixed; background-color: #131315; left: 480px; top: 251px; }
 
 #trk1-music-remaining-indicator {
-    width: 40px; height: 8px; left: 0px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 6px; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 42%; }
+    width: 44px; height: 8px; left: -2px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
+    color: white;  font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 45%; }
 
 #trk1-music-remaining-time {
-    width: 35px; height: 12px; left: 2px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
+    width: 35px; height: 12px; left: 4px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
     color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
+
+#test-div { 
+    top: 251px; left: 534px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px;  }
 
 #trk1-fx-indicator {
     width: 15px; height: 74px; position: relative; top: 98px; left: 4px; }

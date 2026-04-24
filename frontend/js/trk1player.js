@@ -115,6 +115,9 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
       detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
     }
   });
+  trk1WaveSurfer.on('ready', () => {
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  });
 }
 
 function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a música é ejetada
@@ -160,6 +163,9 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
   stopTrack1JogWheelSync();
   trk1JogVisualRotation = 0;
   resetTrack1JogWheel(jogWheel);
+
+  if (elapsedTimeText) elapsedTimeText.textContent = '';
+  if (remainingTimeText) remainingTimeText.textContent = '';
 }
 
 function stopTrack1(playIcon, pauseIcon, jogWheel) {
@@ -654,4 +660,34 @@ function formatTrack1Bpm(bpm) {
   if (Number.isNaN(bpmNumber)) return '--';
 
   return bpmNumber.toFixed(2);
+}
+
+function updateTrack1TimeDisplays(elapsedEl, remainingEl) {
+  if (!trk1WaveSurfer || !trk1HasLoadedTrack) return;
+
+  const current = trk1WaveSurfer.getCurrentTime();
+  const duration = trk1WaveSurfer.getDuration();
+
+  if (!duration) return;
+
+  const remaining = duration - current;
+
+  if (elapsedEl) {
+    elapsedEl.textContent = formatTrack1Time(current);
+  }
+
+  if (remainingEl) {
+    remainingEl.textContent = formatTrack1Time(remaining);
+  }
+}
+
+function formatTrack1Time(seconds) {
+  const totalSeconds = Math.max(0, seconds);
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const secs = Math.floor(totalSeconds % 60);
+  const deciseconds = Math.floor((totalSeconds % 1) * 10);
+
+  const paddedSecs = String(secs).padStart(2, '0');
+  return `${minutes}:${paddedSecs}:${deciseconds}`;
 }

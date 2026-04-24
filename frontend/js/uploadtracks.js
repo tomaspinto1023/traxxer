@@ -18,6 +18,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const cueBtn = document.getElementById('trk1-cue-btn');
   const jogWheel = document.getElementById('trk1-jog-wheel');
   const bpmText = document.getElementById('trk1-bpm');
+  const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
+  const remainingTimeText = document.getElementById('trk1-music-remaining-time');
 
   if (testButton) {
     testButton.addEventListener('click', () => {
@@ -112,6 +114,22 @@ window.addEventListener('DOMContentLoaded', () => {
       playIcon,
       pauseIcon
     }, jogWheel);
+  });
+
+  waveSurfer.on('audioprocess', () => {
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  });
+
+  waveSurfer.on('seek', () => {
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  });
+
+  waveSurfer.on('audioprocess', () => {
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  });
+
+  waveSurfer.on('seek', () => {
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
   });
 
   waveSurfer.on('play', () => {
