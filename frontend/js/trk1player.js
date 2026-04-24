@@ -8,6 +8,7 @@ let trk1CuePoint = 0; // O cue começa por definição no inicio da musica
 let trk1HasLoadedTrack = false; // Só fica true quando há uma música realmente carregada
 let trk1JogVisualRotation = 0;
 let trk1JogAnimationFrame = null;
+let trk1LoadId = 0;
 const TRK1_SCRATCH_SECONDS_PER_DEGREE = 0.0030;
 const TRK1_JOG_SENSITIVITY_PLAYING = 0.010;
 const TRK1_JOG_SENSITIVITY_PAUSED = 0.006;
@@ -44,7 +45,10 @@ function getTrack1WaveSurfer() { //Função que retorna o onda de som
 }
 
 function loadTrack1File(file, elements) { //Função que carrega a musica
-  const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
+  const { cover, musicName, channelName, bpmText, playIcon, pauseIcon } = elements;
+
+  trk1LoadId++;
+  const currentLoadId = trk1LoadId;
 
   if (trk1CurrentObjectUrl) {
     URL.revokeObjectURL(trk1CurrentObjectUrl);
@@ -59,6 +63,10 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
   musicName.textContent = removeMp3Extension(file.name);
   channelName.textContent = 'Artista desconhecido';
 
+  if (bpmText) {
+    bpmText.textContent = '--';
+  }
+
   cover.style.backgroundImage = '';
   cover.style.backgroundSize = 'cover';
   cover.style.backgroundPosition = 'center';
@@ -69,6 +77,16 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
   window.jsmediatags.read(file, {
     onSuccess: (tag) => {
       const tags = tag.tags;
+
+      console.log('Metadata completa:', tags);
+
+      const metadataBpm = getTrack1BpmFromTags(tags);
+
+      if (metadataBpm) {
+        if (bpmText) bpmText.textContent = formatTrack1Bpm(metadataBpm);
+      } else {
+        detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
+      }
 
       if (tags.title) {
         musicName.textContent = tags.title;
@@ -94,12 +112,13 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
     },
     onError: (error) => {
       console.log('Erro ao ler metadata da faixa:', error);
+      detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
     }
   });
 }
 
 function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a música é ejetada
-  const { cover, musicName, channelName, playIcon, pauseIcon } = elements;
+  const { cover, musicName, channelName, bpmText, playIcon, pauseIcon } = elements;
 
   if (trk1WaveSurfer) {
     resetTrack1JogPlaybackRate();
@@ -123,9 +142,14 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
 
   trk1CuePoint = 0;
   trk1HasLoadedTrack = false;
+  trk1LoadId++;
 
   musicName.textContent = '';
   channelName.textContent = '';
+
+  if (bpmText) {
+    bpmText.textContent = '';
+  }
 
   cover.style.backgroundImage = '';
   cover.style.backgroundSize = '';
@@ -469,4 +493,165 @@ function resetTrack1JogWheel(jogWheel) {
 
   resetTrack1JogPlaybackRate();
   trk1JogVisualRotation = 0;
+}
+
+function getTrack1BpmFromTags(tags) {
+  if (!tags) return null;
+
+  const possibleBpm =
+    tags.TBPM ||
+    tags.bpm ||
+    tags.BPM ||
+    tags['TBPM'];
+
+  if (!possibleBpm) return null;
+
+  const bpmNumber = parseFloat(String(possibleBpm).replace(',', '.'));
+
+  if (Number.isNaN(bpmNumber)) return null;
+
+  return Math.round(bpmNumber);
+}
+
+async function detectAndShowTrack1Bpm(file, bpmText, loadId) {
+  if (!bpmText) return;
+
+  bpmText.textContent = '...';
+
+  try {
+    const bpm = await detectTrack1BpmFromAudio(file);
+
+    if (loadId !== trk1LoadId) return;
+    if (!trk1HasLoadedTrack) return;
+
+    bpmText.textContent = bpm ? formatTrack1Bpm(bpm) : '--';
+  } catch (error) {
+    console.log('Erro ao detetar BPM:', error);
+
+    if (loadId !== trk1LoadId) return;
+
+    bpmText.textContent = '--';
+  }
+}
+
+async function detectTrack1BpmFromAudio(file) {
+  const arrayBuffer = await file.arrayBuffer();
+
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  const audioContext = new AudioContextClass();
+
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+  const channelData = audioBuffer.getChannelData(0);
+  const sampleRate = audioBuffer.sampleRate;
+
+  const peaks = getTrack1EnergyPeaks(channelData, sampleRate);
+  const tempoCandidates = getTrack1TempoCandidates(peaks);
+
+  await audioContext.close();
+
+  if (!tempoCandidates.length) return null;
+
+  tempoCandidates.sort((a, b) => b.score - a.score);
+
+  return normalizeTrack1Bpm(tempoCandidates[0].tempo);
+}
+
+function getTrack1EnergyPeaks(channelData, sampleRate) {
+  const blockSize = Math.floor(sampleRate * 0.05); // blocos de 50ms
+  const energies = [];
+
+  for (let i = 0; i < channelData.length; i += blockSize) {
+    let sum = 0;
+
+    for (let j = 0; j < blockSize && i + j < channelData.length; j++) {
+      const sample = channelData[i + j];
+      sum += sample * sample;
+    }
+
+    energies.push({
+      time: i / sampleRate,
+      energy: sum / blockSize
+    });
+  }
+
+  const averageEnergy =
+    energies.reduce((total, item) => total + item.energy, 0) / energies.length;
+
+  const threshold = averageEnergy * 1.45;
+  const peaks = [];
+
+  for (let i = 1; i < energies.length - 1; i++) {
+    const previous = energies[i - 1];
+    const current = energies[i];
+    const next = energies[i + 1];
+
+    const isLocalPeak =
+      current.energy > previous.energy &&
+      current.energy > next.energy &&
+      current.energy > threshold;
+
+    if (!isLocalPeak) continue;
+
+    const lastPeak = peaks[peaks.length - 1];
+
+    if (!lastPeak || current.time - lastPeak.time > 0.25) {
+      peaks.push(current);
+    }
+  }
+
+  return peaks;
+}
+
+function getTrack1TempoCandidates(peaks) {
+  const candidates = [];
+
+  for (let i = 0; i < peaks.length; i++) {
+    for (let j = i + 1; j < peaks.length && j < i + 12; j++) {
+      const interval = peaks[j].time - peaks[i].time;
+
+      if (interval <= 0) continue;
+
+      let tempo = 60 / interval;
+
+      while (tempo < 70) tempo *= 2;
+      while (tempo > 180) tempo /= 2;
+
+      tempo = Math.round(tempo);
+
+      const existingCandidate = candidates.find(
+        candidate => Math.abs(candidate.tempo - tempo) <= 1
+      );
+
+      if (existingCandidate) {
+        existingCandidate.score++;
+      } else {
+        candidates.push({
+          tempo,
+          score: 1
+        });
+      }
+    }
+  }
+
+  return candidates;
+}
+
+function normalizeTrack1Bpm(bpm) {
+  if (!bpm) return null;
+
+  let normalizedBpm = bpm;
+
+  while (normalizedBpm < 70) normalizedBpm *= 2;
+  while (normalizedBpm > 180) normalizedBpm /= 2;
+
+  return Math.round(normalizedBpm);
+}
+
+function formatTrack1Bpm(bpm) {
+  const bpmNumber = Number(bpm);
+
+  if (Number.isNaN(bpmNumber)) return '--';
+
+  return bpmNumber.toFixed(2);
 }

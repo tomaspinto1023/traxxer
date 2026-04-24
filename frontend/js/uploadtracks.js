@@ -17,6 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const stopBtn = document.getElementById('trk1-stop-btn');
   const cueBtn = document.getElementById('trk1-cue-btn');
   const jogWheel = document.getElementById('trk1-jog-wheel');
+  const bpmText = document.getElementById('trk1-bpm');
 
   if (testButton) {
     testButton.addEventListener('click', () => {
@@ -80,6 +81,7 @@ window.addEventListener('DOMContentLoaded', () => {
       cover,
       musicName,
       channelName,
+      bpmText,
       playIcon,
       pauseIcon
     });
@@ -106,6 +108,7 @@ window.addEventListener('DOMContentLoaded', () => {
       cover,
       musicName,
       channelName,
+      bpmText,
       playIcon,
       pauseIcon
     }, jogWheel);
