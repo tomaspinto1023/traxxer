@@ -35,7 +35,11 @@
     color: #ffffff; font-size: 77%; font-family: Arial, Helvetica, sans-serif; }
 
 #trk1-waveform {
-    width: 389.6px; height: 28px; background-color: #131315; position: fixed; left: 29px; top: 248.5px; }
+    width: 389.6px; height: 28px; background-color: #131315; position: fixed; left: 29px; top: 248.5px; z-index: 1000;}
+
+    #trk1-waveform ::part(wrapper) {
+  background-color: #131315;
+}
 
 #trk1-bpm {
     background-color: #131315; left: 470px; top: 168px; position: fixed; width: 16px; height: 10px; 
