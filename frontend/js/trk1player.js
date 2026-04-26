@@ -121,7 +121,16 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
 }
 
 function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a música é ejetada
-  const { cover, musicName, channelName, bpmText, playIcon, pauseIcon } = elements;
+  const {
+    cover,
+    musicName,
+    channelName,
+    bpmText,
+    playIcon,
+    pauseIcon,
+    elapsedTimeText,
+    remainingTimeText
+  } = elements;
 
   if (trk1WaveSurfer) {
     resetTrack1JogPlaybackRate();
@@ -160,6 +169,7 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
   cover.style.backgroundRepeat = '';
 
   setPlayPauseVisual(false, playIcon, pauseIcon);
+
   stopTrack1JogWheelSync();
   trk1JogVisualRotation = 0;
   resetTrack1JogWheel(jogWheel);

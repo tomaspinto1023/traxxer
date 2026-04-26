@@ -106,15 +106,20 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   
   ejectBtn.addEventListener('click', () => {
-    ejectTrack1({
-      cover,
-      musicName,
-      channelName,
-      bpmText,
-      playIcon,
-      pauseIcon
-    }, jogWheel);
-  });
+  const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
+  const remainingTimeText = document.getElementById('trk1-music-remaining-time');
+
+  ejectTrack1({
+    cover,
+    musicName,
+    channelName,
+    bpmText,
+    playIcon,
+    pauseIcon,
+    elapsedTimeText,
+    remainingTimeText
+  }, jogWheel);
+});
 
   waveSurfer.on('audioprocess', () => {
     updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
