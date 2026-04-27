@@ -37,13 +37,15 @@
 #trk1-waveform {
     width: 389.6px; height: 28px; background-color: #131315; position: fixed; left: 29px; top: 248.5px; z-index: 1000;}
 
-    #trk1-waveform ::part(wrapper) {
+#trk1-waveform ::part(wrapper) {
   background-color: #131315;
 }
 
 #trk1-bpm {
     background-color: #131315; left: 470px; top: 168px; position: fixed; width: 16px; height: 10px; 
     font-size: 177%; color: #c83cb0; text-align: right; font-family: Arial, Helvetica, sans-serif; }
+
+
 
 #trk1-master-sync { /*Trocar de lugar com o trk1 e meter corfes parecidas com o virtual dj ajustadas à imagem da minha app*/
     left: 435px; top: 200px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px; }

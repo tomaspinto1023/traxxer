@@ -64,7 +64,8 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
   channelName.textContent = 'Artista desconhecido';
 
   if (bpmText) {
-    bpmText.textContent = '--';
+    bpmText.textContent = '';
+    bpmText.style.left = '470px';
   }
 
   cover.style.backgroundImage = '';
@@ -83,11 +84,13 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
       const metadataBpm = getTrack1BpmFromTags(tags);
 
       if (metadataBpm) {
-        if (bpmText) bpmText.textContent = formatTrack1Bpm(metadataBpm);
+        if (bpmText) {
+          bpmText.textContent = formatTrack1Bpm(metadataBpm);
+          updateTrack1BpmPosition(bpmText, metadataBpm);
+        }
       } else {
         detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
       }
-
       if (tags.title) {
         musicName.textContent = tags.title;
       }
@@ -116,8 +119,40 @@ function loadTrack1File(file, elements) { //Função que carrega a musica
     }
   });
   trk1WaveSurfer.on('ready', () => {
-    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+    if (currentLoadId !== trk1LoadId) return;
+    if (!trk1HasLoadedTrack) return;
+
+    const elapsedIndicator = document.getElementById('trk1-music-elapsed-indicator');
+    const remainingIndicator = document.getElementById('trk1-music-remaining-indicator');
+
+    const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
+    const remainingTimeText = document.getElementById('trk1-music-remaining-time');
+
+    if (elapsedIndicator) elapsedIndicator.textContent = 'DECORRIDO';
+    if (remainingIndicator) remainingIndicator.textContent = 'RESTANTE';
+
+    if (elapsedTimeText) elapsedTimeText.textContent = '0:00:0';
+
+    const duration = trk1WaveSurfer.getDuration();
+
+    if (remainingTimeText) {
+      remainingTimeText.textContent = formatTrack1Time(duration);
+    }
   });
+}
+
+function updateTrack1BpmPosition(bpmText, bpmValue) {
+  if (!bpmText) return;
+
+  const bpmNumber = Number(bpmValue);
+
+  if (Number.isNaN(bpmNumber)) return;
+
+  if (bpmNumber < 100) {
+    bpmText.style.left = '486px';
+  } else {
+    bpmText.style.left = '470px';
+  }
 }
 
 function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a música é ejetada
@@ -127,9 +162,7 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
     channelName,
     bpmText,
     playIcon,
-    pauseIcon,
-    elapsedTimeText,
-    remainingTimeText
+    pauseIcon
   } = elements;
 
   if (trk1WaveSurfer) {
@@ -174,8 +207,9 @@ function ejectTrack1(elements, jogWheel) { //Função que limpa o deck quando a 
   trk1JogVisualRotation = 0;
   resetTrack1JogWheel(jogWheel);
 
-  if (elapsedTimeText) elapsedTimeText.textContent = '';
-  if (remainingTimeText) remainingTimeText.textContent = '';
+  resetTrack1EffectSlotN1();
+
+  clearTrack1TimeDisplay();
 }
 
 function stopTrack1(playIcon, pauseIcon, jogWheel) {
@@ -438,8 +472,12 @@ function setTrack1JogWheelRotation(jogWheel, angle) {
   label.style.transform = `rotate(${trk1JogVisualRotation}deg)`;
 }
 
-function updateTrack1JogWheelFromAudio(jogWheel) {
-  if (!jogWheel || !trk1WaveSurfer || !trk1HasLoadedTrack) return;
+function updateTrack1TimeDisplays(elapsedEl, remainingEl) {
+  if (!trk1WaveSurfer || !trk1HasLoadedTrack) {
+    if (elapsedEl) elapsedEl.textContent = '';
+    if (remainingEl) remainingEl.textContent = '';
+    return;
+  }
 
   const duration = trk1WaveSurfer.getDuration();
   if (!duration) return;
@@ -540,13 +578,20 @@ async function detectAndShowTrack1Bpm(file, bpmText, loadId) {
     if (loadId !== trk1LoadId) return;
     if (!trk1HasLoadedTrack) return;
 
-    bpmText.textContent = bpm ? formatTrack1Bpm(bpm) : '--';
+    if (bpm) {
+      bpmText.textContent = formatTrack1Bpm(bpm);
+      updateTrack1BpmPosition(bpmText, bpm);
+    } else {
+      bpmText.textContent = '--';
+      bpmText.style.left = '470px';
+    }
   } catch (error) {
     console.log('Erro ao detetar BPM:', error);
 
     if (loadId !== trk1LoadId) return;
 
     bpmText.textContent = '--';
+    bpmText.style.left = '470px';
   }
 }
 
@@ -672,13 +717,46 @@ function formatTrack1Bpm(bpm) {
   return bpmNumber.toFixed(2);
 }
 
+function updateTrack1JogWheelFromAudio(jogWheel) {
+  if (!jogWheel || !trk1WaveSurfer || !trk1HasLoadedTrack) return;
+
+  const duration = trk1WaveSurfer.getDuration();
+  if (!duration) return;
+
+  const currentTime = trk1WaveSurfer.getCurrentTime();
+
+  const degreesPerSecond = 180;
+  const exactRotation = currentTime * degreesPerSecond;
+
+  setTrack1JogWheelRotation(jogWheel, exactRotation);
+}
+
+function formatTrack1Time(seconds) {
+  const totalSeconds = Math.max(0, seconds);
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const secs = Math.floor(totalSeconds % 60);
+  const deciseconds = Math.floor((totalSeconds % 1) * 10);
+
+  const paddedSecs = String(secs).padStart(2, '0');
+  return `${minutes}:${paddedSecs}:${deciseconds}`;
+}
+
 function updateTrack1TimeDisplays(elapsedEl, remainingEl) {
-  if (!trk1WaveSurfer || !trk1HasLoadedTrack) return;
+  if (!trk1WaveSurfer || !trk1HasLoadedTrack) {
+    if (elapsedEl) elapsedEl.textContent = '';
+    if (remainingEl) remainingEl.textContent = '';
+    return;
+  }
 
   const current = trk1WaveSurfer.getCurrentTime();
   const duration = trk1WaveSurfer.getDuration();
 
-  if (!duration) return;
+  if (!duration) {
+    if (elapsedEl) elapsedEl.textContent = '';
+    if (remainingEl) remainingEl.textContent = '';
+    return;
+  }
 
   const remaining = duration - current;
 
@@ -691,13 +769,27 @@ function updateTrack1TimeDisplays(elapsedEl, remainingEl) {
   }
 }
 
-function formatTrack1Time(seconds) {
-  const totalSeconds = Math.max(0, seconds);
+function clearTrack1TimeDisplay() {
+  const elapsedIndicator = document.getElementById('trk1-music-elapsed-indicator');
+  const remainingIndicator = document.getElementById('trk1-music-remaining-indicator');
+  const elapsedTime = document.getElementById('trk1-music-elapsed-time');
+  const remainingTime = document.getElementById('trk1-music-remaining-time');
 
-  const minutes = Math.floor(totalSeconds / 60);
-  const secs = Math.floor(totalSeconds % 60);
-  const deciseconds = Math.floor((totalSeconds % 1) * 10);
+  if (elapsedIndicator) elapsedIndicator.textContent = '';
+  if (remainingIndicator) remainingIndicator.textContent = '';
+  if (elapsedTime) elapsedTime.textContent = '';
+  if (remainingTime) remainingTime.textContent = '';
+}
 
-  const paddedSecs = String(secs).padStart(2, '0');
-  return `${minutes}:${paddedSecs}:${deciseconds}`;
+function resetTrack1EffectSlotN1() {
+  const effectBox = document.getElementById('trk1-effect-n1');
+  const optionsBox = document.getElementById('trk1-effect-n1-options');
+
+  if (trk1SelectedEffectN1) {
+    trk1SelectedEffectN1.disable();
+    trk1SelectedEffectN1 = null;
+  }
+
+  if (effectBox) effectBox.textContent = '';
+  if (optionsBox) optionsBox.style.display = 'none';
 }

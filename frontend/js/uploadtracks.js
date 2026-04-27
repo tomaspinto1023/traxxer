@@ -153,4 +153,6 @@ window.addEventListener('DOMContentLoaded', () => {
     updateTrack1JogWheelFromAudio(jogWheel);
     setPlayPauseVisual(false, playIcon, pauseIcon);
   });
+
+  setupTrack1EffectSlotN1();
 });
