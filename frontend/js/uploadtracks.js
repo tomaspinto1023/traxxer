@@ -1,7 +1,7 @@
 // Ficheiro JavaScript com a lógica de descarregamento de faixas 
 // Se começar a adicionar coisas a mais, pensar em como dividir o ficheiro em vários ficheiros menores
 
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('traxxer:partials-loaded', () => {
   const testButton = document.getElementById('test-backend-btn');
   const responseText = document.getElementById('backend-response');
 

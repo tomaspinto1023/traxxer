@@ -1,0 +1,325 @@
+<section id="decks"> <!--Decks + parte central com KNOBS centrais, CROSSFADERS E VOLUMES-->
+    <div id="deck1"> <!--Deck 1-->
+        <div id="first-trk-letter">A</div>
+        <section id="trk1"> <!--Track 1!-->
+        <!--Quando for tratar da questão do carregamento de faixas, tenho que criar mais uma div, 
+        que sirva como local onde a música possa ser descarregada dentro da div da trk1 -->
+            <div id="trk1-horizontal-line"></div>
+            <div id="trk1-vertical-line"></div>
+            <!--Div que contém a capa da música, nome da música e nome do canal que publicou a música-->
+            <div id="trk1-drop-zone">
+                <div id="trk1-loaded-music-intel">
+                    <div id="trk1-cover"></div>
+                    <div>
+                        <p id="trk1-track-title"></p>
+                        <p id="trk1-track-artist"></p>
+                    </div>
+                    <div id="trk1-waveform"></div>
+                </div>
+            </div>
+            <p id="trk1-bpm"></p> <!--Exibição dos BPMs da música carregada no deck 1; relativo à faixa mestre-->
+            <p id="trk1-indicator">TRK1</p> <!--Indicador de Track 1-->
+            <div id="trk1-scale"> <!--Seção de exibição da escala da música-->
+                <i style="background-color: #131315;" class="bi bi-caret-left-fill"></i>
+                <p id="trk1-scale-text">ESCALA</p>
+                <i style="background-color: #131315;" class="bi bi-caret-right-fill"></i>
+                <p id="trk1-scale-text">(...)</p>
+            </div>
+            <div id="trk1-music-elapsed"> <!--Seção de exibição do tempo decorrido da música da track 1-->
+                <div id="trk1-music-elapsed-indicator"></div>
+                <div id="trk1-music-elapsed-time"></div>
+            </div>
+            <div id="trk1-music-remaining"> <!--Seção de exibição do tempo restante da música da track 1-->
+                <div id="trk1-music-remaining-indicator"></div>
+                <div id="trk1-music-remaining-time"></div>
+            </div>
+            <i id="trk1-master-sync" class="bi bi-music-note-list"></i> <!--Ícone de Master Sync, responsável por sincronizar os bpm da faixa mestre-->
+        </section>
+        <div id="trk1-fx-indicator"> <!--Indicador dos efeitos da track 1-->
+            <div id="trk1-fx-button"></div>
+            <div id="trk1-fx-text">EFFECTS</div>
+            <div id="trk1-fx-circle"></div>
+        </div>
+        <div id="trk1-effects"> <!--Div dos efeitos da track 1-->
+            <div id="trk1-effects-position"> <!--Div de posicionamento dos efeitos da track 1; não existe visualmente, mas é crucial para o posicionamento dos elementos-->
+                <div id="trk1-effect-n1-general-div"> <!--Div geral do efeito n1 da track 1; herda a posição da div anteriormente mencionada-->
+                    <div id="trk1-effect-n1"></div>
+                    <div id="trk1-effect-n1-arrow">
+                    <i style="background-color: #212121; color: #ffffff; font-size: 70%;"
+                        class="bi bi-caret-down-fill"></i>
+                    </div>
+                    <div id="trk1-effect-n1-decrease"> <!--Botão de diminuir o parâmetro do efeito n1 da track 1-->
+                        <i style="background-color: #212121; color: #ffffff; font-size: 80%;"
+                            class="bi bi-dash"></i>
+                    </div>
+                    <div id="trk1-effect-n1-blackbar"></div>
+                    <div id="trk1-effect-n1-switch"></div>
+                    <div id="trk1-effect-n1-increase">
+                        <i style="background-color: #212121; color: #ffffff; font-size: 80%;"
+                            class="bi bi-plus"></i>
+                    </div>
+                </div>
+                <div id="trk1-effect-n2-general-div">
+                    <div id="trk1-effect-n2"></div>
+                    <div id="trk1-effect-n2-arrow">
+                        <i style="background-color: #212121; color: #ffffff; font-size: 70%;"
+                            class="bi bi-caret-down-fill"></i>
+                    </div>
+                    <div id="trk1-effect-n2-decrease">
+                        <i style="background-color: #212121; color: #ffffff; font-size: 80%;"
+                            class="bi bi-dash"></i>
+                    </div>
+                    <div id="trk1-effect-n2-blackbar"></div>
+                    <div id="trk1-effect-n2-switch"></div>
+                    <div id="trk1-effect-n2-increase">
+                        <i style="background-color: #212121; color: #ffffff; font-size: 80%;"
+                            class="bi bi-plus"></i>
+                    </div>
+                </div>
+                <div id="trk1-effect-n3-general-div">
+                    <div id="trk1-effect-n3"></div>
+                    <div id="trk1-effect-n3-arrow">
+                        <i style="background-color: #212121; color: #ffffff; font-size: 70%;"
+                            class="bi bi-caret-down-fill"></i>
+                    </div>
+                    <div id="trk1-effect-n3-decrease">
+                        <i style="background-color: #212121; color: #ffffff; font-size: 80%;"
+                            class="bi bi-dash"></i>
+                    </div>
+                    <div id="trk1-effect-n3-blackbar"></div>
+                    <div id="trk1-effect-n3-switch"></div>
+                    <div id="trk1-effect-n3-increase">
+                        <i style="background-color: #212121; color: #ffffff; font-size: 80%;"
+                            class="bi bi-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="trk1-tools-indicator">
+            <div id="trk1-tools-button"></div>
+            <div id="trk1-tools-text">TOOLS</div>
+            <div id="trk1-tools-circle"></div>
+        </div>
+        <div id="trk1-tools-main-div">
+            <div id="trk1-tools-position">
+                <div id="trk1-slip-mode">
+                    <i style="display:inline-block; transform: rotate(180deg); z-index: 1000; background: none;"
+                        class="bi bi-triangle-fill"></i>
+                    <i style="display:inline-block; transform: rotate(180deg);" class="bi bi-triangle"></i>
+                </div>
+                <div id="trk1-restart-beatgrid"><i class="bi bi-grid"></i></div>
+                <div id="trk1-adjust-beatgrid"><i class="bi bi-columns-gap"></i></div>
+                <div id="trk1-quantize"><i class="bi bi-magnet-fill"
+                        style="display:inline-block; transform: rotate(-90deg);"></i></div>
+                <div id="trk1-repeat"><i class="bi bi-repeat-1"></i></div>
+                <div id="trk1-sound-lock"><i class="bi bi-lock-fill"></i></div>
+            </div>
+        </div>
+        <div id="trk1-separation-line-horizontal"></div>
+        <div id="trk1-loop-indicator">
+            <div id="trk1-loop-button"></div>
+            <div id="trk1-loop-text">LOOP</div>
+            <div id="trk1-loop-circle"></div>
+        </div>
+        <div id="trk1-beatloop-main-div">
+            <div id="trk1-beatloop-position">
+                <div id="trk1-beatloop-btn"><i
+                        style="display:inline-block; transform: rotate(90deg); margin-left:-2px;"
+                        class="bi bi-arrow-repeat"></i></div>
+                <div id="trk1-reloop-btn"><img src="../assets/images/iconlooptraxxer.png"
+                        style="width: 25px; height: 25px;"></div>
+                <div id="trk1-beatloop-size">(...)</div>
+                <div id="trk1-loopin-btn"><i
+                        style="display:inline-block; transform: rotate(180deg); margin-top: -2px;"
+                        class="bi bi-arrow-90deg-left"></i></div>
+                <div id="trk1-beatloop-arrows">
+                    <i style="margin-left: 1px;" class="bi bi-caret-up-fill"></i>
+                    <i style="display:inline-block; transform: rotate(180deg); margin-top: -2px; margin-left: 1px;"
+                        class="bi bi-caret-up-fill"></i>
+                </div>
+                <div id="trk1-loopout-btn"><i class="bi bi-arrow-90deg-left"></i></div>
+            </div>
+        </div>
+        <div id="trk1-beatjump-main-div">
+            <div id="trk1-beatjump-position">
+                <div id="trk1-beatjump-size">(...)</div>
+                <div id="trk1-beatloop-anchor">
+                    <i style="display:inline-block; transform: rotate(180deg); background: none; margin-top: 11px; padding-right: 3px;"
+                        class="bi bi-arrow-90deg-left"></i>
+                    <i style="background: none; margin-top: 3px; padding-left: 13px;" class="bi bi-lock"></i>
+                </div>
+                <div id="trk1-beatjump-arrows">
+                    <i style="margin-left: 3px;" class="bi bi-caret-up-fill"></i>
+                    <i style="display:inline-block; transform: rotate(180deg); margin-top: -2px; margin-left: 3px;"
+                        class="bi bi-caret-up-fill"></i>
+                </div>
+                <div id="trk1-beatjump-backward"><i class="bi bi-arrow-90deg-down"></i></div>
+                <div id="trk1-beatjump-forward"><i style="display:inline-block; transform: scaleX(-1);"
+                        class="bi bi-arrow-90deg-down"></i></div> <!-- curva à direita -->
+            </div>
+        </div>
+        <div id="trk1-pads-indicator">
+            <div id="trk1-pads-button"></div>
+            <div id="trk1-pads-text">PADS</div>
+            <div id="trk1-pads-circle"></div>
+        </div>
+        <div id="trk1-pads-main-div">
+            <div id="trk1-pads-position">
+                <div id="trk1-hotcues-main-button">HOTCUES</div>
+                <div id="trk1-nodes-main-button">
+                    <div></div> <!--Assemelhar estas divs às do virtual dj-->
+                    <div></div> <!--Para mais, consultar!-->
+                </div>
+                <div id="trk1-pads-btn1"><i class="bi bi-1-square"></i></div>
+                <div id="trk1-pads-btn2"><i class="bi bi-2-square"></i></div>
+                <div id="trk1-pads-btn3"><i class="bi bi-3-square"></i></div>
+                <div id="trk1-pads-btn4"><i class="bi bi-4-square"></i></div>
+                <div id="trk1-pads-btn5"><i class="bi bi-5-square"></i></div>
+                <div id="trk1-pads-btn6"><i class="bi bi-6-square"></i></div>
+                <div id="trk1-pads-btn7"><i class="bi bi-7-square"></i></div>
+                <div id="trk1-pads-btn8"><i class="bi bi-8-square"></i></div>
+            </div>
+        </div>
+        <div id="trk1-eject-btn">
+            <!--<i class="bi bi-upload"></i>-->
+            <i style="background: none; margin-top: 1px;" class="bi bi-eject-fill"></i>
+        </div>
+        <div id="trk1-jog-wheel" class="jog-wheel">
+            <div class="jog-wheel-ring"></div>
+            <div class="jog-wheel-platter">
+                <div class="jog-wheel-label"></div>
+                <div class="jog-wheel-spindle"></div>
+            </div>
+            <style> 
+                /*Jog wheel - colocar depois num ficheiro css - organizar isso mais para a frente*/
+                
+
+                #trk1-jog-wheel.jog-wheel:active {
+                    cursor: grabbing;
+                }
+
+                #trk1-jog-wheel .jog-wheel-ring {
+                    position: absolute;
+                    inset: 0;
+                    border-radius: 50%;
+                    background: radial-gradient(circle at center, #28282c 58%, #28282c 58.5%, #34343b 67%, #18181b 68%, #09090b 100%);
+                    box-shadow: inset 0 0 0 2px #5f5f6b, inset 0 0 18px rgba(0, 0, 0, 0.55), 0 8px 18px rgba(0, 0, 0, 0.35);
+                }
+
+                #trk1-jog-wheel .jog-wheel-label {
+                    position: absolute;
+                    inset: 27%;
+                    border-radius: 50%;
+                    background: radial-gradient(
+                        circle at center,
+                        #c544d6 0%,
+                        #b83ac8 38%,
+                        #8c27aa 68%,
+                        #5d237f 100%
+                    );
+                }
+
+                #trk1-jog-wheel .jog-wheel-label::before {
+                    content: '';
+                    position: absolute;
+                    top: -40%;
+                    left: 85%;
+                    width: 4px;
+                    height: 110%;
+                    transform: translateX(-50%) rotate(45deg);
+                    border-radius: 999px;
+                    background: rgba(255,255,255,0.92);
+                }
+
+                #trk1-jog-wheel .jog-wheel-spindle {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 16px;
+                    height: 16px;
+                    transform: translate(-50%, -50%);
+                    border-radius: 50%;
+                    background: radial-gradient(circle at 35% 35%, #f5f4f5 0%, #b5b5bd 45%, #6d6d75 100%);
+                    box-shadow: 0 0 8px rgba(255,255,255,0.18);
+                }
+
+                #trk1-jog-wheel.is-playing .jog-wheel-label {
+                    animation: trk1JogSpin 1.8s linear infinite;
+                }
+
+                #trk1-jog-wheel.is-scratching .jog-wheel-label,
+                #trk1-jog-wheel.is-jogging .jog-wheel-label {
+                    animation: none;
+                }
+
+                @keyframes trk1JogSpin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                </style>
+        </div>
+        <div id="trk1-cue-btn">CUE</div>
+        <div id="trk1-play-pause-btn">
+            <i style="background-color: #252525; color: #e5e5e5" class="bi bi-play-fill"></i>
+            <i style="background-color: #252525; color: #e5e5e5" class="bi bi-pause-fill"></i>
+        </div>
+        <div id="trk1-sync-btn">SYNC</div>
+        <div id="trk1-stop-btn">
+            <i style="background: none; margin-top: 1px;" class="bi bi-square-fill"></i>
+        </div>
+        <div id="trk1-separation-line-vertical"></div>
+        <div id="pitch-trk1"> <!--Pitch do primeiro deck -> da primeira música; lado A-->
+            <div id="timer-bpm1">+0.0</div>
+            <div id="timer-bpm1-black-bar"></div>
+            <div id="timer-bpm1-up-first-line"></div>
+            <div id="timer-bpm1-up-second-line"></div>
+            <div id="timer-bpm1-up-third-line"></div>
+            <div id="timer-bpm1-up-fourth-line"></div>
+            <div id="timer-bpm1-shift-btn">
+                <div id="timer-bpm1-dark-grey-line">
+                    <div id="timer-bpm1-light-grey-line"></div>
+                </div>
+            </div>
+            <div id="timer-bpm1-down-first-line"></div>
+            <div id="timer-bpm1-down-second-line"></div>
+            <div id="timer-bpm1-down-third-line"></div>
+            <div id="timer-bpm1-down-fourth-line"></div>
+        </div>
+    </div>
+    <div id="deck2">
+        <div id="second-trk-letter">B</div>
+        <section id="trk2">
+            <div id="trk2-horizontal-line"></div>
+            <div id="trk2-vertical-line"></div>
+            <section id="trk2-drop-zone">
+                <div id="trk2-loaded-music-intel">
+                    <div id="trk2-cover" style="display: none;"></div>
+                    <div>
+                        <p id="trk2-music-name" style="display: none;"></p>
+                        <p id="trk2-music-channel-name" style="display: none;"></p>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <i id="trk2-master-sync" class="bi bi-music-note-list"></i>
+        <p id="trk2-bpm">120.00</p>
+        <p id="trk2-indicator">TRK2</p>
+        <section id="trk2-scale">	
+            <p id="trk2-scale-text">(...)</p>
+            <i style="background-color: #131315;" class="bi bi-caret-left-fill"></i>
+            <p id="trk2-scale-text">ESCALA</p>
+            <i style="background-color: #131315;" class="bi bi-caret-right-fill"></i>
+        </section>
+        <div id="trk2-music-length">
+            <div id="trk2-music-length-indicator">RESTANTE</div>
+            <div id="trk2-music-length-time">3:23:00</div>
+        </div>
+        <div id="trk2-music-elapsed">
+            <div id="trk2-music-elapsed-indicator">DECORRIDO</div>
+            <div id="trk2-music-elapsed-time">0:00:00</div>
+        </div>
+        <div id="trk2-music-remaining">
+            <div id="trk2-music-remaining-indicator">DURAÇÃO</div>
+            <div id="trk2-music-remaining-time">3:23:00</div>
+        </div>
+</section> 
