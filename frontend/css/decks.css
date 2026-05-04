@@ -37,17 +37,18 @@
 #trk1-waveform {
     width: 390px;
     height: 17px;
-    background-color: #131315;
+    background: #131315;
     position: fixed;
     left: 29px;
-    top: 238px;
+    top: 247px;
     z-index: 1000;
 }
 
 /* remove fundo estranho do WaveSurfer */
 #trk1-waveform ::part(wrapper) {
-    height: 17px;
-    background: #131315;
+    height: 15px;
+    background-color: #131315;
+    transform: translateY(-10px);
 }
 
 #trk1-bpm {
