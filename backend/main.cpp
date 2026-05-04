@@ -1,3 +1,4 @@
+// Don't forget to integrate JUCE on the project! Take some time for that this week.
 #include <iostream>
 #include <string>
 
