@@ -36,7 +36,7 @@
 
 #trk1-waveform {
     width: 390px;
-    height: 17px;
+    height: 30px;
     background: #131315;
     position: fixed;
     left: 29px;
@@ -44,11 +44,14 @@
     z-index: 1000;
 }
 
-/* remove fundo estranho do WaveSurfer */
 #trk1-waveform ::part(wrapper) {
-    height: 15px;
+    height: 30px;
     background-color: #131315;
-    transform: translateY(-10px);
+}
+
+#trk1-waveform ::part(scroll) {
+    height: 30px;
+    background-color: #131315;
 }
 
 #trk1-bpm {
@@ -59,7 +62,7 @@
     left: 435px; top: 200px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px; }
 
 #trk1-master-sync:hover {
-    background-color: #131315; color: white; }
+    background-color: #131315; color: white; text: "Master Sync";}
 
 #trk1-indicator {
     background-color: #131315; color: #c83cb0; font-size: 65%; top: 219px; 

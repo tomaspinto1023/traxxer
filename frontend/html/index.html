@@ -14,7 +14,6 @@
 	- Arranjar um ícone melhor para o Master Sync:
 	- Inspirar-me no Virtual DJ para implementar todas estas mudanças:
 	- Aprender a usar melhores ícones do que aqueles que atualmente tenho e/ou tornar a app mais flexível para o utilizador:
-	- Organizar o HTML em 5 ficheiros como fiz para o css: até é mais fácil para me orientar - fazer até 1 de maio!
 ========================================================================== -->
 
 <head>
@@ -24,11 +23,19 @@
 	<title>Traxxer</title>
 	<!--Referências js-->
 	<!--<script src="../electron/main.js"></script>-->
-	<script src="../js/bootstrap.min.js"></script>
 	<script src="../../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
 	<script src="../../node_modules/jsmediatags/dist/jsmediatags.min.js"></script>
-	<script src="../js/trk1player.js"></script>
-	<script src="../js/uploadtracks.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/loadPartials.js"></script>
+	<!--
+	<script src="../../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
+	<script src="../../node_modules/jsmediatags/dist/jsmediatags.min.js"></script>
+	<script src="../js/decks/trk1/trk1state.js"></script>
+	<script src="../js/decks/trk1/trk1jogwheel.js"></script>
+	<script src="../js/decks/trk1/trk1bpm.js"></script>
+	<script src="../js/decks/trk1/trk1time.js"></script>
+	<script src="../js/decks/trk1/trk1load.js"></script>
+	<script src="../js/decks/trk1/trk1init.js"></script>-->
 	<style>
 		/* Remove TODAS as scrollbars do Chromium/Electron, de modo a permitir um design mais limpo quando colocado em full screen */
 		::-webkit-scrollbar {
@@ -49,11 +56,5 @@
   <div data-include="./partials/middledeck.html"></div>
   <div data-include="./partials/library.html"></div>
   <div data-include="./partials/alonecomponents.html"></div>
-
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
-  <script src="../../node_modules/jsmediatags/dist/jsmediatags.min.js"></script>
-
-  <script src="../js/loadPartials.js"></script>
 </body>
 </html>

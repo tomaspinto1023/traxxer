@@ -19,18 +19,35 @@ async function loadPartials() {
     }
   }
 
-  await loadScript('../js/trk1player.js');
-  await loadScript('../js/uploadtracks.js');
+  await loadScriptOnce('../js/decks/trk1/trk1state.js');
+  await loadScriptOnce('../js/decks/trk1/trk1jogwheel.js');
+  await loadScriptOnce('../js/decks/trk1/trk1bpm.js');
+  await loadScriptOnce('../js/decks/trk1/trk1time.js');
+  await loadScriptOnce('../js/decks/trk1/trk1load.js');
+  await loadScriptOnce('../js/decks/trk1/trk1init.js');
 
   document.dispatchEvent(new Event('traxxer:partials-loaded'));
 }
 
-function loadScript(src) {
+function loadScriptOnce(src) {
   return new Promise((resolve, reject) => {
+    const scriptId = `script-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
+
+    if (document.getElementById(scriptId)) {
+      resolve();
+      return;
+    }
+
     const script = document.createElement('script');
+    script.id = scriptId;
     script.src = src;
+
     script.onload = resolve;
-    script.onerror = reject;
+
+    script.onerror = () => {
+      reject(new Error(`Erro ao carregar script: ${src}`));
+    };
+
     document.body.appendChild(script);
   });
 }
