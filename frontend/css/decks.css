@@ -21,7 +21,7 @@
 
 #trk1-cover {
     width: 36px; height: 32px; position: fixed; background-position: center; background-repeat: no-repeat;
-    background-color: #2f2f2f; left: 38px; top: 203px; border: 1px solid #5f5f5f; }
+    background-color: #2f2f2f; left: 35px; top: 203px; border: 1px solid #5f5f5f; }
 
 #trk1-drop-zone.drag-over {
     outline: 2px dashed #e5e5e5; }
@@ -35,24 +35,11 @@
     color: #ffffff; font-size: 77%; font-family: Arial, Helvetica, sans-serif; }
 
 #trk1-waveform {
-    width: 390px;
-    height: 30px;
-    background: #131315;
-    position: fixed;
-    left: 29px;
-    top: 247px;
-    z-index: 1000;
-}
+    width: 390px; height: 30px; background: #131315; position: fixed; left: 29px; top: 247px; z-index: 1000;}
 
-#trk1-waveform ::part(wrapper) {
-    height: 30px;
-    background-color: #131315;
-}
+#trk1-waveform ::part(wrapper) { height: 30px; background-color: #131315; }
 
-#trk1-waveform ::part(scroll) {
-    height: 30px;
-    background-color: #131315;
-}
+#trk1-waveform ::part(scroll) { height: 30px; background-color: #131315; }
 
 #trk1-bpm {
     background-color: #131315; left: 470px; top: 168px; position: fixed; width: 16px; height: 10px; 
