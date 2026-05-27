@@ -39,16 +39,14 @@ function initTrack1() {
   console.log('playPauseBtn:', elements.playPauseBtn);
 
   if (!areTrack1ElementsValid(elements)) {
-    console.warn('Elementos do deck 1 não encontrados. A lógica de upload da faixa não foi inicializada.');
+    console.warn('Elementos do deck 1 não encontrados.');
     return;
   }
 
-  createTrack1WaveSurfer();
+  createTrack1WaveSurfer(elements.playIcon, elements.pauseIcon); // ← usa elements diretamente
 
   setupTrack1JogWheel(elements.jogWheel);
-
   setPlayPauseVisual(false, elements.playIcon, elements.pauseIcon);
-
   setupTrack1DropZone(elements);
   setupTrack1TransportControls(elements);
   setupTrack1WaveSurferEvents(elements);
@@ -72,7 +70,7 @@ function getTrack1Elements() {
     playIcon: playPauseBtn?.querySelector('.bi-play-fill'),
     pauseIcon: playPauseBtn?.querySelector('.bi-pause-fill'),
     stopBtn: document.getElementById('trk1-stop-btn'),
-    cueBtn: document.getElementById('trk1-cue-btn'),
+    cueBtn: document.getElementById('trk1-cue-btn'), 
     jogWheel: document.getElementById('trk1-jog-wheel'),
     bpmText: document.getElementById('trk1-bpm'),
     elapsedTimeText: document.getElementById('trk1-music-elapsed-time'),
@@ -93,4 +91,25 @@ function areTrack1ElementsValid(elements) {
     elements.cueBtn &&
     elements.jogWheel
   );
+}
+
+function setupTrack1WaveSurferEvents(elements) {
+  const { elapsedTimeText, remainingTimeText, jogWheel } = elements;
+
+  trk1WaveSurfer.on('audioprocess', () => {
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  });
+
+  trk1WaveSurfer.on('seek', () => {
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  });
+
+  trk1WaveSurfer.on('play', () => {
+    startTrack1JogWheelSync(jogWheel);
+  });
+
+  trk1WaveSurfer.on('pause', () => {
+    stopTrack1JogWheelSync();
+    updateTrack1JogWheelFromAudio(jogWheel);
+  });
 }

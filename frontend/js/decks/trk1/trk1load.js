@@ -1,6 +1,6 @@
 // Lógica de carregamento, waveform, cue, stop e eject da Track 1
 
-function createTrack1WaveSurfer() {
+function createTrack1WaveSurfer(playIcon, pauseIcon) {
   trk1WaveSurfer = WaveSurfer.create({
     container: '#trk1-waveform',
     waveColor: '#dbdbdb',
@@ -9,6 +9,14 @@ function createTrack1WaveSurfer() {
     height: 30,
     barWidth: 2,
     barGap: 1,
+  });
+
+  trk1WaveSurfer.on('play', () => {
+    setPlayPauseVisual(true, playIcon, pauseIcon);
+  });
+
+  trk1WaveSurfer.on('pause', () => {
+    setPlayPauseVisual(false, playIcon, pauseIcon);
   });
 
   return trk1WaveSurfer;
