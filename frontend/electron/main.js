@@ -1,6 +1,6 @@
 //Ficheiro principal do Electron -> responsável por inicializar e correr aplicação
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
@@ -97,6 +97,25 @@ function stopBackend() {
     backendProcess = null;
   }
 }
+
+ipcMain.handle('open-folder', async () => {
+  const result = await dialog.showOpenDialog(win, {
+    properties: ['openDirectory']
+  });
+  return result.canceled ? null : result.filePaths[0];
+});
+
+ipcMain.handle('read-folder', async (_, folderPath) => {
+  const extensions = ['.mp3', '.wav', '.flac', '.ogg', '.aac', '.m4a'];
+  const files = fs.readdirSync(folderPath);
+  return files
+    .filter(f => extensions.includes(path.extname(f).toLowerCase()))
+    .map(f => ({
+      name: path.basename(f, path.extname(f)),
+      ext: path.extname(f),
+      fullPath: path.join(folderPath, f),
+    }));
+});
 
 app.whenReady().then(() => {
   startBackend();

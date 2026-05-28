@@ -1,3 +1,72 @@
+//Jog wheel da trk 1
+
+// Audio do scratch
+
+let trk1ScratchAudioCtx = null;
+let trk1ScratchBufferSource = null;
+let trk1ScratchGain = null;
+let trk1ScratchAudioBuffer = null; // buffer do MP3 decodificado
+let trk1ScratchAudioLoaded = false;
+
+async function initTrack1ScratchSound() {
+  trk1ScratchAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  trk1ScratchGain = trk1ScratchAudioCtx.createGain();
+  trk1ScratchGain.gain.value = 0;
+  trk1ScratchGain.connect(trk1ScratchAudioCtx.destination);
+
+  try {
+    const response = await fetch('../assets/audios/scratch.mp3');
+    const arrayBuffer = await response.arrayBuffer();
+    trk1ScratchAudioBuffer = await trk1ScratchAudioCtx.decodeAudioData(arrayBuffer);
+    trk1ScratchAudioLoaded = true;
+  } catch (err) {
+    console.warn('Erro ao carregar o áudio do scratch:', err);
+  }
+}
+
+function startTrack1ScratchSound() {
+  if (!trk1ScratchAudioCtx) return;
+  if (!trk1ScratchAudioLoaded) return;
+  if (trk1ScratchAudioCtx.state === 'suspended') trk1ScratchAudioCtx.resume();
+  if (trk1ScratchBufferSource) return;
+
+  trk1ScratchBufferSource = trk1ScratchAudioCtx.createBufferSource();
+  trk1ScratchBufferSource.buffer = trk1ScratchAudioBuffer; // usa o MP3 decodificado
+  trk1ScratchBufferSource.loop = true;
+  trk1ScratchBufferSource.playbackRate.value = 1;
+  trk1ScratchBufferSource.connect(trk1ScratchGain);
+  trk1ScratchBufferSource.start();
+}
+
+function stopTrack1ScratchSound() {
+  if (!trk1ScratchBufferSource) return;
+
+  // Fade out rápido para evitar click audível
+  trk1ScratchGain.gain.setTargetAtTime(0, trk1ScratchAudioCtx.currentTime, 0.04);
+
+  setTimeout(() => {
+    trk1ScratchBufferSource?.stop();
+    trk1ScratchBufferSource?.disconnect();
+    trk1ScratchBufferSource = null;
+  }, 150);
+}
+
+function updateTrack1ScratchSound(angleDelta, timeDeltaMs) {
+  if (!trk1ScratchBufferSource || !trk1ScratchGain) return;
+
+  const speed = Math.abs(angleDelta) / Math.max(timeDeltaMs, 1);
+
+  // Volume proporcional à velocidade do arrasto
+  const targetGain = Math.min(speed * 18, 0.9);
+  trk1ScratchGain.gain.setTargetAtTime(targetGain, trk1ScratchAudioCtx.currentTime, 0.02);
+
+  // Pitch: varia com velocidade e direção do arrasto
+  const direction = angleDelta >= 0 ? 1 : -1;
+  const rate = Math.min(Math.max(speed * 6, 0.3), 4.0);
+  trk1ScratchBufferSource.playbackRate.value = rate * direction;
+}
+
 // Lógica da jog wheel da Track 1
 
 function setupTrack1JogWheel(jogWheel) {
@@ -33,6 +102,7 @@ function setupTrack1JogWheel(jogWheel) {
 
     if (mode === 'scratch') {
       jogWheel.classList.add('is-scratching');
+      startTrack1ScratchSound(); // ← inicia som de scratch
 
       if (trk1WaveSurfer.isPlaying()) {
         trk1WaveSurfer.pause();
@@ -62,7 +132,7 @@ function setupTrack1JogWheel(jogWheel) {
     trk1JogData.lastMoveTime = now;
 
     if (trk1JogData.mode === 'scratch') {
-      applyTrack1Scratch(angleDelta);
+      applyTrack1Scratch(angleDelta, timeDeltaMs); // passa timeDeltaMs para o som
       setTrack1JogWheelRotation(jogWheel, trk1JogVisualRotation + angleDelta);
       return;
     }
@@ -78,6 +148,7 @@ function setupTrack1JogWheel(jogWheel) {
 
     if (trk1JogData.mode === 'scratch') {
       jogWheel.classList.remove('is-scratching');
+      stopTrack1ScratchSound(); // ← para o som de scratch
 
       if (trk1JogData.wasPlayingBeforeScratch) {
         trk1JogData.scratchResumeTimeout = setTimeout(() => {
@@ -106,6 +177,7 @@ function setupTrack1JogWheel(jogWheel) {
     if (event.pointerId !== trk1JogData.pointerId) return;
 
     jogWheel.classList.remove('is-scratching', 'is-jogging');
+    stopTrack1ScratchSound(); // ← para o som se o pointer for perdido
     resetTrack1JogPlaybackRate();
 
     trk1JogData.isActive = false;
@@ -146,9 +218,11 @@ function normalizeTrack1AngleDelta(delta) {
   return delta;
 }
 
-function applyTrack1Scratch(angleDelta) {
+function applyTrack1Scratch(angleDelta, timeDeltaMs) {
   if (!trk1WaveSurfer) return;
   if (!trk1HasLoadedTrack) return;
+
+  updateTrack1ScratchSound(angleDelta, timeDeltaMs); // ← atualiza pitch/volume do som
 
   const duration = trk1WaveSurfer.getDuration();
   const currentTime = trk1WaveSurfer.getCurrentTime();
@@ -284,6 +358,9 @@ function resetTrack1JogWheel(jogWheel) {
   trk1JogData.mode = null;
   trk1JogData.pointerId = null;
 
+  stopTrack1ScratchSound(); // ← garante que o som para no reset
   resetTrack1JogPlaybackRate();
-  trk1JogVisualRotation = 0;
+    trk1JogVisualRotation = 0;
 }
+
+initTrack1ScratchSound();
