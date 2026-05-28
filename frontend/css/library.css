@@ -57,3 +57,163 @@
 .footer {
     width: 100%; height: 21px; background: #363636; border: 1px solid #1A1A1A;  bottom: 0; left: 0; position: absolute;}
 
+#folder-open-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    color: #b0b0b0;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #1a1a1a;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+ 
+#folder-open-btn:hover {
+    background-color: #161616;
+}
+ 
+#folder-open-btn i {
+    font-size: 12px;
+    color: #888;
+    flex-shrink: 0;
+}
+ 
+/* Cabeçalho da tabela */
+#library-header-row {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    background-color: #111111;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 0 8px;
+    flex-shrink: 0;
+}
+ 
+#library-header-row span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+ 
+/* Lista scrollável */
+#library-track-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
+    height: calc(335px - 20px);
+}
+ 
+#library-track-list::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+#library-track-list::-webkit-scrollbar-track {
+    background: #0f0f0f;
+}
+ 
+#library-track-list::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 2px;
+}
+ 
+#library-track-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+ 
+/* Linha de música */
+.library-track-row {
+    display: flex;
+    align-items: center;
+    height: 23px;
+    padding: 0 8px;
+    cursor: grab;
+    border-bottom: 1px solid #111;
+    flex-shrink: 0;
+}
+ 
+.library-track-row:nth-child(even) {
+    background-color: #161616;
+}
+ 
+.library-track-row:nth-child(odd) {
+    background-color: #121212;
+}
+ 
+.library-track-row:hover {
+    background-color: #1f1f1f;
+}
+ 
+.library-track-row.selected {
+    background-color: #1e1e2e;
+    border-left: 2px solid #9a3fbf;
+}
+ 
+.library-track-row.is-dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+ 
+/* Colunas — proporções idênticas à referência */
+.lib-col-title {
+    flex: 1;
+    font-size: 12px;
+    color: #cccccc;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+ 
+.lib-col-title i {
+    color: #555;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+ 
+.lib-col-artist {
+    width: 200px;
+    font-size: 12px;
+    color: #888;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    padding-right: 8px;
+}
+ 
+.lib-col-ext {
+    width: 60px;
+    font-size: 11px;
+    color: #666;
+    text-align: right;
+    flex-shrink: 0;
+}
+ 
+/* Mensagem de pasta vazia */
+#library-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 12px;
+    color: #444;
+    font-style: italic;
+}
+ 
+/* Highlight do deck ao fazer dragover */
+#trk1-drop-zone.drag-over {
+    outline: 1px solid #9a3fbf;
+    background-color: rgba(154, 63, 191, 0.05);
+}

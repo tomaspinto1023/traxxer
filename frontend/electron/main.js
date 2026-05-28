@@ -45,6 +45,12 @@ function createWindow() {
   win.on('leave-full-screen', () => {
     win.webContents.send('layout-change', 'normal');
   });
+
+  win.webContents.on('will-navigate', (e) => e.preventDefault());
+
+  win.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
+    callback(true);
+  });
 }
 
 function startBackend() {
@@ -85,8 +91,9 @@ function startBackend() {
   });
 
   ipcMain.on('send-to-backend', (_, message) => {
-  if (backendProcess && backendProcess.stdin.writable) {
-    backendProcess.stdin.write(message + '\n'); }
+    if (backendProcess && backendProcess.stdin.writable) {
+      backendProcess.stdin.write(message + '\n');
+    }
   });
 }
 
@@ -97,6 +104,8 @@ function stopBackend() {
     backendProcess = null;
   }
 }
+
+// ── IPC handlers ─────────────────────────────────────────────
 
 ipcMain.handle('open-folder', async () => {
   const result = await dialog.showOpenDialog(win, {
@@ -116,6 +125,13 @@ ipcMain.handle('read-folder', async (_, folderPath) => {
       fullPath: path.join(folderPath, f),
     }));
 });
+
+ipcMain.handle('read-file-buffer', async (_, filePath) => {
+  const buffer = fs.readFileSync(filePath);
+  return buffer;
+});
+
+// ─────────────────────────────────────────────────────────────
 
 app.whenReady().then(() => {
   startBackend();

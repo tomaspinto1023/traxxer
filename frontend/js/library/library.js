@@ -29,7 +29,6 @@ function createTrackRow(track) {
     <span class="lib-col-ext">${track.ext.replace('.', '').toUpperCase()}</span>
   `;
 
-  // Drag and drop para os decks
   row.addEventListener('dragstart', (e) => {
     e.dataTransfer.setData('text/plain', track.fullPath);
     e.dataTransfer.setData('track-name', track.name);
@@ -40,7 +39,6 @@ function createTrackRow(track) {
     row.classList.remove('is-dragging');
   });
 
-  // Highlight ao hover
   row.addEventListener('click', () => {
     document.querySelectorAll('.library-track-row').forEach(r => r.classList.remove('selected'));
     row.classList.add('selected');
@@ -78,11 +76,46 @@ folderOpenBtn.addEventListener('dblclick', async () => {
   const folderPath = await window.electronAPI.openFolder();
   if (!folderPath) return;
 
-  // Mostra o nome da pasta no botão
   const folderName = folderPath.split(/[\\/]/).pop();
   folderOpenBtn.querySelector('span').textContent = folderName;
   folderOpenBtn.title = folderPath;
 
   const tracks = await window.electronAPI.readFolder(folderPath);
   renderLibraryTracks(tracks);
+});
+
+// ── Drop zone do deck 1 ───────────────────────────────────────
+
+const trk1DropZone = document.getElementById('trk1-drop-zone');
+
+trk1DropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  trk1DropZone.classList.add('drag-over');
+});
+
+trk1DropZone.addEventListener('dragleave', () => {
+  trk1DropZone.classList.remove('drag-over');
+});
+
+trk1DropZone.addEventListener('drop', async (e) => {
+  e.preventDefault();
+  trk1DropZone.classList.remove('drag-over');
+
+  // Drop de ficheiro externo (Windows Explorer)
+  if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    const file = e.dataTransfer.files[0];
+    if (!file.name.toLowerCase().match(/\.(mp3|wav|flac|ogg|aac|m4a)$/)) return;
+    loadTrack1File(file, getTrack1Elements());
+    return;
+  }
+
+  // Drop interno da biblioteca
+  const filePath = e.dataTransfer.getData('text/plain');
+  if (!filePath) return;
+
+  const buffer = await window.electronAPI.readFileAsBuffer(filePath);
+  const fileName = filePath.split(/[\\/]/).pop();
+  const file = new File([buffer], fileName, { type: 'audio/mpeg' });
+
+  loadTrack1File(file, getTrack1Elements());
 });
