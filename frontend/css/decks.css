@@ -57,9 +57,9 @@
 
 #trk1-scale {
     display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: 1%;
-    position: fixed; left: 500px; top: 229px; font-size: 70%; background-color: #131315; }
+    position: fixed; left: 494px; top: 229px; font-size: 70%; background-color: #131315; }
 
-#trk1-scale-text { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
+#trk1-scale-text, #trk1-scale-itself { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
 
 #trk1-music-elapsed {
     width: 36px; height: 24px; position: fixed; background-color: #131315; left: 428px; top: 251px; }

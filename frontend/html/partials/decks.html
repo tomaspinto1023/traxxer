@@ -23,7 +23,7 @@
                 <i style="background-color: #131315;" class="bi bi-caret-left-fill"></i>
                 <p id="trk1-scale-text">ESCALA</p>
                 <i style="background-color: #131315;" class="bi bi-caret-right-fill"></i>
-                <p id="trk1-scale-text">(...)</p>
+                <p id="trk1-scale-itself"></p>
             </div>
             <div id="trk1-music-elapsed"> <!--Seção de exibição do tempo decorrido da música da track 1-->
                 <div id="trk1-music-elapsed-indicator"></div>
@@ -208,38 +208,32 @@
 
                 #trk1-jog-wheel .jog-wheel-label {
                     position: absolute;
-                    inset: 27%;
+                    inset: 28%;
                     border-radius: 50%;
-                    background: radial-gradient(
-                        circle at center,
-                        #c544d6 0%,
-                        #b83ac8 38%,
-                        #8c27aa 68%,
-                        #5d237f 100%
-                    );
+                    background: #09090b;
                 }
 
                 #trk1-jog-wheel .jog-wheel-label::before {
                     content: '';
                     position: absolute;
-                    top: -40%;
-                    left: 85%;
+                    top: -44%;
                     width: 4px;
-                    height: 110%;
+                    height: 120%;
+                    left: 85%;
                     transform: translateX(-50%) rotate(45deg);
-                    border-radius: 999px;
-                    background: rgba(255,255,255,0.92);
+                    border-radius: 1px;
+                    background: rgba(179, 42, 234, 0.92);
                 }
 
                 #trk1-jog-wheel .jog-wheel-spindle {
                     position: absolute;
                     top: 50%;
                     left: 50%;
-                    width: 16px;
-                    height: 16px;
+                    width: 14px;
+                    height: 14px;
                     transform: translate(-50%, -50%);
                     border-radius: 50%;
-                    background: radial-gradient(circle at 35% 35%, #f5f4f5 0%, #b5b5bd 45%, #6d6d75 100%);
+                    background: #b5b5bd;
                     box-shadow: 0 0 8px rgba(255,255,255,0.18);
                 }
 

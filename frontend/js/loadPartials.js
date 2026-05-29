@@ -21,7 +21,7 @@ async function loadPartials() {
 
   await loadScriptOnce('../js/decks/trk1/trk1state.js');
   await loadScriptOnce('../js/decks/trk1/trk1jogwheel.js');
-  await loadScriptOnce('../js/decks/trk1/trk1bpm.js');
+  await loadScriptOnce('../js/decks/trk1/trk1bpmandscale.js');
   await loadScriptOnce('../js/decks/trk1/trk1time.js');
   await loadScriptOnce('../js/decks/trk1/trk1load.js');
   await loadScriptOnce('../js/decks/trk1/trk1init.js');
