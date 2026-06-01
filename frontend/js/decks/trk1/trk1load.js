@@ -27,7 +27,7 @@ function getTrack1WaveSurfer() {
 }
 
 function loadTrack1File(file, elements) {
-  const { cover, musicName, channelName, bpmText, playIcon, pauseIcon } = elements;
+  const { cover, musicName, channelName, bpmText, scaleText, playIcon, pauseIcon } = elements;
 
   trk1LoadId++;
   const currentLoadId = trk1LoadId;
@@ -52,6 +52,10 @@ function loadTrack1File(file, elements) {
     bpmText.style.left = '470px';
   }
 
+  if (scaleText) {
+    scaleText.textContent = ''; 
+  }
+
   cover.style.backgroundImage = '';
   cover.style.backgroundSize = 'cover';
   cover.style.backgroundPosition = 'center';
@@ -65,6 +69,9 @@ function loadTrack1File(file, elements) {
 
       console.log('Metadata completa:', tags);
 
+      const artist = tags.artist || '';
+      const title = tags.title || file.name;
+
       const metadataBpm = getTrack1BpmFromTags(tags);
 
       if (metadataBpm) {
@@ -76,13 +83,16 @@ function loadTrack1File(file, elements) {
         detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
       }
 
-      if (tags.title) {
-        musicName.textContent = tags.title;
+      const metadataScale = getTrack1ScaleFromTags(tags);
+
+      if (metadataScale) {
+        if (scaleText) scaleText.textContent = metadataScale;
+      } else {
+        detectAndShowTrack1Scale(file, scaleText, currentLoadId, artist, title);
       }
 
-      if (tags.artist) {
-        channelName.textContent = tags.artist;
-      }
+      if (tags.title) musicName.textContent = tags.title;
+      if (tags.artist) channelName.textContent = tags.artist;
 
       if (tags.picture) {
         const { data, format } = tags.picture;
@@ -93,14 +103,13 @@ function loadTrack1File(file, elements) {
         }
 
         const base64String = window.btoa(binaryString);
-        const imageUrl = `data:${format};base64,${base64String}`;
-
-        cover.style.backgroundImage = `url("${imageUrl}")`;
+        cover.style.backgroundImage = `url("data:${format};base64,${base64String}")`;
       }
     },
     onError: (error) => {
       console.log('Erro ao ler metadata da faixa:', error);
       detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
+      detectAndShowTrack1Scale(file, scaleText, currentLoadId, '', file.name);
     }
   });
 
@@ -132,6 +141,7 @@ function setupTrack1DropZone(elements) {
     musicName,
     channelName,
     bpmText,
+    scaleText,
     playIcon,
     pauseIcon
   } = elements;
@@ -165,6 +175,7 @@ function setupTrack1DropZone(elements) {
       musicName,
       channelName,
       bpmText,
+      scaleText,
       playIcon,
       pauseIcon
     });
@@ -216,6 +227,7 @@ function ejectTrack1(elements, jogWheel) {
     musicName,
     channelName,
     bpmText,
+    scaleText,
     playIcon,
     pauseIcon
   } = elements;
@@ -249,6 +261,10 @@ function ejectTrack1(elements, jogWheel) {
 
   if (bpmText) {
     bpmText.textContent = '';
+  }
+
+  if (scaleText) {
+    scaleText.textContent = ''; 
   }
 
   cover.style.backgroundImage = '';

@@ -73,6 +73,7 @@ function getTrack1Elements() {
     cueBtn: document.getElementById('trk1-cue-btn'), 
     jogWheel: document.getElementById('trk1-jog-wheel'),
     bpmText: document.getElementById('trk1-bpm'),
+    scaleText: document.getElementById('trk1-scale-itself'),
     elapsedTimeText: document.getElementById('trk1-music-elapsed-time'),
     remainingTimeText: document.getElementById('trk1-music-remaining-time')
   };

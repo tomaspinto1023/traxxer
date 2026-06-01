@@ -20,4 +20,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFolder: () => ipcRenderer.invoke('open-folder'),
   readFolder: (folderPath) => ipcRenderer.invoke('read-folder', folderPath),
   readFileAsBuffer: (filePath) => ipcRenderer.invoke('read-file-buffer', filePath),
+  getSpotifyScale: (artist, title) => ipcRenderer.invoke('get-spotify-scale', artist, title),
+  analyzeScaleLocal: (arrayBuffer) => ipcRenderer.invoke('analyze-scale-local', arrayBuffer),
 });
