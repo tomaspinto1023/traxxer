@@ -7,6 +7,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     return () => ipcRenderer.removeListener('layout-change', subscription);
   },
 
+  setWindowSize: (size) => ipcRenderer.send('set-window-size', size),
+  getWindowSize: ()     => ipcRenderer.invoke('get-window-size'),
+
   sendToBackend: (message) => {
     ipcRenderer.send('send-to-backend', message);
   },
@@ -17,9 +20,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
     return () => ipcRenderer.removeListener('backend-message', subscription);
   },
 
-  openFolder: () => ipcRenderer.invoke('open-folder'),
-  readFolder: (folderPath) => ipcRenderer.invoke('read-folder', folderPath),
-  readFileAsBuffer: (filePath) => ipcRenderer.invoke('read-file-buffer', filePath),
-  getSpotifyScale: (artist, title) => ipcRenderer.invoke('get-spotify-scale', artist, title),
+  openFolder:       () => ipcRenderer.invoke('open-folder'),
+  readFolder:       (folderPath)   => ipcRenderer.invoke('read-folder', folderPath),
+  readFileAsBuffer: (filePath)     => ipcRenderer.invoke('read-file-buffer', filePath),
+  getSpotifyScale:  (artist, title) => ipcRenderer.invoke('get-spotify-scale', artist, title),
   analyzeScaleLocal: (arrayBuffer) => ipcRenderer.invoke('analyze-scale-local', arrayBuffer),
+  minimizeWindow: () => ipcRenderer.send('minimize-window'),
+  closeWindow:    () => ipcRenderer.send('close-window'),
 });

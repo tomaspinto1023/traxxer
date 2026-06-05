@@ -43,7 +43,11 @@ function initTrack1() {
     return;
   }
 
-  createTrack1WaveSurfer(elements.playIcon, elements.pauseIcon); // ← usa elements diretamente
+  createTrack1WaveSurfer(elements.playIcon, elements.pauseIcon);
+  
+  trk1WaveSurfer.once('ready', () => {
+    initTrack1Pitch(trk1WaveSurfer);
+  });
 
   setupTrack1JogWheel(elements.jogWheel);
   setPlayPauseVisual(false, elements.playIcon, elements.pauseIcon);

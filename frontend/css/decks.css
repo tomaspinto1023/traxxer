@@ -49,7 +49,7 @@
     left: 435px; top: 200px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px; }
 
 #trk1-master-sync:hover {
-    background-color: #131315; color: white; text: "Master Sync";}
+    background-color: #131315; color: white; /* text: "Master Sync"; */}
 
 #trk1-indicator {
     background-color: #131315; color: #c83cb0; font-size: 65%; top: 219px; 
@@ -57,7 +57,7 @@
 
 #trk1-scale {
     display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: 1%;
-    position: fixed; left: 494px; top: 229px; font-size: 70%; background-color: #131315; }
+    position: fixed; left: 492px; top: 229px; font-size: 70%; background-color: #131315; }
 
 #trk1-scale-text, #trk1-scale-itself { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
 

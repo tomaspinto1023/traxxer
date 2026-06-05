@@ -26,6 +26,7 @@ async function loadPartials() {
   await loadScriptOnce('../js/decks/trk1/trk1load.js');
   await loadScriptOnce('../js/decks/trk1/trk1init.js');
   await loadScriptOnce('../js/library/library.js');
+  await loadScriptOnce('../js/decks/trk1/trk1pitch.js');
 
   document.dispatchEvent(new Event('traxxer:partials-loaded'));
 }

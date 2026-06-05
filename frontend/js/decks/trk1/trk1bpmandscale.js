@@ -200,33 +200,42 @@ function getTrack1ScaleFromTags(tags) {
 async function detectAndShowTrack1Scale(file, scaleText, loadId, artist, title) {
   if (!scaleText) return;
 
+  console.log('detectAndShowTrack1Scale chamado:', { artist, title });
   scaleText.textContent = '...';
 
   try {
-    // 1. Spotify
+    console.log('A chamar Spotify...');
     const spotifyScale = await window.electronAPI.getSpotifyScale(artist, title);
+    console.log('Spotify resultado:', spotifyScale);
 
     if (loadId !== trk1LoadId) return;
     if (!trk1HasLoadedTrack) return;
 
     if (spotifyScale) {
       scaleText.textContent = spotifyScale;
+      onTrack1ScaleDetected(spotifyScale, null);
       return;
     }
 
-    // 2. Fallback: backend C++
+    console.log('A chamar backend C++...');
     const arrayBuffer = await file.arrayBuffer();
+    console.log('ArrayBuffer obtido, tamanho:', arrayBuffer.byteLength);
     const localScale = await window.electronAPI.analyzeScaleLocal(arrayBuffer);
+    console.log('Backend resultado:', localScale);
 
     if (loadId !== trk1LoadId) return;
     if (!trk1HasLoadedTrack) return;
 
-    scaleText.textContent = localScale || '--';
+    if (localScale) {
+      scaleText.textContent = localScale;
+      onTrack1ScaleDetected(localScale, spotifyScale);
+    } else {
+      scaleText.textContent = '--';
+    }
+
   } catch (error) {
     console.log('Erro ao detetar escala:', error);
-
     if (loadId !== trk1LoadId) return;
-
     scaleText.textContent = '--';
   }
 }
