@@ -1,2 +1,3 @@
 # Ignorar dependências e builds
 node_modules/
+env/

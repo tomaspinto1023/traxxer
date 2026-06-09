@@ -12,40 +12,162 @@
   <script src="../../node_modules/essentia.js/dist/essentia.js-core.js"></script>
   <script src="../js/loadPartials.js"></script>
   <style>
+    :root {
+      --branco: #fefefe; --preto: #191919; --cinzento: #575757; --cor-fundo: #2c2c2c;
+      --header: #3B3B3B; --waveform: #191818; --mechanical: #232323;
+    }
+
+    * { background-color: var(--cor-fundo); cursor: default; }
+
     ::-webkit-scrollbar { display: none; }
 
-    /* Titlebar personalizada */
+    body { margin-top: 32px; }
+
+    /* ── TITLEBAR ─────────────────────────────────────────── */
     #titlebar {
       -webkit-app-region: drag;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       height: 32px;
-      background: #1a1a2e;
+      background: var(--header);
       padding: 0 8px;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 9999;
+      gap: 6px;
+      border-bottom: 1px solid #727272;
     }
 
-    #app-title {
-      font-size: 13px;
-      color: #aaa;
-      font-family: sans-serif;
-    }
+    #titlebar * { background: transparent; }
 
-    #size-controls,
-    #window-controls {
+    /* Logo */
+    #tb-logo img {
+      height: 110px; 
+      margin-left: -15px;
+      margin-top: 2px;
+      width: 120px;  
+      display: block;
+    }
+    
+    /* Botões pill (criar conta, no ar, rec, definições) */
+    .tb-pill {
       -webkit-app-region: no-drag;
       display: flex;
+      align-items: center;
       gap: 4px;
+      height: 20px;
+      background: var(--cor-fundo) !important;
+      border-radius: 2px;
+      padding: 0 7px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .tb-pill i { font-size: 11px; color: #aaa; background: transparent; }
+    .tb-pill span { font-size: 10px; color: #aaa; font-family: 'Inter', sans-serif;
+                    letter-spacing: 0.4px; font-weight: 400; background: transparent; }
+
+    .tb-pill:hover i, .tb-pill:hover span { color: #fff; }
+    .tb-pill.active i { color: #b44fc8; }
+    #tb-rec.active i  { color: #e03c3c; }
+
+    /* CPU bar */
+    #tb-cpu {
+      -webkit-app-region: no-drag;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      height: 20px;
+      background: var(--cor-fundo) !important;
+      border-radius: 2px;
+      padding: 0 7px;
+      flex-shrink: 0;
+    }
+
+    #tb-cpu span { font-size: 10px; color: #aaa; font-family: 'Inter', sans-serif;
+                   letter-spacing: 0.4px; background: transparent; }
+
+    .tb-cpu-bar {
+      width: 40px; height: 6px;
+      background: #444 !important;
+      border: 1px solid var(--preto);
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Mantém o padrão listrado do .bar original quando vazio */
+    .tb-cpu-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to right,
+        var(--header), var(--header) 4px,
+        var(--preto)   4px, var(--preto) 5px
+      );
+    }
+
+    .tb-cpu-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 0%;
+      background: #b44fc8 !important;
+      border-radius: 1px;
+      transition: width 0.5s;
+      z-index: 1;
+    }
+
+    /* Relógio */
+    #tb-time {
+      -webkit-app-region: no-drag;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 20px;
+      background: var(--cor-fundo) !important;
+      border-radius: 2px;
+      padding: 0 7px;
+      flex-shrink: 0;
+    }
+
+    #tb-clock {
+      font-size: 11px;
+      color: #aaa;
+      font-family: monospace;
+      letter-spacing: 1px;
+      background: transparent;
+    }
+
+    #tb-time i { font-size: 11px; color: #888; background: transparent; cursor: pointer; }
+    #tb-time i:hover { color: #fff; }
+
+    /* Profile */
+    #tb-profile {
+      -webkit-app-region: no-drag;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      cursor: pointer;
+    }
+
+    #tb-profile i { font-size: 16px; color: #888; background: transparent; }
+    #tb-profile i:hover { color: #fff; }
+
+    /* Empurra extras para a direita */
+    #tb-spacer { flex: 1; }
+
+    /* Size + window controls */
+    #size-controls, #window-controls {
+      -webkit-app-region: no-drag;
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
     }
 
     #titlebar button {
       -webkit-app-region: no-drag;
-      background: transparent;
+      background: transparent !important;
       border: none;
       color: #aaa;
       cursor: pointer;
@@ -54,20 +176,8 @@
       border-radius: 4px;
     }
 
-    #titlebar button:hover {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-    }
-
-    .size-btn.active {
-      color: #fff;
-      background: rgba(255,255,255,0.15);
-    }
-
-    /* Empurra o conteúdo para baixo da titlebar */
-    body {
-      margin-top: 32px;
-    }
+    #titlebar button:hover { background: rgba(255,255,255,0.1) !important; color: #fff; }
+    .size-btn.active       { color: #fff; background: rgba(255,255,255,0.15) !important; }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="../css/header-waveforms.css">
@@ -77,29 +187,99 @@
 </head>
 <body>
   <div id="titlebar">
-    <span id="app-title">Traxxer</span>
-    <div id="size-controls">
-      <button class="size-btn" data-size="small"  title="Compacto">⊡</button>
-      <button class="size-btn" data-size="medium" title="Normal">⊟</button> <!-- Quanto tiver tempo, aplicar a lógica do virtualdj! -->
-      <button class="size-btn" data-size="large"  title="Grande">⊞</button>
+
+    <!-- Logo -->
+    <div id="tb-logo">
+      <img src="../assets/images/traxxer-logo.png" alt="Traxxer">
     </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Criar Conta -->
+    <div class="tb-pill" id="tb-create-account">
+      <i class="bi bi-person-fill"></i>
+      <span>CRIAR CONTA</span>
+    </div>
+
+    <!-- No Ar -->
+    <div class="tb-pill" id="tb-onair">
+      <i class="bi bi-broadcast"></i>
+      <span>NO AR</span>
+    </div>
+
+    <!-- Espaço central livre para drag -->
+    <div id="tb-spacer"></div>
+
+    <!-- CPU -->
+    <div id="tb-cpu">
+      <div class="tb-cpu-bar"><div class="tb-cpu-fill"></div></div>
+      <span>CPU</span>
+    </div>
+
+    <!-- REC -->
+    <div class="tb-pill" id="tb-rec">
+      <i class="bi bi-circle-fill"></i>
+      <span>REC</span>
+    </div>
+
+    <!-- Hora -->
+    <div id="tb-time">
+      <span id="tb-clock">00:00:00</span>
+      <i class="bi bi-caret-down-square"></i>
+    </div>
+
+    <!-- Definições -->
+    <div class="tb-pill" id="tb-settings">
+      <i class="bi bi-gear-fill"></i>
+      <span>DEFINIÇÕES</span>
+    </div>
+
+    <!-- Perfil -->
+    <div id="tb-profile">
+      <i class="bi bi-person-circle"></i>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- Tamanho da janela -->
+    <div id="size-controls">
+      <button class="size-btn" id="btn-cycle-size" title="Tamanho">⊟</button>
+    </div>
+
+    <!-- Minimizar / Fechar -->
     <div id="window-controls">
       <button id="btn-minimize">─</button>
       <button id="btn-close">✕</button>
     </div>
+
   </div>
 
   <!-- Partials -->
-  <div data-include="./partials/header.html"></div>
   <div data-include="./partials/waveforms.html"></div>
   <div data-include="./partials/decks.html"></div>
   <div data-include="./partials/middledeck.html"></div>
   <div data-include="./partials/library.html"></div>
-  <div data-include="./partials/alonecomponents.html"></div>
 
   <script>
     document.addEventListener('traxxer:partials-loaded', () => {
-      // Botões de tamanho
+
+      const sizeOrder = ['medium', 'large', 'small'];
+      const sizeIcons = { small: '⊡', medium: '⊟', large: '⊞' };
+
+      window.electronAPI.getWindowSize().then(size => {
+        currentSize = size;
+        document.getElementById('btn-cycle-size').textContent = sizeIcons[size];
+      });
+
+      let currentSize = 'medium';
+      document.getElementById('btn-cycle-size').addEventListener('click', () => {
+        const nextIndex = (sizeOrder.indexOf(currentSize) + 1) % sizeOrder.length;
+        currentSize = sizeOrder[nextIndex];
+        window.electronAPI.setWindowSize(currentSize);
+        document.getElementById('btn-cycle-size').textContent = sizeIcons[currentSize];
+      });
+
+      // Tamanho da janela
       window.electronAPI.getWindowSize().then(size => {
         document.querySelector(`[data-size="${size}"]`)?.classList.add('active');
       });
@@ -113,14 +293,20 @@
         });
       });
 
-      // Botões de janela
-      document.getElementById('btn-minimize').addEventListener('click', () => {
-        window.electronAPI.minimizeWindow();
-      });
+      // Minimizar / Fechar
+      document.getElementById('btn-minimize').addEventListener('click', () => window.electronAPI.minimizeWindow());
+      document.getElementById('btn-close').addEventListener('click',    () => window.electronAPI.closeWindow());
 
-      document.getElementById('btn-close').addEventListener('click', () => {
-        window.electronAPI.closeWindow();
-      });
+      // Relógio
+      function updateClock() {
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        const el = document.getElementById('tb-clock');
+        if (el) el.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
     });
   </script>
 

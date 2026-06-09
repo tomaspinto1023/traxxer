@@ -483,7 +483,7 @@
     color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
 
 #trk2-fx-indicator {
-    width: 15px; height: 74px; position: relative; top: 278px; left: 1411px; z-index: 1000;}
+    width: 15px; height: 74px; position: relative; top: 98px; left: 552px; z-index: 1000 }
 
 #trk2-fx-button {
     width: 15px; height: 74px; right: 0px; top: 0px; position: absolute; background: #504F4F; border: 0.50px #0C0C0C solid; }
@@ -496,7 +496,7 @@
     width: 5px; height: 5px; right: 5px; bottom: 8px; position: absolute; background: #CECECE; border-radius: 9999px }
 
 #trk2-effects {
-    width: 260px; height: 74px; right: -1218px; top: 204.5px; position: relative; background-color: #3A3A3A; transform: rotate(180deg); }
+    width: 260px; height: 74px; right: -356px; top: 24.5px; position: relative; background-color: #3A3A3A; transform: rotate(180deg); }
 
 #trk2-effects-position {
     width: 210px; height: 74px; right: 2px; top: 0px; position: absolute; background-color: #3A3A3A; }
@@ -575,7 +575,7 @@
     top: 3.5px; position: absolute; background: #222222; border-radius: 1px; }
 
 #trk2-tools-indicator {
-    width: 12px; height: 74px; position: relative; top: 130px; right: -1203px; z-index: 1000; }
+    width: 12px; height: 74px; position: relative; top: 98px; right: -340px; }
 
 #trk2-tools-button {
     width: 12px; height: 74px; right: 0px; top: 0px; position: absolute; background: #504F4F; border: 0.50px #0C0C0C solid; }
