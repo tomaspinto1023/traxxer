@@ -84,11 +84,12 @@ function loadTrack1File(file, elements) {
       }
 
       const metadataScale = getTrack1ScaleFromTags(tags);
+      console.log('Scale da tag:', metadataScale);
 
       if (metadataScale) {
         if (scaleText) scaleText.textContent = metadataScale;
       } else {
-        detectAndShowTrack1Scale(file, scaleText, currentLoadId, artist, title);
+        detectAndShowTrack1Scale(file, scaleText, currentLoadId);
       }
 
       if (tags.title) musicName.textContent = tags.title;

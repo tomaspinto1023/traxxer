@@ -575,7 +575,7 @@
     top: 3.5px; position: absolute; background: #222222; border-radius: 1px; }
 
 #trk2-tools-indicator {
-    width: 12px; height: 74px; position: relative; top: 98px; right: -340px; }
+    width: 12px; height: 74px; position: relative; top: -50px; right: -342px; }
 
 #trk2-tools-button {
     width: 12px; height: 74px; right: 0px; top: 0px; position: absolute; background: #504F4F; border: 0.50px #0C0C0C solid; }

@@ -197,45 +197,158 @@ function getTrack1ScaleFromTags(tags) {
   return String(possibleKey).trim();
 }
 
-async function detectAndShowTrack1Scale(file, scaleText, loadId, artist, title) {
+async function detectAndShowTrack1Scale(file, scaleText, loadId) {
   if (!scaleText) return;
-
-  console.log('detectAndShowTrack1Scale chamado:', { artist, title });
   scaleText.textContent = '...';
 
   try {
-    console.log('A chamar Spotify...');
-    const spotifyScale = await window.electronAPI.getSpotifyScale(artist, title);
-    console.log('Spotify resultado:', spotifyScale);
+    const scale = await detectTrack1ScaleFromAudio(file);
 
     if (loadId !== trk1LoadId) return;
     if (!trk1HasLoadedTrack) return;
 
-    if (spotifyScale) {
-      scaleText.textContent = spotifyScale;
-      onTrack1ScaleDetected(spotifyScale, null);
-      return;
-    }
-
-    console.log('A chamar backend C++...');
-    const arrayBuffer = await file.arrayBuffer();
-    console.log('ArrayBuffer obtido, tamanho:', arrayBuffer.byteLength);
-    const localScale = await window.electronAPI.analyzeScaleLocal(arrayBuffer);
-    console.log('Backend resultado:', localScale);
-
-    if (loadId !== trk1LoadId) return;
-    if (!trk1HasLoadedTrack) return;
-
-    if (localScale) {
-      scaleText.textContent = localScale;
-      onTrack1ScaleDetected(localScale, spotifyScale);
-    } else {
-      scaleText.textContent = '--';
-    }
-
+    scaleText.textContent = scale || '--';
   } catch (error) {
     console.log('Erro ao detetar escala:', error);
     if (loadId !== trk1LoadId) return;
     scaleText.textContent = '--';
   }
+}
+
+async function detectTrack1ScaleFromAudio(file) {
+  const arrayBuffer = await file.arrayBuffer();
+
+  const tempCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const audioBuffer = await tempCtx.decodeAudioData(arrayBuffer);
+  await tempCtx.close();
+
+  const sampleRate = audioBuffer.sampleRate;
+  const duration = Math.min(audioBuffer.duration, 60);
+  const totalSamples = Math.floor(duration * sampleRate);
+
+  // OfflineAudioContext para processar sem bloquear
+  const offlineCtx = new OfflineAudioContext(1, totalSamples, sampleRate);
+
+  const source = offlineCtx.createBufferSource();
+  source.buffer = audioBuffer;
+
+  // AnalyserNode para obter FFT
+  const analyser = offlineCtx.createAnalyser();
+  analyser.fftSize = 32768;
+  source.connect(analyser);
+  analyser.connect(offlineCtx.destination);
+
+  source.start(0);
+
+  const chroma = new Array(12).fill(0);
+  const freqBinCount = analyser.frequencyBinCount;
+  const freqData = new Float32Array(freqBinCount);
+
+  // Processa em janelas de 2 segundos
+  const windowDuration = 2;
+  let currentTime = 0;
+
+  offlineCtx.suspend(windowDuration).then(async function process() {
+    analyser.getFloatFrequencyData(freqData);
+
+    const nyquist = sampleRate / 2;
+    for (let bin = 0; bin < freqBinCount; bin++) {
+      const freq = bin * nyquist / freqBinCount;
+      if (freq < 27.5 || freq > 2093) continue;
+
+      const magnitude = Math.pow(10, freqData[bin] / 20);
+      const midi = 12 * Math.log2(freq / 440) + 69;
+      const pitchClass = ((Math.round(midi) % 12) + 12) % 12;
+      chroma[pitchClass] += magnitude * magnitude;
+    }
+
+    currentTime += windowDuration;
+    if (currentTime < duration) {
+      offlineCtx.resume().then(() => {
+        offlineCtx.suspend(currentTime + windowDuration).then(process);
+      });
+    } else {
+      offlineCtx.resume();
+    }
+  });
+
+  await offlineCtx.startRendering();
+
+  const max = Math.max(...chroma);
+  if (max > 0) chroma.forEach((_, i) => chroma[i] /= max);
+
+  return krumhanslSchmuckler(chroma);
+}
+
+function krumhanslSchmuckler(chroma) {
+  const majorProfile = [6.35,2.23,3.48,2.33,4.38,4.09,2.52,5.19,2.39,3.66,2.29,2.88];
+  const minorProfile = [6.33,2.68,3.52,5.38,2.60,3.53,2.54,4.75,3.98,2.69,3.34,3.17];
+  const noteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+
+  let bestScore = -Infinity;
+  let bestKey = 'C';
+  let bestMode = 'Major';
+
+  for (let i = 0; i < 12; i++) {
+    const scoreMajor = pearsonCorrelation(chroma, rotate(majorProfile, i));
+    const scoreMinor = pearsonCorrelation(chroma, rotate(minorProfile, i));
+
+    if (scoreMajor > bestScore) { bestScore = scoreMajor; bestKey = noteNames[i]; bestMode = 'Major'; }
+    if (scoreMinor > bestScore) { bestScore = scoreMinor; bestKey = noteNames[i]; bestMode = 'Minor'; }
+  }
+
+  return `${bestKey} ${bestMode}`;
+}
+
+function computeChroma(samples, sampleRate) {
+  const chroma = new Array(12).fill(0);
+  const blockSize = 4096;
+  const A4 = 440;
+
+  for (let start = 0; start < samples.length - blockSize; start += blockSize) {
+    const block = samples.slice(start, start + blockSize);
+
+    // FFT simples via energia por bin de frequência
+    for (let k = 1; k < blockSize / 2; k++) {
+      const freq = k * sampleRate / blockSize;
+      if (freq < 27.5 || freq > 4186) continue; // A0 a C8
+
+      // Energia do bin (magnitude ao quadrado simplificado)
+      let real = 0, imag = 0;
+      for (let n = 0; n < blockSize; n++) {
+        const angle = 2 * Math.PI * k * n / blockSize;
+        real += block[n] * Math.cos(angle);
+        imag -= block[n] * Math.sin(angle);
+      }
+      const energy = real * real + imag * imag;
+
+      // Mapeia frequência para classe de pitch (0-11)
+      const midi = 12 * Math.log2(freq / A4) + 69;
+      const pitchClass = ((Math.round(midi) % 12) + 12) % 12;
+      chroma[pitchClass] += energy;
+    }
+  }
+
+  // Normaliza
+  const max = Math.max(...chroma);
+  return max > 0 ? chroma.map(v => v / max) : chroma;
+}
+
+function rotate(arr, n) {
+  return [...arr.slice(n), ...arr.slice(0, n)];
+}
+
+function pearsonCorrelation(a, b) {
+  const n = a.length;
+  const meanA = a.reduce((s, v) => s + v, 0) / n;
+  const meanB = b.reduce((s, v) => s + v, 0) / n;
+  let num = 0, denomA = 0, denomB = 0;
+  for (let i = 0; i < n; i++) {
+    const da = a[i] - meanA;
+    const db = b[i] - meanB;
+    num += da * db;
+    denomA += da * da;
+    denomB += db * db;
+  }
+  return num / Math.sqrt(denomA * denomB);
 }
