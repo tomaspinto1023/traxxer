@@ -55,6 +55,7 @@ function applyWindowSize(sizeName, animated = true) {
     const w = 1280, h = 780;
     const applySmall = () => {
       win.setMovable(true);
+      win.setResizable(true);   // ← desbloqueia antes de redimensionar
       win.setSize(w, h, false);
       win.center();
       win.setResizable(false);

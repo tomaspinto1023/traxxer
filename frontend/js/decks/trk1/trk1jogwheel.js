@@ -2,11 +2,19 @@
 
 // Audio do scratch
 
+// ============================================================
+// Scratch Sound Engine — Track 1
+// ============================================================
+
 let trk1ScratchAudioCtx = null;
-let trk1ScratchBufferSource = null;
 let trk1ScratchGain = null;
-let trk1ScratchAudioBuffer = null; // buffer do MP3 decodificado
+let trk1ScratchAudioBuffer = null;
 let trk1ScratchAudioLoaded = false;
+
+// Dois sources separados: um para frente, outro para trás
+let trk1ScratchSourceFwd = null; // playbackRate positivo
+let trk1ScratchSourceRev = null; // toca o buffer ao contrário (offset invertido)
+let trk1ScratchCurrentDirection = 0; // 1 = frente, -1 = trás, 0 = parado
 
 async function initTrack1ScratchSound() {
   trk1ScratchAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -25,47 +33,102 @@ async function initTrack1ScratchSound() {
   }
 }
 
+function createScratchSource(reversed) {
+  if (!trk1ScratchAudioCtx || !trk1ScratchAudioBuffer) return null;
+
+  const source = trk1ScratchAudioCtx.createBufferSource();
+
+  if (reversed) {
+    // Cria um buffer invertido em memória
+    const original = trk1ScratchAudioBuffer;
+    const revBuffer = trk1ScratchAudioCtx.createBuffer(
+      original.numberOfChannels,
+      original.length,
+      original.sampleRate
+    );
+
+    for (let ch = 0; ch < original.numberOfChannels; ch++) {
+      const originalData = original.getChannelData(ch);
+      const revData = revBuffer.getChannelData(ch);
+      for (let i = 0; i < originalData.length; i++) {
+        revData[i] = originalData[originalData.length - 1 - i];
+      }
+    }
+
+    source.buffer = revBuffer;
+  } else {
+    source.buffer = trk1ScratchAudioBuffer;
+  }
+
+  source.loop = true;
+  source.connect(trk1ScratchGain);
+  return source;
+}
+
 function startTrack1ScratchSound() {
   if (!trk1ScratchAudioCtx) return;
   if (!trk1ScratchAudioLoaded) return;
   if (trk1ScratchAudioCtx.state === 'suspended') trk1ScratchAudioCtx.resume();
-  if (trk1ScratchBufferSource) return;
 
-  trk1ScratchBufferSource = trk1ScratchAudioCtx.createBufferSource();
-  trk1ScratchBufferSource.buffer = trk1ScratchAudioBuffer; // usa o MP3 decodificado
-  trk1ScratchBufferSource.loop = true;
-  trk1ScratchBufferSource.playbackRate.value = 1;
-  trk1ScratchBufferSource.connect(trk1ScratchGain);
-  trk1ScratchBufferSource.start();
+  // Cria ambos os sources prontos, com gain 0
+  // Só o ativo terá rate > 0; o outro fica em idle
+  if (!trk1ScratchSourceFwd) {
+    trk1ScratchSourceFwd = createScratchSource(false);
+    trk1ScratchSourceFwd?.start();
+  }
+
+  if (!trk1ScratchSourceRev) {
+    trk1ScratchSourceRev = createScratchSource(true);
+    trk1ScratchSourceRev?.start();
+  }
 }
 
 function stopTrack1ScratchSound() {
-  if (!trk1ScratchBufferSource) return;
+  if (!trk1ScratchGain) return;
 
-  // Fade out rápido para evitar click audível
   trk1ScratchGain.gain.setTargetAtTime(0, trk1ScratchAudioCtx.currentTime, 0.04);
 
   setTimeout(() => {
-    trk1ScratchBufferSource?.stop();
-    trk1ScratchBufferSource?.disconnect();
-    trk1ScratchBufferSource = null;
+    if (trk1ScratchSourceFwd) {
+      trk1ScratchSourceFwd.stop();
+      trk1ScratchSourceFwd.disconnect();
+      trk1ScratchSourceFwd = null;
+    }
+    if (trk1ScratchSourceRev) {
+      trk1ScratchSourceRev.stop();
+      trk1ScratchSourceRev.disconnect();
+      trk1ScratchSourceRev = null;
+    }
+    trk1ScratchCurrentDirection = 0;
   }, 150);
 }
 
 function updateTrack1ScratchSound(angleDelta, timeDeltaMs) {
-  if (!trk1ScratchBufferSource || !trk1ScratchGain) return;
+  if (!trk1ScratchGain) return;
+  if (!trk1ScratchSourceFwd || !trk1ScratchSourceRev) return;
 
   const speed = Math.abs(angleDelta) / Math.max(timeDeltaMs, 1);
+  const direction = angleDelta >= 0 ? 1 : -1;
+  const rate = Math.min(Math.max(speed * 6, 0.3), 4.0);
 
-  // Volume proporcional à velocidade do arrasto
+  // Volume proporcional à velocidade
   const targetGain = Math.min(speed * 18, 0.9);
   trk1ScratchGain.gain.setTargetAtTime(targetGain, trk1ScratchAudioCtx.currentTime, 0.02);
 
-  // Pitch: varia com velocidade e direção do arrasto
-  const direction = angleDelta >= 0 ? 1 : -1;
-  const rate = Math.min(Math.max(speed * 6, 0.3), 4.0);
-  trk1ScratchBufferSource.playbackRate.value = rate * direction;
+  if (direction === 1) {
+    // Frente: ativa o source normal, silencia o invertido
+    trk1ScratchSourceFwd.playbackRate.value = rate;
+    trk1ScratchSourceRev.playbackRate.value = 0.001; // não pode ser 0
+  } else {
+    // Trás: ativa o source invertido, silencia o normal
+    trk1ScratchSourceFwd.playbackRate.value = 0.001;
+    trk1ScratchSourceRev.playbackRate.value = rate;
+  }
+
+  trk1ScratchCurrentDirection = direction;
 }
+
+initTrack1ScratchSound();
 
 // Lógica da jog wheel da Track 1
 
