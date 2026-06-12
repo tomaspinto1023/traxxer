@@ -13,9 +13,6 @@ let currentSizeName = 'large';
 function applyWindowSize(sizeName, animated = true) {
   currentSizeName = sizeName;
 
-  win.setResizable(true);
-  win.setMaximizable(true);
-
   if (win.isFullScreen()) {
     win.setFullScreen(false);
   }
@@ -25,6 +22,8 @@ function applyWindowSize(sizeName, animated = true) {
 
   if (sizeName === 'large') {
     win.setMovable(true);
+    win.setResizable(true);
+    win.setMaximizable(true);
     setTimeout(() => {
       win.setFullScreen(true);
       win.webContents.send('layout-change', 'large');
@@ -32,6 +31,9 @@ function applyWindowSize(sizeName, animated = true) {
 
   } else if (sizeName === 'medium') {
     const applyMedium = () => {
+      win.setMovable(false);
+      win.setResizable(false);
+      win.setMaximizable(false);
       const { workArea } = screen.getPrimaryDisplay();
       win.setBounds({
         x: workArea.x,
@@ -39,9 +41,6 @@ function applyWindowSize(sizeName, animated = true) {
         width: workArea.width,
         height: workArea.height
       }, false);
-      win.setMovable(false);
-      win.setResizable(false);
-      win.setMaximizable(false);
       win.webContents.send('layout-change', 'medium');
     };
 
@@ -55,7 +54,8 @@ function applyWindowSize(sizeName, animated = true) {
     const w = 1280, h = 780;
     const applySmall = () => {
       win.setMovable(true);
-      win.setResizable(true);   // ← desbloqueia antes de redimensionar
+      win.setResizable(true);
+      win.setMaximizable(true);
       win.setSize(w, h, false);
       win.center();
       win.setResizable(false);

@@ -9,6 +9,7 @@ AudioEngine::~AudioEngine()
     shutdown();
 }
 
+
 bool AudioEngine::initialise()
 {
     auto error = deviceManager.initialise(
