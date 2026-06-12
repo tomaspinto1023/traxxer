@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog, screen } = require('electron');
 const { globalShortcut } = require('electron');
 const path = require('path');
 const fs = require('fs');
-const { spawn } = require('child_process');
+const { spawn, execFile } = require('child_process');
 
 let win;
 let backendProcess = null;
@@ -34,7 +34,8 @@ function applyWindowSize(sizeName, animated = true) {
       win.setMovable(false);
       win.setResizable(false);
       win.setMaximizable(false);
-      const { workArea } = screen.getPrimaryDisplay();
+      win.setHasShadow(false);
+      const { workArea} = screen.getPrimaryDisplay();
       win.setBounds({
         x: workArea.x,
         y: workArea.y,
@@ -80,6 +81,8 @@ function createWindow() {
     resizable: false,
     maximizable: false,
     frame: false,
+    hasShadow: false,
+    roundedCorners: false,        
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -137,14 +140,21 @@ ipcMain.handle('open-folder', async () => {
   return result.canceled ? null : result.filePaths[0];
 });
 
+ipcMain.handle('analyze-scale-local', async (_, filePath) => {
+  const analyzerExePath = path.join(__dirname, '..', '..', 'backend', 'bin', 'TraxxerKeyAnalyzer.exe');
+  return await new Promise((resolve) => {
+    execFile(analyzerExePath, [filePath], (error, stdout) => {
+      resolve(error ? null : stdout.trim() || null);
+    });
+  });
+});
+
 ipcMain.handle('read-folder', async (_, folderPath) => {
   const extensions = ['.mp3', '.wav', '.flac', '.ogg', '.aac', '.m4a'];
   return fs.readdirSync(folderPath)
     .filter(f => extensions.includes(path.extname(f).toLowerCase()))
     .map(f => ({ name: path.basename(f, path.extname(f)), ext: path.extname(f), fullPath: path.join(folderPath, f) }));
 });
-
-ipcMain.handle('read-file-buffer', async (_, filePath) => fs.readFileSync(filePath));
 
 ipcMain.on('set-window-size', (_, sizeName) => applyWindowSize(sizeName));
 ipcMain.handle('get-window-size', () => currentSizeName);

@@ -113,9 +113,10 @@ trk1DropZone.addEventListener('drop', async (e) => {
   const filePath = e.dataTransfer.getData('text/plain');
   if (!filePath) return;
 
-  const buffer = await window.electronAPI.readFileAsBuffer(filePath);
+  const response = await fetch(`file://${filePath.replace(/\\/g, '/')}`);
+  const blob = await response.blob();
   const fileName = filePath.split(/[\\/]/).pop();
-  const file = new File([buffer], fileName, { type: 'audio/mpeg' });
+  const file = new File([blob], fileName, { type: 'audio/mpeg' });
 
   loadTrack1File(file, getTrack1Elements());
 });

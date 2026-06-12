@@ -201,3 +201,7 @@
     outline: 1px solid #9a3fbf;
     background-color: rgba(154, 63, 191, 0.05);
 }
+
+#library-track-list {
+  user-select: none;
+}

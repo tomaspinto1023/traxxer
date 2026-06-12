@@ -20,7 +20,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   openFolder:       ()             => ipcRenderer.invoke('open-folder'),
   readFolder:       (folderPath)   => ipcRenderer.invoke('read-folder', folderPath),
-  readFileAsBuffer: (filePath)     => ipcRenderer.invoke('read-file-buffer', filePath),
+  analyzeScaleLocal: (filePath) => ipcRenderer.invoke('analyze-scale-local', filePath),
   minimizeWindow:   ()             => ipcRenderer.send('minimize-window'),
   closeWindow:      ()             => ipcRenderer.send('close-window'),
 });
