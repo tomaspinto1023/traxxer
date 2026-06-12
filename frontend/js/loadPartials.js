@@ -27,6 +27,16 @@ async function loadPartials() {
   await loadScriptOnce('../js/decks/trk1/trk1load.js');
   await loadScriptOnce('../js/decks/trk1/trk1init.js');
   await loadScriptOnce('../js/decks/trk1/trk1pitch.js');
+
+  await loadScriptOnce('../js/decks/trk2/trk2state.js');
+  await loadScriptOnce('../js/decks/trk2/trk2jogwheel.js');
+  await loadScriptOnce('../js/decks/trk2/trk2bpm.js');
+  await loadScriptOnce('../js/decks/trk2/trk2scale.js');
+  await loadScriptOnce('../js/decks/trk2/trk2time.js');
+  await loadScriptOnce('../js/decks/trk2/trk2load.js');
+  await loadScriptOnce('../js/decks/trk2/trk2init.js');
+  await loadScriptOnce('../js/decks/trk2/trk2pitch.js');
+
   await loadScriptOnce('../js/library/library.js');
 
   document.dispatchEvent(new Event('traxxer:partials-loaded'));
