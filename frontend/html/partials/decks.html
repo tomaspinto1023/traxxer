@@ -285,33 +285,34 @@
         <section id="trk2">
             <div id="trk2-horizontal-line"></div>
             <div id="trk2-vertical-line"></div>
-            <section id="trk2-drop-zone">
+            <div id="trk2-drop-zone">
                 <div id="trk2-loaded-music-intel">
-                    <div id="trk2-cover" style="display: none;"></div>
+                    <div id="trk2-cover"></div>
                     <div>
-                        <p id="trk2-music-name" style="display: none;"></p>
-                        <p id="trk2-music-channel-name" style="display: none;"></p>
+                        <p id="trk2-track-title"></p>
+                        <p id="trk2-track-artist"></p>
                     </div>
+                    <div id="trk2-waveform"></div>
                 </div>
-            </section>
+            </div>
         </section>
-        <i id="trk2-master-sync" class="bi bi-music-note-list"></i>
-        <p id="trk2-bpm">120.00</p>
+        <p id="trk2-bpm"></p>
         <p id="trk2-indicator">TRK2</p>
-        <section id="trk2-scale">	
-            <p id="trk2-scale-text">(...)</p>
+        <div id="trk2-scale">	
             <i style="background-color: #131315;" class="bi bi-caret-left-fill"></i>
             <p id="trk2-scale-text">ESCALA</p>
             <i style="background-color: #131315;" class="bi bi-caret-right-fill"></i>
-        </section>
+            <p id="trk2-scale-itself"></p>
+        </div>
         <div id="trk2-music-elapsed">
-            <div id="trk2-music-elapsed-indicator">feger</div>
-            <div id="trk2-music-elapsed-time">ger</div>
+            <div id="trk2-music-elapsed-indicator"></div>
+            <div id="trk2-music-elapsed-time"></div>
         </div>
         <div id="trk2-music-remaining">
-            <div id="trk2-music-remaining-indicator">vr</div>
-            <div id="trk2-music-remaining-time">gr</div>
+            <div id="trk2-music-remaining-indicator"></div>
+            <div id="trk2-music-remaining-time"></div>
         </div>
+        <i id="trk2-master-sync" class="bi bi-music-note-list"></i>
         <div id="trk2-fx-indicator">
             <div id="trk2-fx-button"></div>
             <div id="trk2-fx-text">EFFECTS</div>
@@ -440,7 +441,71 @@
         <div id="trk2-eject-btn">
             <i style="background: none; margin-top: 1px;" class="bi bi-eject-fill"></i>
         </div>
-        <div id="trk2-jog-wheel"></div>
+        <div id="trk2-jog-wheel" class="jog-wheel">
+            <div class="jog-wheel-ring"></div>
+            <div class="jog-wheel-platter">
+                <div class="jog-wheel-label"></div>
+                <div class="jog-wheel-spindle"></div>
+            </div>
+            <style> 
+                #trk2-jog-wheel.jog-wheel:active {
+                    cursor: grabbing;
+                }
+
+                #trk2-jog-wheel .jog-wheel-ring {
+                    position: absolute;
+                    inset: 0;
+                    border-radius: 50%;
+                    background: radial-gradient(circle at center, #28282c 58%, #28282c 58.5%, #34343b 67%, #18181b 68%, #09090b 100%);
+                    box-shadow: inset 0 0 0 2px #5f5f6b, inset 0 0 18px rgba(0, 0, 0, 0.55), 0 8px 18px rgba(0, 0, 0, 0.35);
+                }
+
+                #trk2-jog-wheel .jog-wheel-label {
+                    position: absolute;
+                    inset: 28%;
+                    border-radius: 50%;
+                    background: #09090b;
+                }
+
+                #trk2-jog-wheel .jog-wheel-label::before {
+                    content: '';
+                    position: absolute;
+                    top: -47%;
+                    width: 4px;
+                    height: 119%;
+                    left: 85%;
+                    transform: translateX(-50%) rotate(45deg);
+                    border-radius: 1px;
+                    background: rgba(179, 42, 234, 0.92);
+                }
+
+                #trk2-jog-wheel .jog-wheel-spindle {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 14px;
+                    height: 14px;
+                    transform: translate(-50%, -50%);
+                    border-radius: 50%;
+                    background: #b5b5bd;
+                    box-shadow: 0 0 8px rgba(255,255,255,0.18);
+                }
+
+                #trk2-jog-wheel.is-playing .jog-wheel-label {
+                    animation: trk2JogSpin 1.8s linear infinite;
+                }
+
+                #trk2-jog-wheel.is-scratching .jog-wheel-label,
+                #trk2-jog-wheel.is-jogging .jog-wheel-label {
+                    animation: none;
+                }
+
+                @keyframes trk2JogSpin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                </style>
+        </div>
         <div id="trk2-cue-btn">CUE</div>
         <div id="trk2-play-pause-btn">
             <i style="background-color: #252525; color: #e5e5e5" class="bi bi-play-fill"></i>

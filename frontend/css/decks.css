@@ -421,23 +421,30 @@
     width: 36px; height: 32px; position: fixed; background-color: #2f2f2f; right: 38px; top: 203px; 
     border: 1px solid #5f5f5f; z-index: 1000; }
 
-#trk2-music-name {
-    width: 300px; height: 20px; position: fixed; right: 82px; top: 188px; font-weight: bolder; background-color: #131315; 
-    color: #ffffff; font-size: 90%; font-family: Arial, Helvetica, sans-serif; text-align: right;}
+#trk2-track-title {
+    width: 300px; height: 20px; position: fixed; right: 82px; top: 190px; font-weight: bolder; background-color: #131315; 
+    color: #ffffff; font-size: 80%; font-family: Arial, Helvetica, sans-serif;}
 
-#trk2-music-channel-name {
-    width: 300px; height: 12px; position: fixed; right: 82px; top: 208px; background-color: #131315; 
-    color: #ffffff; font-size: 84%; font-family: Arial, Helvetica, sans-serif; text-align: right; }
+#trk2-track-artist {
+    width: 300px; height: 12px; position: fixed; left: 82px; top: 210px; background-color: #131315; 
+    color: #ffffff; font-size: 77%; font-family: Arial, Helvetica, sans-serif; }
+
+#trk2-waveform {
+    width: 390px; height: 30px; background: #131315; position: fixed; left: 29px; top: 247px; z-index: 1000;}
+
+#trk2-waveform ::part(wrapper) { height: 30px; background-color: #131315; }
+
+#trk2-waveform ::part(scroll) { height: 30px; background-color: #131315; }
 
 #trk2-bpm {
     background-color: #131315; right: 503px; top: 168px; position: fixed; width: 16px; height: 10px; 
     font-size: 177%; color: #c83cb0; text-align: right; font-family: Arial, Helvetica, sans-serif; }
 
-#trk2-master-sync {
-    right: 530px; top: 200px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px; }
+#trk2-master-sync { /*Trocar de lugar com o trk1 e meter corfes parecidas com o virtual dj ajustadas à imagem da minha app*/
+    right: 532px; top: 251px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px; }
 
 #trk2-master-sync:hover {
-    background-color: #131315; color: white; }
+    background-color: #131315; color: white; /* text: "Master Sync"; */}
 
 #trk2-indicator {
     background-color: #131315; color: #c83cb0; font-size: 65%; top: 219px; 
@@ -445,38 +452,27 @@
 
 #trk2-scale {
     display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: 1%;
-    position: fixed; right: 500px; top: 229px; font-size: 70%; background-color: #131315; }
+    position: fixed; right: 488px; top: 229px; font-size: 70%; background-color: #131315; }
 
-#trk2-scale-text { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
-
-#trk2-music-length {
-    width: 36px; height: 24px; position: fixed; background-color: #131315; right: 519px; top: 251px; }
-
-#trk2-music-length-indicator {
-    width: 40px; height: 8px; right: 0px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 6px; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 42%; }
-
-#trk2-music-length-time {
-    width: 35px; height: 12px; right: 2px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
+#trk2-scale-text, #trk2-scale-itself { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
 
 #trk2-music-elapsed {
-    width: 36px; height: 24px; position: fixed; background-color: #131315; right: 473px; top: 251px; }
+    width: 36px; height: 24px; position: fixed; background-color: #131315; right: 427px; top: 251px; }
 
 #trk2-music-elapsed-indicator {
-    width: 40px; height: 8px; right: 0px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 6px; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 42%; }
+    width: 44px; height: 8px; right: 1px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
+    color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 45%; }
 
 #trk2-music-elapsed-time {
-    width: 35px; height: 12px; right: 2px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
+    width: 35px; height: 12px; right: 5px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
     color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
 
 #trk2-music-remaining {
-    width: 36px; height: 24px; position: fixed; background-color: #131315; right: 427px; top: 251px; }
+    width: 36px; height: 24px; position: fixed; background-color: #131315; right: 480px; top: 251px; }
 
 #trk2-music-remaining-indicator {
-    width: 40px; height: 8px; right: 0px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
-    color: white; font-size: 6px; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 42%; }
+    width: 44px; height: 8px; right: -2px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
+    color: white;  font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 45%; }
 
 #trk2-music-remaining-time {
     width: 35px; height: 12px; right: 2px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
