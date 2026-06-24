@@ -452,7 +452,7 @@
 
 #trk2-scale {
     display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: 1%;
-    position: fixed; right: 488px; top: 229px; font-size: 70%; background-color: #131315; }
+    position: fixed; right: 486px; top: 229px; font-size: 70%; background-color: #131315; }
 
 #trk2-scale-text, #trk2-scale-itself { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
 

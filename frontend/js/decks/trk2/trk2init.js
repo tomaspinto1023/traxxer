@@ -1,35 +1,11 @@
 // Inicialização da Track 2 e ligação ao backend
 
 document.addEventListener('traxxer:partials-loaded', () => {
-  setupBackendTest();
-  initTrack1();
+  initTrack2();
 });
 
-function setupBackendTest() {
-  const testButton = document.getElementById('test-backend-btn');
-  const responseText = document.getElementById('backend-response');
-
-  if (testButton) {
-    testButton.addEventListener('click', () => {
-      if (window.electronAPI) {
-        window.electronAPI.sendToBackend('ping');
-      }
-    });
-  }
-
-  if (window.electronAPI) {
-    window.electronAPI.onBackendMessage((message) => {
-      console.log('Resposta do backend:', message);
-
-      if (responseText) {
-        responseText.textContent = message;
-      }
-    });
-  }
-}
-
-function initTrack1() {
-  const elements = getTrack1Elements();
+function initTrack2() {
+  const elements = getTrack2Elements();
 
   console.log('dropZone:', elements.dropZone);
   console.log('cover:', elements.cover);
@@ -38,52 +14,52 @@ function initTrack1() {
   console.log('waveformContainer:', elements.waveformContainer);
   console.log('playPauseBtn:', elements.playPauseBtn);
 
-  if (!areTrack1ElementsValid(elements)) {
-    console.warn('Elementos do deck 1 não encontrados.');
+  if (!areTrack2ElementsValid(elements)) {
+    console.warn('Elementos do deck 2 não encontrados.');
     return;
   }
 
-  createTrack1WaveSurfer(elements.playIcon, elements.pauseIcon);
-  
-  trk1WaveSurfer.once('ready', () => {
-    initTrack1Pitch(trk1WaveSurfer);
+  createTrack2WaveSurfer(elements.playIcon, elements.pauseIcon);
+
+  trk2WaveSurfer.once('ready', () => {
+    initTrack2Pitch(trk2WaveSurfer);
   });
 
-  setupTrack1JogWheel(elements.jogWheel);
+  setupTrack2JogWheel(elements.jogWheel);
   setPlayPauseVisual(false, elements.playIcon, elements.pauseIcon);
-  setupTrack1DropZone(elements);
-  setupTrack1TransportControls(elements);
-  setupTrack1WaveSurferEvents(elements);
+  setupTrack2DropZone(elements);
+  setupTrack2TransportControls(elements);
+  setupTrack2WaveSurferEvents(elements);
 
-  if (typeof setupTrack1EffectSlotN1 === 'function') {
-    setupTrack1EffectSlotN1();
+  if (typeof setupTrack2EffectSlotN1 === 'function') {
+    setupTrack2EffectSlotN1();
   }
 }
 
-function getTrack1Elements() {
-  const playPauseBtn = document.getElementById('trk1-play-pause-btn');
+function getTrack2Elements() {
+  const playPauseBtn = document.getElementById('trk2-play-pause-btn');
 
   return {
-    dropZone: document.getElementById('trk1-drop-zone'),
-    cover: document.getElementById('trk1-cover'),
-    musicName: document.getElementById('trk1-track-title'),
-    channelName: document.getElementById('trk1-track-artist'),
-    waveformContainer: document.getElementById('trk1-waveform'),
+    dropZone: document.getElementById('trk2-drop-zone'),
+    cover: document.getElementById('trk2-cover'),
+    musicName: document.getElementById('trk2-track-title'),
+    channelName: document.getElementById('trk2-track-artist'),
+    waveformContainer: document.getElementById('trk2-waveform'),
     playPauseBtn,
-    ejectBtn: document.getElementById('trk1-eject-btn'),
+    ejectBtn: document.getElementById('trk2-eject-btn'),
     playIcon: playPauseBtn?.querySelector('.bi-play-fill'),
     pauseIcon: playPauseBtn?.querySelector('.bi-pause-fill'),
-    stopBtn: document.getElementById('trk1-stop-btn'),
-    cueBtn: document.getElementById('trk1-cue-btn'), 
-    jogWheel: document.getElementById('trk1-jog-wheel'),
-    bpmText: document.getElementById('trk1-bpm'),
-    scaleText: document.getElementById('trk1-scale-itself'),
-    elapsedTimeText: document.getElementById('trk1-music-elapsed-time'),
-    remainingTimeText: document.getElementById('trk1-music-remaining-time')
+    stopBtn: document.getElementById('trk2-stop-btn'),
+    cueBtn: document.getElementById('trk2-cue-btn'),
+    jogWheel: document.getElementById('trk2-jog-wheel'),
+    bpmText: document.getElementById('trk2-bpm'),
+    scaleText: document.getElementById('trk2-scale-itself'),
+    elapsedTimeText: document.getElementById('trk2-music-elapsed-time'),
+    remainingTimeText: document.getElementById('trk2-music-remaining-time')
   };
 }
 
-function areTrack1ElementsValid(elements) {
+function areTrack2ElementsValid(elements) {
   return (
     elements.dropZone &&
     elements.cover &&
@@ -98,23 +74,23 @@ function areTrack1ElementsValid(elements) {
   );
 }
 
-function setupTrack1WaveSurferEvents(elements) {
+function setupTrack2WaveSurferEvents(elements) {
   const { elapsedTimeText, remainingTimeText, jogWheel } = elements;
 
-  trk1WaveSurfer.on('audioprocess', () => {
-    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  trk2WaveSurfer.on('audioprocess', () => {
+    updateTrack2TimeDisplays(elapsedTimeText, remainingTimeText);
   });
 
-  trk1WaveSurfer.on('seek', () => {
-    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
+  trk2WaveSurfer.on('seek', () => {
+    updateTrack2TimeDisplays(elapsedTimeText, remainingTimeText);
   });
 
-  trk1WaveSurfer.on('play', () => {
-    startTrack1JogWheelSync(jogWheel);
+  trk2WaveSurfer.on('play', () => {
+    startTrack2JogWheelSync(jogWheel);
   });
 
-  trk1WaveSurfer.on('pause', () => {
-    stopTrack1JogWheelSync();
-    updateTrack1JogWheelFromAudio(jogWheel);
+  trk2WaveSurfer.on('pause', () => {
+    stopTrack2JogWheelSync();
+    updateTrack2JogWheelFromAudio(jogWheel);
   });
 }

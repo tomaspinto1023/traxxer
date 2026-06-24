@@ -1,6 +1,6 @@
 // Lógica de BPM da Track 2
 
-function getTrack1BpmFromTags(tags) {
+function getTrack2BpmFromTags(tags) {
   if (!tags) return null;
 
   const possibleBpm =
@@ -18,20 +18,20 @@ function getTrack1BpmFromTags(tags) {
   return Math.round(bpmNumber);
 }
 
-async function detectAndShowTrack1Bpm(file, bpmText, loadId) {
+async function detectAndShowTrack2Bpm(file, bpmText, loadId) {
   if (!bpmText) return;
 
   bpmText.textContent = '...';
 
   try {
-    const bpm = await detectTrack1BpmFromAudio(file);
+    const bpm = await detectTrack2BpmFromAudio(file);
 
-    if (loadId !== trk1LoadId) return;
-    if (!trk1HasLoadedTrack) return;
+    if (loadId !== trk2LoadId) return;
+    if (!trk2HasLoadedTrack) return;
 
     if (bpm) {
-      bpmText.textContent = formatTrack1Bpm(bpm);
-      updateTrack1BpmPosition(bpmText, bpm);
+      bpmText.textContent = formatTrack2Bpm(bpm);
+      updateTrack2BpmPosition(bpmText, bpm);
     } else {
       bpmText.textContent = '--';
       bpmText.style.left = '470px';
@@ -39,14 +39,14 @@ async function detectAndShowTrack1Bpm(file, bpmText, loadId) {
   } catch (error) {
     console.log('Erro ao detetar BPM:', error);
 
-    if (loadId !== trk1LoadId) return;
+    if (loadId !== trk2LoadId) return;
 
     bpmText.textContent = '--';
     bpmText.style.left = '470px';
   }
 }
 
-async function detectTrack1BpmFromAudio(file) {
+async function detectTrack2BpmFromAudio(file) {
   const arrayBuffer = await file.arrayBuffer();
 
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -57,8 +57,8 @@ async function detectTrack1BpmFromAudio(file) {
   const channelData = audioBuffer.getChannelData(0);
   const sampleRate = audioBuffer.sampleRate;
 
-  const peaks = getTrack1EnergyPeaks(channelData, sampleRate);
-  const tempoCandidates = getTrack1TempoCandidates(peaks);
+  const peaks = getTrack2EnergyPeaks(channelData, sampleRate);
+  const tempoCandidates = getTrack2TempoCandidates(peaks);
 
   await audioContext.close();
 
@@ -66,10 +66,10 @@ async function detectTrack1BpmFromAudio(file) {
 
   tempoCandidates.sort((a, b) => b.score - a.score);
 
-  return normalizeTrack1Bpm(tempoCandidates[0].tempo);
+  return normalizeTrack2Bpm(tempoCandidates[0].tempo);
 }
 
-function getTrack1EnergyPeaks(channelData, sampleRate) {
+function getTrack2EnergyPeaks(channelData, sampleRate) {
   const blockSize = Math.floor(sampleRate * 0.05);
   const energies = [];
 
@@ -115,7 +115,7 @@ function getTrack1EnergyPeaks(channelData, sampleRate) {
   return peaks;
 }
 
-function getTrack1TempoCandidates(peaks) {
+function getTrack2TempoCandidates(peaks) {
   const candidates = [];
 
   for (let i = 0; i < peaks.length; i++) {
@@ -146,7 +146,7 @@ function getTrack1TempoCandidates(peaks) {
   return candidates;
 }
 
-function normalizeTrack1Bpm(bpm) {
+function normalizeTrack2Bpm(bpm) {
   if (!bpm) return null;
 
   let normalizedBpm = bpm;
@@ -157,7 +157,7 @@ function normalizeTrack1Bpm(bpm) {
   return Math.round(normalizedBpm);
 }
 
-function formatTrack1Bpm(bpm) {
+function formatTrack2Bpm(bpm) {
   const bpmNumber = Number(bpm);
 
   if (Number.isNaN(bpmNumber)) return '--';
@@ -165,7 +165,7 @@ function formatTrack1Bpm(bpm) {
   return bpmNumber.toFixed(2);
 }
 
-function updateTrack1BpmPosition(bpmText, bpmValue) {
+function updateTrack2BpmPosition(bpmText, bpmValue) {
   if (!bpmText) return;
 
   const bpmNumber = Number(bpmValue);
