@@ -4,6 +4,7 @@ let trk1WaveSurfer = null;
 let trk1CurrentObjectUrl = null;
 let trk1CuePoint = 0;
 let trk1HasLoadedTrack = false;
+let trk1IsScratchingJog = false;
 
 let trk1JogVisualRotation = 0;
 let trk1JogAnimationFrame = null;

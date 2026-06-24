@@ -1,8 +1,8 @@
 // Lógica de carregamento, waveform, cue, stop e eject da Track 2
 
-function createTrack1WaveSurfer(playIcon, pauseIcon) {
-  trk1WaveSurfer = WaveSurfer.create({
-    container: '#trk1-waveform',
+function createTrack2WaveSurfer(playIcon, pauseIcon) {
+  trk2WaveSurfer = WaveSurfer.create({
+    container: '#trk2-waveform',
     waveColor: '#dbdbdb',
     progressColor: '#a12fb0',
     cursorColor: '#ffffff',
@@ -11,38 +11,38 @@ function createTrack1WaveSurfer(playIcon, pauseIcon) {
     barGap: 1,
   });
 
-  trk1WaveSurfer.on('play', () => {
+  trk2WaveSurfer.on('play', () => {
     setPlayPauseVisual(true, playIcon, pauseIcon);
   });
 
-  trk1WaveSurfer.on('pause', () => {
+  trk2WaveSurfer.on('pause', () => {
     setPlayPauseVisual(false, playIcon, pauseIcon);
   });
 
-  return trk1WaveSurfer;
+  return trk2WaveSurfer;
 }
 
-function getTrack1WaveSurfer() {
-  return trk1WaveSurfer;
+function getTrack2WaveSurfer() {
+  return trk2WaveSurfer;
 }
 
-function loadTrack1File(file, elements) {
+function loadTrack2File(file, elements) {
   const { cover, musicName, channelName, bpmText, scaleText, playIcon, pauseIcon } = elements;
 
-  trk1LoadId++;
-  const currentLoadId = trk1LoadId;
+  trk2LoadId++;
+  const currentLoadId = trk2LoadId;
 
-  if (trk1CurrentObjectUrl) {
-    URL.revokeObjectURL(trk1CurrentObjectUrl);
-    trk1CurrentObjectUrl = null;
+  if (trk2CurrentObjectUrl) {
+    URL.revokeObjectURL(trk2CurrentObjectUrl);
+    trk2CurrentObjectUrl = null;
   }
 
-  trk1CurrentObjectUrl = URL.createObjectURL(file);
+  trk2CurrentObjectUrl = URL.createObjectURL(file);
 
-  trk1WaveSurfer.load(trk1CurrentObjectUrl);
+  trk2WaveSurfer.load(trk2CurrentObjectUrl);
 
-  trk1CuePoint = 0;
-  trk1HasLoadedTrack = true;
+  trk2CuePoint = 0;
+  trk2HasLoadedTrack = true;
 
   musicName.textContent = removeMp3Extension(file.name);
   channelName.textContent = 'Artista desconhecido';
@@ -53,7 +53,7 @@ function loadTrack1File(file, elements) {
   }
 
   if (scaleText) {
-    scaleText.textContent = ''; 
+    scaleText.textContent = '';
   }
 
   cover.style.backgroundImage = '';
@@ -72,24 +72,24 @@ function loadTrack1File(file, elements) {
       const artist = tags.artist || '';
       const title = tags.title || file.name;
 
-      const metadataBpm = getTrack1BpmFromTags(tags);
+      const metadataBpm = getTrack2BpmFromTags(tags);
 
       if (metadataBpm) {
         if (bpmText) {
-          bpmText.textContent = formatTrack1Bpm(metadataBpm);
-          updateTrack1BpmPosition(bpmText, metadataBpm);
+          bpmText.textContent = formatTrack2Bpm(metadataBpm);
+          updateTrack2BpmPosition(bpmText, metadataBpm);
         }
       } else {
-        detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
+        detectAndShowTrack2Bpm(file, bpmText, currentLoadId);
       }
 
-      const metadataScale = getTrack1ScaleFromTags(tags);
+      const metadataScale = getTrack2ScaleFromTags(tags);
       console.log('Scale da tag:', metadataScale);
 
       if (metadataScale) {
         if (scaleText) scaleText.textContent = metadataScale;
       } else {
-        detectAndShowTrack1Scale(file, scaleText, currentLoadId);
+        detectAndShowTrack2Scale(file, scaleText, currentLoadId);
       }
 
       if (tags.title) musicName.textContent = tags.title;
@@ -109,33 +109,33 @@ function loadTrack1File(file, elements) {
     },
     onError: (error) => {
       console.log('Erro ao ler metadata da faixa:', error);
-      detectAndShowTrack1Bpm(file, bpmText, currentLoadId);
-      detectAndShowTrack1Scale(file, scaleText, currentLoadId, '', file.name);
+      detectAndShowTrack2Bpm(file, bpmText, currentLoadId);
+      detectAndShowTrack2Scale(file, scaleText, currentLoadId, '', file.name);
     }
   });
 
-  trk1WaveSurfer.once('ready', () => {
-    if (currentLoadId !== trk1LoadId) return;
-    if (!trk1HasLoadedTrack) return;
+  trk2WaveSurfer.once('ready', () => {
+    if (currentLoadId !== trk2LoadId) return;
+    if (!trk2HasLoadedTrack) return;
 
-    const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
-    const remainingTimeText = document.getElementById('trk1-music-remaining-time');
+    const elapsedTimeText = document.getElementById('trk2-music-elapsed-time');
+    const remainingTimeText = document.getElementById('trk2-music-remaining-time');
 
-    showTrack1TimeIndicators();
+    showTrack2TimeIndicators();
 
     if (elapsedTimeText) {
-        elapsedTimeText.textContent = '0:00:0';
+      elapsedTimeText.textContent = '0:00:0';
     }
 
-    const duration = trk1WaveSurfer.getDuration();
+    const duration = trk2WaveSurfer.getDuration();
 
     if (remainingTimeText) {
-        remainingTimeText.textContent = formatTrack1Time(duration);
+      remainingTimeText.textContent = formatTrack2Time(duration);
     }
-    });
+  });
 }
 
-function setupTrack1DropZone(elements) {
+function setupTrack2DropZone(elements) {
   const {
     dropZone,
     cover,
@@ -171,7 +171,7 @@ function setupTrack1DropZone(elements) {
       return;
     }
 
-    loadTrack1File(file, {
+    loadTrack2File(file, {
       cover,
       musicName,
       channelName,
@@ -183,7 +183,7 @@ function setupTrack1DropZone(elements) {
   });
 }
 
-function setupTrack1TransportControls(elements) {
+function setupTrack2TransportControls(elements) {
   const {
     playPauseBtn,
     stopBtn,
@@ -195,26 +195,26 @@ function setupTrack1TransportControls(elements) {
   } = elements;
 
   playPauseBtn.addEventListener('click', () => {
-    if (!trk1WaveSurfer) return;
-    if (!trk1HasLoadedTrack) return;
-    if (!trk1WaveSurfer.getDuration()) return;
+    if (!trk2WaveSurfer) return;
+    if (!trk2HasLoadedTrack) return;
+    if (!trk2WaveSurfer.getDuration()) return;
 
-    trk1WaveSurfer.playPause();
+    trk2WaveSurfer.playPause();
   });
 
   stopBtn.addEventListener('click', () => {
-    stopTrack1(playIcon, pauseIcon, jogWheel);
+    stopTrack2(playIcon, pauseIcon, jogWheel);
   });
 
   cueBtn.addEventListener('click', () => {
-    handleCueTrack1(playIcon, pauseIcon);
+    handleCueTrack2(playIcon, pauseIcon);
   });
 
   ejectBtn.addEventListener('click', () => {
-    const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
-    const remainingTimeText = document.getElementById('trk1-music-remaining-time');
+    const elapsedTimeText = document.getElementById('trk2-music-elapsed-time');
+    const remainingTimeText = document.getElementById('trk2-music-remaining-time');
 
-    ejectTrack1({
+    ejectTrack2({
       ...elements,
       elapsedTimeText,
       remainingTimeText
@@ -222,7 +222,7 @@ function setupTrack1TransportControls(elements) {
   });
 }
 
-function ejectTrack1(elements, jogWheel) {
+function ejectTrack2(elements, jogWheel) {
   const {
     cover,
     musicName,
@@ -233,13 +233,13 @@ function ejectTrack1(elements, jogWheel) {
     pauseIcon
   } = elements;
 
-  if (trk1WaveSurfer) {
-    resetTrack1JogPlaybackRate();
+  if (trk2WaveSurfer) {
+    resetTrack2JogPlaybackRate();
 
-    const media = trk1WaveSurfer.getMediaElement?.();
+    const media = trk2WaveSurfer.getMediaElement?.();
 
-    trk1WaveSurfer.stop();
-    trk1WaveSurfer.empty();
+    trk2WaveSurfer.stop();
+    trk2WaveSurfer.empty();
 
     if (media) {
       media.pause();
@@ -248,14 +248,14 @@ function ejectTrack1(elements, jogWheel) {
     }
   }
 
-  if (trk1CurrentObjectUrl) {
-    URL.revokeObjectURL(trk1CurrentObjectUrl);
-    trk1CurrentObjectUrl = null;
+  if (trk2CurrentObjectUrl) {
+    URL.revokeObjectURL(trk2CurrentObjectUrl);
+    trk2CurrentObjectUrl = null;
   }
 
-  trk1CuePoint = 0;
-  trk1HasLoadedTrack = false;
-  trk1LoadId++;
+  trk2CuePoint = 0;
+  trk2HasLoadedTrack = false;
+  trk2LoadId++;
 
   musicName.textContent = '';
   channelName.textContent = '';
@@ -265,7 +265,7 @@ function ejectTrack1(elements, jogWheel) {
   }
 
   if (scaleText) {
-    scaleText.textContent = ''; 
+    scaleText.textContent = '';
   }
 
   cover.style.backgroundImage = '';
@@ -275,68 +275,57 @@ function ejectTrack1(elements, jogWheel) {
 
   setPlayPauseVisual(false, playIcon, pauseIcon);
 
-  stopTrack1JogWheelSync();
+  stopTrack2JogWheelSync();
 
-  trk1JogVisualRotation = 0;
-  resetTrack1JogWheel(jogWheel);
+  trk2JogVisualRotation = 0;
+  resetTrack2JogWheel(jogWheel);
 
-  resetTrack1EffectSlotN1();
+  resetTrack2EffectSlotN1();
 
-  clearTrack1TimeDisplay();
+  clearTrack2TimeDisplay();
 }
 
-function stopTrack1(playIcon, pauseIcon, jogWheel) {
-  if (!trk1WaveSurfer) return;
-  if (!trk1HasLoadedTrack) return;
-  if (!trk1WaveSurfer.getDuration()) return;
+function stopTrack2(playIcon, pauseIcon, jogWheel) {
+  if (!trk2WaveSurfer) return;
+  if (!trk2HasLoadedTrack) return;
+  if (!trk2WaveSurfer.getDuration()) return;
 
-  trk1WaveSurfer.stop();
+  trk2WaveSurfer.stop();
 
-  stopTrack1JogWheelSync();
-  updateTrack1JogWheelFromAudio(jogWheel);
+  stopTrack2JogWheelSync();
+  updateTrack2JogWheelFromAudio(jogWheel);
   setPlayPauseVisual(false, playIcon, pauseIcon);
 }
 
-function handleCueTrack1(playIcon, pauseIcon) {
-  if (!trk1WaveSurfer) return;
-  if (!trk1HasLoadedTrack) return;
-  if (!trk1WaveSurfer.getDuration()) return;
+function handleCueTrack2(playIcon, pauseIcon) {
+  if (!trk2WaveSurfer) return;
+  if (!trk2HasLoadedTrack) return;
+  if (!trk2WaveSurfer.getDuration()) return;
 
-  if (trk1WaveSurfer.isPlaying()) {
-    trk1WaveSurfer.pause();
+  if (trk2WaveSurfer.isPlaying()) {
+    trk2WaveSurfer.pause();
 
-    const duration = trk1WaveSurfer.getDuration();
-    const cueProgress = duration > 0 ? trk1CuePoint / duration : 0;
+    const duration = trk2WaveSurfer.getDuration();
+    const cueProgress = duration > 0 ? trk2CuePoint / duration : 0;
 
-    trk1WaveSurfer.seekTo(cueProgress);
+    trk2WaveSurfer.seekTo(cueProgress);
     setPlayPauseVisual(false, playIcon, pauseIcon);
 
     return;
   }
 
-  trk1CuePoint = trk1WaveSurfer.getCurrentTime();
+  trk2CuePoint = trk2WaveSurfer.getCurrentTime();
 
-  console.log('Novo cue point:', trk1CuePoint);
+  console.log('Novo cue point:', trk2CuePoint);
 }
 
-function removeMp3Extension(filename) {
-  return filename.replace(/\.mp3$/i, '');
-}
+function resetTrack2EffectSlotN1() {
+  const effectBox = document.getElementById('trk2-effect-n1');
+  const optionsBox = document.getElementById('trk2-effect-n1-options');
 
-function setPlayPauseVisual(isPlaying, playIcon, pauseIcon) {
-  if (!playIcon || !pauseIcon) return;
-
-  playIcon.style.display = isPlaying ? 'none' : 'inline-block';
-  pauseIcon.style.display = isPlaying ? 'inline-block' : 'none';
-}
-
-function resetTrack1EffectSlotN1() {
-  const effectBox = document.getElementById('trk1-effect-n1');
-  const optionsBox = document.getElementById('trk1-effect-n1-options');
-
-  if (typeof trk1SelectedEffectN1 !== 'undefined' && trk1SelectedEffectN1) {
-    trk1SelectedEffectN1.disable();
-    trk1SelectedEffectN1 = null;
+  if (typeof trk2SelectedEffectN1 !== 'undefined' && trk2SelectedEffectN1) {
+    trk2SelectedEffectN1.disable();
+    trk2SelectedEffectN1 = null;
   }
 
   if (effectBox) effectBox.textContent = '';

@@ -426,11 +426,11 @@
     color: #ffffff; font-size: 80%; font-family: Arial, Helvetica, sans-serif;}
 
 #trk2-track-artist {
-    width: 300px; height: 12px; position: fixed; left: 82px; top: 210px; background-color: #131315; 
+    width: 300px; height: 12px; position: fixed; right: 82px; top: 210px; background-color: #131315; 
     color: #ffffff; font-size: 77%; font-family: Arial, Helvetica, sans-serif; }
 
 #trk2-waveform {
-    width: 390px; height: 30px; background: #131315; position: fixed; left: 29px; top: 247px; z-index: 1000;}
+    width: 390px; height: 30px; background: #131315; position: fixed; right: 29px; top: 247px; z-index: 1000;}
 
 #trk2-waveform ::part(wrapper) { height: 30px; background-color: #131315; }
 

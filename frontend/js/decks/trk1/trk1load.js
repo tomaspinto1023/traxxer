@@ -16,6 +16,7 @@ function createTrack1WaveSurfer(playIcon, pauseIcon) {
   });
 
   trk1WaveSurfer.on('pause', () => {
+    if (trk1IsScratchingJog) return; 
     setPlayPauseVisual(false, playIcon, pauseIcon);
   });
 

@@ -1,4 +1,4 @@
-//Jog wheel da trk 1
+// Jog wheel da trk 1
 
 // Audio do scratch
 
@@ -164,8 +164,9 @@ function setupTrack1JogWheel(jogWheel) {
     }
 
     if (mode === 'scratch') {
+      trk1IsScratchingJog = true; // ← ativa flag antes de pausar
       jogWheel.classList.add('is-scratching');
-      startTrack1ScratchSound(); // ← inicia som de scratch
+      startTrack1ScratchSound();
 
       if (trk1WaveSurfer.isPlaying()) {
         trk1WaveSurfer.pause();
@@ -195,7 +196,7 @@ function setupTrack1JogWheel(jogWheel) {
     trk1JogData.lastMoveTime = now;
 
     if (trk1JogData.mode === 'scratch') {
-      applyTrack1Scratch(angleDelta, timeDeltaMs); // passa timeDeltaMs para o som
+      applyTrack1Scratch(angleDelta, timeDeltaMs);
       setTrack1JogWheelRotation(jogWheel, trk1JogVisualRotation + angleDelta);
       return;
     }
@@ -210,8 +211,9 @@ function setupTrack1JogWheel(jogWheel) {
     event.preventDefault();
 
     if (trk1JogData.mode === 'scratch') {
+      trk1IsScratchingJog = false; // ← desativa flag antes de retomar
       jogWheel.classList.remove('is-scratching');
-      stopTrack1ScratchSound(); // ← para o som de scratch
+      stopTrack1ScratchSound();
 
       if (trk1JogData.wasPlayingBeforeScratch) {
         trk1JogData.scratchResumeTimeout = setTimeout(() => {
@@ -240,7 +242,8 @@ function setupTrack1JogWheel(jogWheel) {
     if (event.pointerId !== trk1JogData.pointerId) return;
 
     jogWheel.classList.remove('is-scratching', 'is-jogging');
-    stopTrack1ScratchSound(); // ← para o som se o pointer for perdido
+    trk1IsScratchingJog = false; // ← desativa flag se pointer for perdido
+    stopTrack1ScratchSound();
     resetTrack1JogPlaybackRate();
 
     trk1JogData.isActive = false;
@@ -285,7 +288,7 @@ function applyTrack1Scratch(angleDelta, timeDeltaMs) {
   if (!trk1WaveSurfer) return;
   if (!trk1HasLoadedTrack) return;
 
-  updateTrack1ScratchSound(angleDelta, timeDeltaMs); // ← atualiza pitch/volume do som
+  updateTrack1ScratchSound(angleDelta, timeDeltaMs);
 
   const duration = trk1WaveSurfer.getDuration();
   const currentTime = trk1WaveSurfer.getCurrentTime();
@@ -421,9 +424,9 @@ function resetTrack1JogWheel(jogWheel) {
   trk1JogData.mode = null;
   trk1JogData.pointerId = null;
 
-  stopTrack1ScratchSound(); // ← garante que o som para no reset
+  stopTrack1ScratchSound();
   resetTrack1JogPlaybackRate();
-    trk1JogVisualRotation = 0;
+  trk1JogVisualRotation = 0;
 }
 
 initTrack1ScratchSound();

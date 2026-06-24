@@ -1,6 +1,6 @@
 // Lógica de escala da Track 2
 
-function getTrack1ScaleFromTags(tags) {
+function getTrack2ScaleFromTags(tags) {
   if (!tags) return null;
 
   const possibleKey =
@@ -14,20 +14,20 @@ function getTrack1ScaleFromTags(tags) {
   return String(possibleKey).trim();
 }
 
-async function detectAndShowTrack1Scale(file, scaleText, loadId) {
+async function detectAndShowTrack2Scale(file, scaleText, loadId) {
   if (!scaleText) return;
   scaleText.textContent = '...';
 
   try {
     const scale = await window.electronAPI.analyzeScaleLocal(file.path);
 
-    if (loadId !== trk1LoadId) return;
-    if (!trk1HasLoadedTrack) return;
+    if (loadId !== trk2LoadId) return;
+    if (!trk2HasLoadedTrack) return;
 
     scaleText.textContent = scale || '--';
   } catch (error) {
     console.log('Erro ao detetar escala:', error);
-    if (loadId !== trk1LoadId) return;
+    if (loadId !== trk2LoadId) return;
     scaleText.textContent = '--';
   }
 }
