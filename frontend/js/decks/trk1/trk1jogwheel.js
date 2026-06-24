@@ -300,6 +300,11 @@ function applyTrack1Scratch(angleDelta, timeDeltaMs) {
   if (newTime > duration) newTime = duration;
 
   trk1WaveSurfer.setTime(newTime);
+
+  // ← atualiza os displays de tempo em tempo real durante o scratch
+  const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
+  const remainingTimeText = document.getElementById('trk1-music-remaining-time');
+  updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
 }
 
 function applyTrack1Jog(angleDelta, timeDeltaMs) {
@@ -319,6 +324,11 @@ function applyTrack1Jog(angleDelta, timeDeltaMs) {
     if (newTime > duration) newTime = duration;
 
     trk1WaveSurfer.setTime(newTime);
+
+    // ← atualiza os displays durante jog com música pausada
+    const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
+    const remainingTimeText = document.getElementById('trk1-music-remaining-time');
+    updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);
     return;
   }
 

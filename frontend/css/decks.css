@@ -56,8 +56,8 @@
     left: 430px; position: fixed; font-family: Arial, Helvetica, sans-serif; }
 
 #trk1-scale {
-    display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: 1%;
-    position: fixed; left: 492px; top: 229px; font-size: 70%; background-color: #131315; }
+    display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: max-content;
+    position: fixed; left: 461px; top: 229px; font-size: 70%; background-color: #131315; }
 
 #trk1-scale-text, #trk1-scale-itself { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
 
