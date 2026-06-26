@@ -19,12 +19,15 @@ function getTrack1BpmFromTags(tags) {
 }
 
 async function detectAndShowTrack1Bpm(file, bpmText, loadId) {
-  if (!bpmText) return;
+  const bpmStart = performance.now();
 
+  if (!bpmText) return;
   bpmText.textContent = '...';
 
   try {
     const bpm = await detectTrack1BpmFromAudio(file);
+    const bpmEnd = performance.now(); // ← ADICIONA AQUI
+    console.log(`[TESTE] Deteção de BPM: ${(bpmEnd - bpmStart).toFixed(2)}ms`);
 
     if (loadId !== trk1LoadId) return;
     if (!trk1HasLoadedTrack) return;

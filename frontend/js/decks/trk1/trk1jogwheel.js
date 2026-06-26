@@ -285,6 +285,8 @@ function normalizeTrack1AngleDelta(delta) {
 }
 
 function applyTrack1Scratch(angleDelta, timeDeltaMs) {
+  const scratchStart = performance.now();
+
   if (!trk1WaveSurfer) return;
   if (!trk1HasLoadedTrack) return;
 
@@ -301,7 +303,9 @@ function applyTrack1Scratch(angleDelta, timeDeltaMs) {
 
   trk1WaveSurfer.setTime(newTime);
 
-  // ← atualiza os displays de tempo em tempo real durante o scratch
+  const scratchEnd = performance.now(); // ← ADICIONA AQUI
+  console.log(`[TESTE] Resposta do scratch: ${(scratchEnd - scratchStart).toFixed(2)}ms`);
+
   const elapsedTimeText = document.getElementById('trk1-music-elapsed-time');
   const remainingTimeText = document.getElementById('trk1-music-remaining-time');
   updateTrack1TimeDisplays(elapsedTimeText, remainingTimeText);

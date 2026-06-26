@@ -28,6 +28,7 @@ function getTrack1WaveSurfer() {
 }
 
 function loadTrack1File(file, elements) {
+  const loadStart = performance.now();
   const { cover, musicName, channelName, bpmText, scaleText, playIcon, pauseIcon } = elements;
 
   trk1LoadId++;
@@ -116,6 +117,8 @@ function loadTrack1File(file, elements) {
   });
 
   trk1WaveSurfer.once('ready', () => {
+    const loadEnd = performance.now(); 
+    console.log(`[TESTE] Carregamento da faixa: ${(loadEnd - loadStart).toFixed(2)}ms`);
     if (currentLoadId !== trk1LoadId) return;
     if (!trk1HasLoadedTrack) return;
 

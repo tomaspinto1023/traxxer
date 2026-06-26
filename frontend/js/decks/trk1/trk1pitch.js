@@ -57,6 +57,8 @@ function initTrack1Pitch(waveSurfer) {
 
 // Aplica pitch em semitões (positivo = mais agudo, negativo = mais grave)
 function applyTrack1Pitch(semitones) {
+  const pitchStart = performance.now();
+
   if (!trk1MediaSource || !trk1AudioContext) return;
 
   trk1CurrentPitchSemitones = semitones;
@@ -89,6 +91,8 @@ function applyTrack1Pitch(semitones) {
   trk1MediaSource.connect(trk1AudioContext.destination);
 
   console.log(`Pitch aplicado: ${semitones} semitões (ratio: ${pitchRatio.toFixed(3)})`);
+  const pitchEnd = performance.now(); 
+  console.log(`[TESTE] Resposta do pitch: ${(pitchEnd - pitchStart).toFixed(2)}ms`);
 }
 
 // Chamado quando a escala é detetada/alterada
