@@ -26,7 +26,7 @@ async function detectAndShowTrack1Bpm(file, bpmText, loadId) {
 
   try {
     const bpm = await detectTrack1BpmFromAudio(file);
-    const bpmEnd = performance.now(); // ← ADICIONA AQUI
+    const bpmEnd = performance.now(); 
     console.log(`[TESTE] Deteção de BPM: ${(bpmEnd - bpmStart).toFixed(2)}ms`);
 
     if (loadId !== trk1LoadId) return;
