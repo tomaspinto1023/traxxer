@@ -136,6 +136,7 @@ function loadTrack1File(file, elements) {
     if (remainingTimeText) {
         remainingTimeText.textContent = formatTrack1Time(duration);
     }
+    window.dispatchEvent(new CustomEvent('perf-track-ready'));
     });
 }
 
