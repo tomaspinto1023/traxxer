@@ -160,9 +160,6 @@ npm start
 - Controlo de pitch (SoundTouchJS)
 - Botões CUE, Play/Pause, Stop e Ejetar
 - Indicadores de tempo decorrido e restante
-- Crossfader e faders de canal (interface)
-- Equalizador de três bandas — HIGH, MID, LOW (interface)
-- GAIN e filtro por deck (interface)
 - Biblioteca de músicas com leitura de pasta
 - Janela personalizada sem moldura nativa (3 tamanhos fixos)
 - Comunicação IPC entre frontend e backend C++
@@ -170,6 +167,9 @@ npm start
 
 ### Planeadas
 - Implementação da lógica de áudio do middle deck (crossfader, EQ, faders)
+- Crossfader e faders de canal (interface)
+- Equalizador de três bandas — HIGH, MID, LOW (interface)
+- GAIN e filtro por deck (interface)
 - SYNC automático de BPM entre os dois decks
 - Loops e Hotcues/Pads
 - Efeitos de áudio
