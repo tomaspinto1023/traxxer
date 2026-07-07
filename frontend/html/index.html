@@ -13,11 +13,13 @@
   <script src="../js/loadPartials.js"></script>
   <script src="../js/perfTests.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="../css/header-waveforms.css">
+  <link rel="stylesheet" href="../css/waveforms.css">
   <link rel="stylesheet" href="../css/tracksbpms.css">
-  <link rel="stylesheet" href="../css/decks.css">
+  <link rel="stylesheet" href="../css/decks/middledeck.css">
+  <link rel="stylesheet" href="../css/decks/deck1.css">
+  <link rel="stylesheet" href="../css/decks/deck2.css">
   <link rel="stylesheet" href="../css/library.css">
-  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/window.css">
 </head>
 <body>
   <div id="titlebar">
@@ -95,6 +97,7 @@
   <div data-include="./partials/library.html"></div>
 
   <script>
+    // Lógica JavaScript da janela personalizada
     document.addEventListener('traxxer:partials-loaded', () => {
 
       const sizeOrder = ['medium', 'large', 'small'];

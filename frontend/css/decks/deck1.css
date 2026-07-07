@@ -1,0 +1,403 @@
+/* CSS do Deck 1*/
+
+#deck1 { /*Deck 1 - esquerda*/
+    width: 571px; height: 264px; background-color: #3A3A3A; position: fixed; left: 0; top: 187px;
+    border: 1px rgba(0, 0, 0, 0) solid; border-bottom: 1px solid #1A1A1A; }
+
+#trk1 { /*Trk 1 - música da esquerda*/
+    width: 536px; height: 84px; position: fixed; background-color: #131315; left: 28px; top: 194px; }
+
+#trk1-horizontal-line {
+    width: 536px; height: 1px; position: fixed; background-color: #5f5f5f; left: 28px; top: 246px; }
+
+#trk1-vertical-line {
+    width: 1px; height: 84px; position: fixed; background-color: #5f5f5f; left: 420px; top: 194px; }
+
+#trk1-loaded-music-intel {
+    display: flex; align-items: center; justify-content: center; width: 350px; height: 46px; 
+    position: fixed; background-color: #131315; left: 36px; top: 197px; }
+
+#trk1-cover {
+    width: 36px; height: 32px; position: fixed; background-position: center; background-repeat: no-repeat;
+    background-color: #2f2f2f; left: 34px; top: 203px; border: 1px solid #5f5f5f; }
+
+#trk1-drop-zone.drag-over {
+    outline: 2px dashed #e5e5e5; }
+
+#trk1-track-title {
+    width: 330px; height: 20px; position: fixed; left: 77px; top: 194px; font-weight: bolder; background-color: #131315; 
+    color: #ffffff; font-size: 74%; font-family: Arial, Helvetica, sans-serif; }
+
+#trk1-track-artist {
+    width: 330px; height: 12px; position: fixed; left: 77px; top: 214px; background-color: #131315; 
+    color: #e0e0e0; font-size: 65%; font-family: Arial, Helvetica, sans-serif; }
+
+#trk1-waveform {
+    width: 390px; height: 30px; background: #131315; position: fixed; left: 29px; top: 247px; z-index: 1000; }
+
+#trk1-waveform ::part(wrapper) { height: 30px; background-color: #131315; }
+
+#trk1-waveform ::part(scroll) { height: 30px; background-color: #131315; }
+
+#trk1-bpm {
+    background-color: #131315; left: 470px; top: 168px; position: fixed; width: 16px; height: 10px; 
+    font-size: 177%; color: #c83cb0; text-align: right; font-family: Arial, Helvetica, sans-serif; }
+
+#trk1-master-sync { /*Trocar de lugar com o trk1 e meter corfes parecidas com o virtual dj ajustadas à imagem da minha app*/
+    left: 435px; top: 200px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px; }
+
+#trk1-master-sync:hover {
+    background-color: #131315; color: white; /* text: "Master Sync"; */}
+
+#trk1-indicator {
+    background-color: #131315; color: #c83cb0; font-size: 65%; top: 219px; 
+    left: 430px; position: fixed; font-family: Arial, Helvetica, sans-serif; }
+
+#trk1-scale {
+    display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: max-content;
+    position: fixed; left: 461px; top: 229px; font-size: 70%; background-color: #131315; }
+
+#trk1-scale-text, #trk1-scale-itself { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
+
+#trk1-music-elapsed {
+    width: 36px; height: 24px; position: fixed; background-color: #131315; left: 428px; top: 251px; }
+
+#trk1-music-elapsed-indicator {
+    width: 44px; height: 8px; left: 1px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
+    color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 45%; }
+
+#trk1-music-elapsed-time {
+    width: 35px; height: 12px; left: 5px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
+    color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
+
+#trk1-music-remaining {
+    width: 36px; height: 24px; position: fixed; background-color: #131315; left: 480px; top: 251px; }
+
+#trk1-music-remaining-indicator {
+    width: 44px; height: 8px; left: -1px; top: 0px; position: absolute; text-align: center; background-color: #131315; 
+    color: white;  font-family: Arial, Helvetica, sans-serif; font-weight: 500; word-wrap: break-word; font-size: 45%; }
+
+#trk1-music-remaining-time {
+    width: 35px; height: 12px; left: 3px; top: 12px; position: absolute; text-align: center; background-color: #131315; 
+    color: white; font-size: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: 400; word-wrap: break-word; font-size: 65%; }
+
+#trk1-master-sync  { /*Trocar de lugar com o trk1 e meter corfes parecidas com o virtual dj ajustadas à imagem da minha app*/
+    top: 251px; left: 534px; position: fixed; background-color: #131315; color: #7f7f7f; font-size: 22px;  }
+
+#trk1-master-sync:hover {
+    background-color: #131315; color: white; }
+
+#trk1-fx-indicator {
+    width: 15px; height: 74px; position: relative; top: 98px; left: 4px; }
+
+#trk1-fx-button {
+    width: 15px; height: 74px; left: 0px; top: 0px; position: absolute; background: #504F4F; border: 0.50px #0C0C0C solid }
+
+#trk1-fx-text { 
+    width: 38px; height: 8px; left: 4px; top: 51px; position: absolute; transform: rotate(-90deg); transform-origin: top left; background: #504F4F;
+    text-align: center; color: white; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: 300; word-wrap: break-word; }
+
+#trk1-fx-circle {
+    width: 5px; height: 5px; left: 5px; bottom: 8px; position: absolute; background: #CECECE; border-radius: 9999px }
+
+#trk1-effects {
+    width: 260px; height: 74px; left: 25px; top: 24.5px; position: relative; background-color: #3A3A3A; }
+
+#trk1-effects-position {
+    width: 210px; height: 74px; left: -2px; top: 0px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-effect-n1-general-div {
+    width: 260px; height: 20px; left: 0px; top: -2px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-effect-n1 {
+    display: flex; align-items: center; justify-content: center; width: 70px; height: 18px; left: 0px; top: 2px; 
+    position: absolute; background-color: #212121; border: 0.50px #6D6D6D solid; }
+
+#trk1-effect-n1-arrow {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 18px; left: 70px; 
+    top: 2px; position: absolute; background-color: #212121; border: 0.50px #6D6D6D solid; }
+
+#trk1-effect-n1-decrease {
+    display: flex; align-items: center; width: 14px; height: 14px; left: 88.5px; top: 4px; 
+    position: absolute; background-color: #222222; border-radius: 1px; }
+
+#trk1-effect-n1-blackbar {
+    width: 60px; height: 6px; left: 108px; top: 7.5px; position: absolute; background-color: black; border-radius: 4px; }
+
+#trk1-effect-n1-switch {
+    width: 8px; height: 14px; left: 108px; top: 3.5px; position: absolute; background-color: #D9D9D9; }
+
+#trk1-effect-n1-increase {
+    display: flex; align-items: center; width: 14px; height: 14px; left: 172px; top: 3.5px; 
+    position: absolute; background: #222222; border-radius: 1px; }
+
+#trk1-effect-n2-general-div {
+    width: 265px; height: 19px; left: 0px; top: 26px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-effect-n2 {
+    width: 70px; height: 18px; left: 0px; top: 1.25px; position: absolute; background-color: #212121; border: 0.50px #6D6D6D solid; }
+
+#trk1-effect-n2-arrow {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 18px; left: 70px; 
+    top: 1.25px; position: absolute; background-color: #212121; border: 0.50px #6D6D6D solid; }
+
+#trk1-effect-n2-decrease {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; left: 88.5px; 
+    top: 3.5px; position: absolute; background-color: #222222; border-radius: 1px; }
+
+#trk1-effect-n2-blackbar {
+    width: 60px; height: 6px; left: 108px; top: 7.5px; position: absolute; background-color: black; border-radius: 4px; }
+
+#trk1-effect-n2-switch {
+    width: 8px; height: 14px; left: 108px; top: 3px; position: absolute; background-color: #D9D9D9; }
+
+#trk1-effect-n2-increase {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; 
+    left: 172px; top: 3.5px; position: absolute; background: #222222; border-radius: 1px; }
+
+#trk1-effect-n3-general-div {
+    width: 265px; height: 20px; left: 0px; top: 54px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-effect-n3 {
+    width: 70px; height: 18px; left: 0px; top: 1px; position: absolute; background-color: #212121; border: 0.50px #6D6D6D solid; }
+
+#trk1-effect-n3-arrow {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 18px; left: 70px; 
+    top: 1px; position: absolute; background-color: #212121; border: 0.50px #6D6D6D solid; }
+
+#trk1-effect-n3-decrease {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; left: 88.5px; 
+    top: 3.5px; position: absolute; background-color: #222222; border-radius: 1px; }
+
+#trk1-effect-n3-blackbar {
+    width: 60px; height: 6px; left: 108px; top: 7.5px; position: absolute; background-color: black; border-radius: 4px; }
+
+#trk1-effect-n3-switch {
+    width: 8px; height: 14px; left: 108px; top: 3px; position: absolute; background-color: #D9D9D9; }
+
+#trk1-effect-n3-increase {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; left: 172px; 
+    top: 3.5px; position: absolute; background: #222222; border-radius: 1px; }
+
+#trk1-tools-indicator {
+    width: 12px; height: 74px; position: relative; bottom: 49.5px; left: 216px; }
+
+#trk1-tools-button {
+    width: 12px; height: 74px; left: 0px; top: 0px; position: absolute; background: #504F4F; border: 0.50px #0C0C0C solid; }
+
+#trk1-tools-text { 
+    width: 29px; height: 10px; left: 2px; top: 51px; position: absolute; transform: rotate(-90deg); background: #504F4F; transform-origin: top left; 
+    text-align: center; color: white; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: 300; word-wrap: break-word; }
+
+#trk1-tools-circle {
+    width: 5px; height: 5px; left: 4px; bottom: 8px; position: absolute; background: #CECECE; border-radius: 9999px; }
+
+#trk1-tools-main-div {
+    width: 108px; height: 54px; position: fixed; top: 293px; left: 236px; }
+
+#trk1-tools-position {
+    width: 108px; height: 54px; left: 0px; top: 0px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-slip-mode {
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 0px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 87%; }
+
+/*#trk1-slip-mode:hover {}*/
+
+#trk1-slip-mode i {
+    margin: 0 -2.8px; /* ajusta o espaço lateral */ }
+
+#trk1-restart-beatgrid {
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 38px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 130%; }
+
+/*#trk1-restart-beatgrid:hover {}*/
+
+#trk1-adjust-beatgrid {
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 76px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 120%; }
+
+/*#trk1-adjust-beatgrid:hover {}*/
+
+#trk1-quantize {
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 0px; top: 33px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 102%; }
+
+/*#trk1-quantize:hover {}*/
+
+#trk1-repeat {
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 38px; top: 33px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 130%; }
+
+/*#trk1-repeat:hover {}*/
+
+#trk1-sound-lock {
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 76px; top: 33px; position: absolute;
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 130%; }
+
+/*#trk1-sound-lock:hover {}*/
+
+#trk1-separation-line-horizontal {
+    width: 348px; height: 1px; left: 6px; top: 365px; position: fixed; background-color: #646464; }
+
+#trk1-loop-indicator {
+    width: 15px; height: 74px; position: fixed; top: 372px; left: 5px; }
+
+#trk1-loop-button {
+    width: 15px; height: 74px; left: 0px; top: 0px; position: absolute; background: #504F4F; border: 0.50px #0C0C0C solid }
+
+#trk1-loop-text { 
+    width: 29px; height: 10px; left: 4px; top: 50px; position: absolute; transform: rotate(-90deg); transform-origin: top left; background: #504F4F;
+    text-align: center; color: white; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: 300; word-wrap: break-word; }
+
+#trk1-loop-circle {
+    width: 5px; height: 5px; left: 5px; bottom: 8px; position: absolute; background: #CECECE; border-radius: 9999px }
+
+#trk1-beatloop-main-div {
+    width: 115px; height: 50px; position: fixed; top: 378px; left: 27px; }
+
+#trk1-beatloop-position {
+    width: 115px; height: 50px; left: 0px; top: 0px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-beatloop-btn {
+    display: flex; align-items: center; justify-content: center; width: 28px; height: 29px; left: 0px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 120%; }
+
+#trk1-reloop-btn {
+     display: flex; align-items: center; justify-content: center; width: 26px; height: 29px; left: 0px; top: 35px; position: absolute; 
+     background: #2A2A2A; border-radius: 1.20px; border: 0.50px #0C0C0C solid;  }
+
+#trk1-beatloop-size {
+    display: flex; align-items: center; justify-content: center; width: 44px; height: 29px; left: 28px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 105%; }
+
+#trk1-loopin-btn {
+    display: flex; align-items: center; justify-content: center; width: 26px; height: 29px; left: 30px; top: 35px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 105%; }
+
+#trk1-beatloop-arrows {
+    width: 14px; height: 29px; left: 72px; top: 0px; position: absolute;
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 75%; }
+
+#trk1-loopout-btn {
+    display: flex; align-items: center; justify-content: center; width: 26px; height: 29px; left: 60px; top: 35px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 105%; }
+
+#trk1-beatjump-main-div {
+    width: 115px; height: 50px; position: fixed; top: 378px; left: 121px; }
+
+#trk1-beatjump-position {
+    width: 115px; height: 50px; left: 0px; top: 0px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-beatjump-size {
+    display: flex; align-items: center; justify-content: center; width: 72px; height: 29px; left: 0px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 105%;}
+
+#trk1-beatloop-anchor {
+    width: 26px; height: 29px; left: 0px; top: 35px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 75%; }
+
+#trk1-beatloop-anchor i {
+    position: absolute;
+}
+
+#trk1-beatjump-arrows {
+    width: 18px; height: 29px; left: 68px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 75%; }
+
+#trk1-beatjump-backward {
+    display: flex; align-items: center; justify-content: center; width: 26px; height: 29px; left: 30px; top: 35px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 105%; }
+
+#trk1-beatjump-forward  {
+    display: flex; align-items: center; justify-content: center; width: 26px; height: 29px; left: 60px; top: 35px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 105%; }
+
+#trk1-pads-indicator {
+    width: 12px; height: 74px; position: fixed; top: 372px; left: 217px; }
+
+#trk1-pads-button {
+    width: 12px; height: 74px; left: 0px; top: 0px; position: absolute; background: #504F4F; border: 0.50px #0C0C0C solid }
+
+#trk1-pads-text { 
+    width: 29px; height: 10px; left: 2px; top: 50px; position: absolute; transform: rotate(-90deg); transform-origin: top left; background: #504F4F;
+    text-align: center; color: white; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: 300; word-wrap: break-word; }
+
+#trk1-pads-circle {
+    width: 5px; height: 5px; left: 4px; bottom: 8px; position: absolute; background: #CECECE; border-radius: 9999px }
+
+#trk1-hotcues-main-button {
+    display: flex; align-items: center; justify-content: center; width: 52px; height: 20px; background: #2A2A2A; position: fixed; top: 376px; left: 238px; 
+    color: #e5e5e5; font-family: Arial, Helvetica, sans-serif; font-size: 58%; border: 0.50px #0C0C0C solid; border-radius: 1.20px; }
+
+#trk1-nodes-main-button {
+    display: flex; align-items: center; justify-content: center; width: 52px; height: 20px; background: #2A2A2A; position: fixed; top: 376px; left: 294px; 
+    color: #e5e5e5; font-family: Arial, Helvetica, sans-serif; font-size: 68%; border: 0.50px #0C0C0C solid; border-radius: 1.20px; }
+
+#trk1-pads-main-div {
+    width: 115px; height: 50px; position: fixed; top: 400px; left: 238px; }
+
+#trk1-pads-position {
+    width: 115px; height: 50px; left: 0px; top: 0px; position: absolute; background-color: #3A3A3A; }
+
+#trk1-pads-btn1 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 0px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-pads-btn2 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 28px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-pads-btn3 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 56px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-pads-btn4 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 84px; top: 0px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-pads-btn5 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 0px; top: 24px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-pads-btn6 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 28px; top: 24px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-pads-btn7 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 56px; top: 24px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-pads-btn8 {
+    display: flex; align-items: center; justify-content: center; width: 24px; height: 20px; left: 84px; top: 24px; position: absolute; 
+    background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 80%; }
+
+#trk1-eject-btn {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; left: 364px; top: 289px; position: fixed; 
+    background: #2A2A2A; color: #c9c9c9; border-radius: 20px; border: 0.50px #0C0C0C solid; font-size: 50%; }
+
+#trk1-stop-btn {
+    display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; left: 364px; top: 397px; position: fixed; 
+    background: #2A2A2A; color: #c9c9c9; border-radius: 20px; border: 0.50px #0C0C0C solid; font-size: 20%; }
+
+#trk1-jog-wheel {
+    width: 106px; height: 106px; left: 380px; top: 293px; position: fixed; background-color: #565656; border-radius: 100px; border: 5px #131313 solid; }
+
+#trk1-cue-btn {
+    display: flex; align-items: center; justify-content: center; width: 40px; height: 22px; left: 372px; top: 420px; position: fixed; background-color: #252525; 
+    border-radius: 1.50px; border: 0.50px #0C0C0C solid; color: #e5e5e5; font-family: Arial, Helvetica, sans-serif; font-size: 70%; } 
+
+#trk1-play-pause-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0px; width: 40px; height: 22px; left: 417px; top: 420px; 
+    position: fixed; background-color: #252525; border-radius: 1.50px; border: 0.50px #0C0C0C solid; } 
+
+#trk1-play-pause-btn i {
+    margin: 0 -2px; /* ajusta o espaço lateral */
+}
+
+#trk1-sync-btn {
+    display: flex; align-items: center; justify-content: center; width: 40px; height: 22px; left: 462px; top: 420px; position: fixed; background-color: #252525; 
+    border-radius: 1.50px; border: 0.50px #0C0C0C solid; color: #e5e5e5; font-family: Arial, Helvetica, sans-serif; font-size: 70%; } 
+
+#trk1-separation-line-vertical {
+    width: 1px; height: 160px; left: 354px; top: 290px; position: fixed; background-color: #646464; }

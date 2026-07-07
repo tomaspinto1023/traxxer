@@ -1,0 +1,269 @@
+/* CSS do Middle Deck */
+
+#middle-deck {
+    width: 292px; height: 265px; background: #383838; position: fixed; left: 573px; top: 187px; z-index: 1000; display: flex; justify-content: center; 
+    align-items: center; border-right: 1px solid #1A1A1A; border-left: 1px solid #1A1A1A; border-bottom: 1px solid #1A1A1A; }
+
+#trk1-knobs { width: 50px; height: 240px; position: relative; /* importante para ser referência dos filhos */ background: none; right: 91px; } 
+
+#eq-high-trk1, #eq-mid-trk1, #eq-low-trk1, #eq-filter-trk1  { 
+    position: absolute; width: 43px; height: 40px; background-color: #383838; left: 50%; transform: translateX(-50%); /* centra horizontalmente */ } 
+    
+#eq-high-trk1 { top: 0%; } 
+#eq-mid-trk1 { top: 25%; }
+#eq-low-trk1 { top: 50%; }
+#eq-filter-trk1 { top: 76%; }
+
+#eq-gain-trk1, #eq-main, #eq-gain-trk2 {
+    position: absolute; width: 43px; height: 40px; background: none; left: 50%; transform: translateX(-50%); }
+
+#eq-gain-trk1 { top: 4%; left: 18%;}
+#eq-main { top: 3.8%; }
+#eq-gain-trk2 { top: 4%; left: 83%; }
+
+.middle-knob-indicator {
+    position: absolute; top: 0; left: 50%; width: 3px; height: 16px; background: #c316a9; transform: translateX(-50%); }
+
+/* sombra inferior */
+.middle-knob-shadow {
+    position: absolute; top: 30px; left: 0; width: 43px; height: 40px; background: #303030; border-radius: 50%; }
+
+/* label */
+.middle-knob-label {
+    position: absolute; top: 39px; left: 7px; width: 28px; height: 14px; color: white; background-color: #303030; 
+    font-size: 10px; font-family: Jost, sans-serif; font-weight: 300; text-align: center; }
+
+#trk2-knobs { width: 50px; height: 240px; position: relative; /* importante para ser referência dos filhos */ background: none; left: 92px; } 
+
+#eq-high-trk2, #eq-mid-trk2, #eq-low-trk2, #eq-filter-trk2  { 
+    position: absolute; width: 43px; height: 40px; background-color: #383838; left: 50%; transform: translateX(-50%); /* centra horizontalmente */ } 
+    
+#eq-high-trk2 { top: 0%; } 
+#eq-mid-trk2 { top: 25%; }
+#eq-low-trk2 { top: 50%; }
+#eq-filter-trk2 { top: 76%; }
+
+/* círculo base */
+.knob-base {
+    position: relative; top: 0%; left: 2px; width: 38px; height: 40px; background: #292828; border-radius: 50%; }
+
+/* sombra inferior */
+.knob-shadow {
+    position: absolute; top: 30px; left: 0; width: 43px; height: 40px; background: #383838; border-radius: 50%; }
+
+/* círculo interior (centrado dentro do base) */
+.knob-inner {
+    position: absolute; top: 50%; left: 50%; width: 32px; height: 32px; top: 20px; box-sizing: border-box; 
+    background: #4A4A4A; border: 1.5px solid #141414; border-radius: 50%; transform: translate(-50%, -50%);}
+
+/* indicador (centrado no topo do base) */
+.knob-indicator {
+    position: absolute; top: 0; left: 50%; width: 3px; height: 16px; background: #969696; transform: translateX(-50%); }
+
+/* label */
+.knob-label {
+    position: absolute; top: 39px; left: 8px; width: 28px; height: 14px; color: white; background-color: #383838; 
+    font-size: 11px; font-family: Jost, sans-serif; font-weight: 300; text-align: center; }
+
+#middle-knobs {
+    width: 170px; height: 205px; background: #303030; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-right: 1px solid #1A1A1A; border-bottom: 1px solid #1A1A1A; 
+    border-left: 1px solid #1A1A1A; position: fixed; top: 187px; display: flex; align-items: center; justify-content: center; }
+
+#main-intensity {
+    display: flex; gap: 8px; background: none; position: relative; top: 16px; right: 23.5%;}
+
+#trk1-intensity, #mixing-intensity, #trk2-intensity {
+    background-image: repeating-linear-gradient( to bottom,#1A1A1A 0px,#1A1A1A 1px, transparent 2px, transparent 4px);
+    height: 102px; border: 1px solid var(--preto); box-sizing: border-box;  }
+
+#trk1-intensity { width: 8px; }
+#mixing-intensity { width: 16px; }
+#trk2-intensity { width: 8px; }
+
+#headphones-sound-distribution {
+    display: flex; align-items: center; justify-content: center; background-color: #101010; 
+    position: absolute; width: 54px; height: 6px; top: 184px; border-radius: 20px; }
+
+#headphones-sound-distribution-switch {
+    background-color: #c2bebe; position: absolute; width: 8px; height: 16px; }
+
+#trk1-volume {
+    display: flex; align-items: center; justify-content: center; position: relative; background: none; width: 40px; height: 105px; right: 10px; top: 20px; }
+
+#trk1-volume-black-bar {
+    height: 100px; width: 4px; background-color: #0F0F0F; z-index: 2000; position: fixed; border-radius: 20px; justify-content: center; align-items: center; }
+
+#trk1-volume-first-line {
+    width: 30px; height: 1px; top: 4px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-shift-btn { 
+    position: absolute; top: -5px; width: 34px; height: 17px; background-color: #212121; z-index: 2000; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;  } 
+    
+#trk1-volume-dark-grey-line { 
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 7px; background-color: #5c5c5c; }
+
+#trk1-volume-light-grey-line {
+    width: 32px; height: 3px; background-color: #808080; }
+
+#trk1-volume-second-line {
+    width: 24px; height: 1px; top: 15px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-third-line {
+    width: 24px; height: 1px; top: 25px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-fourth-line {
+    width: 24px; height: 1px; top: 35px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-fifth-line {
+    width: 24px; height: 1px; top: 45px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-sixth-line {
+    width: 24px; height: 1px; top: 55px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-seventh-line {
+    width: 24px; height: 1px; top: 65px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-eighth-line {
+    width: 24px; height: 1px; top: 75px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-ninth-line {
+    width: 24px; height: 1px; top: 85px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-volume-tenth-line {
+    width: 30px; height: 1px; top: 96px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk1-pfl-btn {
+    display: flex; align-items: center; justify-content: center; position: absolute; background-color: #282828; width: 34px; 
+    height: 20px; left: 13px; top: 178px; z-index: 3000; border: 1px solid black; }
+
+#trk1-pfl-btn-headphones {
+    color: #c1c1c1; }
+
+#trk1-pfl-btn-headphones:hover {
+    color: #db43c4; }
+
+#trk2-volume {
+    display: flex; align-items: center; justify-content: center; position: relative; background: none; width: 40px; height: 105px; left: 58px; top: 20px; }
+
+#trk2-volume-black-bar { 
+    height: 100px; width: 4px; background-color: #0F0F0F; z-index: 2000; position: fixed; border-radius: 20px; justify-content: center; align-items: center; } 
+    
+#trk2-volume-first-line { 
+    width: 30px; height: 1px; top: 4px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-shift-btn { 
+    position: absolute; top: -5px; width: 34px; height: 17px; background-color: #212121; z-index: 2000; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center; } 
+
+#trk2-volume-dark-grey-line { 
+    display: flex; align-items: center; justify-content: center; width: 34px; height: 7px; background-color: #5c5c5c; } 
+
+#trk2-volume-light-grey-line { 
+    width: 32px; height: 3px; background-color: #808080; } 
+
+#trk2-volume-second-line { 
+    width: 24px; height: 1px; top: 15px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-third-line { 
+    width: 24px; height: 1px; top: 25px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-fourth-line { 
+    width: 24px; height: 1px; top: 35px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-fifth-line { 
+    width: 24px; height: 1px; top: 45px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-sixth-line { 
+    width: 24px; height: 1px; top: 55px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-seventh-line { 
+    width: 24px; height: 1px; top: 65px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-eighth-line { 
+    width: 24px; height: 1px; top: 75px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-ninth-line { 
+    width: 24px; height: 1px; top: 85px; background-color: #646464; position: absolute; z-index: 1000; } 
+
+#trk2-volume-tenth-line { 
+    width: 30px; height: 1px; top: 96px; background-color: #646464; position: absolute; z-index: 1000; }
+
+#trk2-pfl-btn {
+    display: flex; align-items: center; justify-content: center; position: absolute; background-color: #282828; width: 34px; 
+    height: 20px; right: 13px; top: 178px; z-index: 3000; border: 1px solid black; }
+
+#trk2-pfl-btn-headphones {
+    color: #c1c1c1; }
+
+#trk2-pfl-btn-headphones:hover {
+    color: #db43c4; }
+
+#crossfader {
+    width: 160px; height: 42px; position: fixed; top: 402px; border-radius: 10px; display: flex; align-items: center; 
+    justify-content: center; background-color: #2b2c2f; box-shadow: 0px 0px 8px 0px #2a2a2a; }
+
+#crossfader-black-bar {
+    width: 140px; height: 4px; background-color: #0f0f0f; border-radius: 10px; border: 2px solid black;
+    position: relative; display: flex; align-items: center; justify-content: center; z-index: 2000; }
+
+#left-first-line-maincf {
+    width: 1px; height: 26px; right: -58px; background-color: #646464; position: relative; z-index: 500; }
+
+#left-second-line-maincf {
+    width: 1px; height: 26px; right: -46px; background-color: #646464; position: relative; z-index: 500; }
+
+#left-third-line-maincf {
+    width: 1px; height: 26px; right: -33px; background-color: #646464; position: relative; z-index: 500; }
+
+#left-fourth-line-maincf {
+    width: 1px; height: 26px; right: -20px; background-color: #646464; position: relative; z-index: 500; }
+
+#left-fifth-line-maincf {
+    width: 1px; height: 34px; right: -8px; background-color: #646464; position: relative; z-index: 500; }
+
+#crossfader-shift-btn {
+    width: 18px; height: 36px; background-color: #1d1d1d; position: relative;
+    border-radius: 2px; display: flex; align-items: center; justify-content: center; z-index: 2000; }
+
+#dark-grey-line-maincf {
+    width: 6px; height: 36px; background-color: #5c5c5c; display: flex; align-items: center; justify-content: center; z-index: 2000;
+}
+
+#light-grey-line-maincf {
+    width: 2px; height: 32px; background-color: #808080; z-index: 2000;
+}
+
+#right-first-line-maincf {
+    width: 1px; height: 26px; left: -55px; background-color: #646464; position: relative; z-index: 500;
+}
+
+#right-second-line-maincf {
+    width: 1px; height: 26px; left: -44px; background-color: #646464; position: relative; z-index: 500;
+}
+
+#right-third-line-maincf {
+    width: 1px; height: 26px; left: -33px; background-color: #646464; position: relative; z-index: 500;
+}
+
+#right-fourth-line-maincf {
+    width: 1px; height: 26px; left: -22px; background-color: #646464; position: relative; z-index: 500;
+}
+
+#right-fifth-line-maincf {
+    width: 1px; height: 34px; left: -12px; background-color: #646464; position: relative; z-index: 500;
+}
+
+#first-trk-letter { /* botão onde tem "A" na borda do lado esquerdo do ecrã */
+    height: 80px; width: 18px; top: 194px; left: 0.27%; position: fixed; background-color:#9d278c; cursor: default; border: 2px solid #c98dc0; color: #ffffff; font-size: 16px; 
+    z-index: 1000; font-family: sans-serif; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease, border-color 0.3s ease; }
+
+#first-trk-letter:hover { /* estado hover → cor mais clara */
+  background-color: #c34eb0; /* tom mais claro */ border-color: #e0b8da; /* borda também mais clara */ }
+
+#second-trk-letter { /* botão onde tem "B" na borda do lado direito do ecrã */
+    height: 80px; width: 18px; top: 194px; right: 0.27%; position: fixed; background-color: #9d278c; cursor: default; border: 2px solid #c98dc0; color: #ffffff; font-size: 16px; 
+    z-index: 1000; font-family: sans-serif; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease, border-color 0.3s ease;  }
+
+#second-trk-letter:hover { /* estado hover → cor mais clara */
+  background-color: #c34eb0; /* tom mais claro */ border-color: #e0b8da; /* borda também mais clara */ }
