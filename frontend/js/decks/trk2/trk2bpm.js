@@ -34,7 +34,7 @@ async function detectAndShowTrack2Bpm(file, bpmText, loadId) {
       updateTrack2BpmPosition(bpmText, bpm);
     } else {
       bpmText.textContent = '--';
-      bpmText.style.left = '470px';
+      bpmText.style.right = '540px';
     }
   } catch (error) {
     console.log('Erro ao detetar BPM:', error);
@@ -42,7 +42,7 @@ async function detectAndShowTrack2Bpm(file, bpmText, loadId) {
     if (loadId !== trk2LoadId) return;
 
     bpmText.textContent = '--';
-    bpmText.style.left = '470px';
+    bpmText.style.right = '540px';
   }
 }
 
@@ -173,8 +173,8 @@ function updateTrack2BpmPosition(bpmText, bpmValue) {
   if (Number.isNaN(bpmNumber)) return;
 
   if (bpmNumber < 100) {
-    bpmText.style.left = '486px';
+    bpmText.style.right = '556px';
   } else {
-    bpmText.style.left = '470px';
+    bpmText.style.right = '540px';
   }
 }

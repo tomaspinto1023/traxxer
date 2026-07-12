@@ -9,6 +9,15 @@
 
 body { margin-top: 32px; }
 
+#app-scale-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1443px;
+    height: 810px;
+    transform-origin: top left;
+}
+
 #titlebar {
     -webkit-app-region: drag;
     display: flex;
@@ -24,6 +33,8 @@ body { margin-top: 32px; }
 }
 
 #titlebar * { background: transparent; }
+
+/* Header */
 
 /* Logo */
 #tb-logo img {

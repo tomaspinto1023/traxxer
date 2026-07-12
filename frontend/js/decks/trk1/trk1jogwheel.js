@@ -5,61 +5,84 @@
 // ============================================================
 // Scratch Sound Engine — Track 1
 // ============================================================
+// O som do scratch usa um pequeno excerto da PRÓPRIA faixa carregada
+// (centrado na posição atual de reprodução), não um som genérico.
 
 let trk1ScratchAudioCtx = null;
 let trk1ScratchGain = null;
-let trk1ScratchAudioBuffer = null;
-let trk1ScratchAudioLoaded = false;
+
+// Excertos (janela) da faixa atual usados como base do scratch
+let trk1ScratchWindowBuffer = null;
+let trk1ScratchWindowBufferReversed = null;
 
 // Dois sources separados: um para frente, outro para trás
 let trk1ScratchSourceFwd = null; // playbackRate positivo
-let trk1ScratchSourceRev = null; // toca o buffer ao contrário (offset invertido)
+let trk1ScratchSourceRev = null; // toca o excerto ao contrário
 let trk1ScratchCurrentDirection = 0; // 1 = frente, -1 = trás, 0 = parado
 
-async function initTrack1ScratchSound() {
+const TRK1_SCRATCH_WINDOW_SECONDS = 1.2;
+
+function initTrack1ScratchSound() {
   trk1ScratchAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
   trk1ScratchGain = trk1ScratchAudioCtx.createGain();
   trk1ScratchGain.gain.value = 0;
   trk1ScratchGain.connect(trk1ScratchAudioCtx.destination);
+}
 
-  try {
-    const response = await fetch('../assets/audios/scratch.mp3');
-    const arrayBuffer = await response.arrayBuffer();
-    trk1ScratchAudioBuffer = await trk1ScratchAudioCtx.decodeAudioData(arrayBuffer);
-    trk1ScratchAudioLoaded = true;
-  } catch (err) {
-    console.warn('Erro ao carregar o áudio do scratch:', err);
+// Extrai (e inverte) um pequeno excerto da faixa carregada, centrado na
+// posição atual do wavesurfer, para servir de base ao som do scratch.
+function buildTrack1ScratchWindow() {
+  trk1ScratchWindowBuffer = null;
+  trk1ScratchWindowBufferReversed = null;
+
+  if (!trk1ScratchAudioCtx || !trk1TrackAudioBuffer || !trk1WaveSurfer) return;
+
+  const original = trk1TrackAudioBuffer;
+  const currentTime = trk1WaveSurfer.getCurrentTime();
+
+  const windowStart = Math.max(0, currentTime - TRK1_SCRATCH_WINDOW_SECONDS / 2);
+  const windowEnd = Math.min(original.duration, windowStart + TRK1_SCRATCH_WINDOW_SECONDS);
+  const startSample = Math.floor(windowStart * original.sampleRate);
+  const endSample = Math.floor(windowEnd * original.sampleRate);
+  const length = Math.max(1, endSample - startSample);
+
+  const windowBuffer = trk1ScratchAudioCtx.createBuffer(
+    original.numberOfChannels,
+    length,
+    original.sampleRate
+  );
+
+  const reversedBuffer = trk1ScratchAudioCtx.createBuffer(
+    original.numberOfChannels,
+    length,
+    original.sampleRate
+  );
+
+  for (let ch = 0; ch < original.numberOfChannels; ch++) {
+    const originalData = original.getChannelData(ch);
+    const windowData = windowBuffer.getChannelData(ch);
+    const reversedData = reversedBuffer.getChannelData(ch);
+
+    for (let i = 0; i < length; i++) {
+      const sample = originalData[startSample + i] || 0;
+      windowData[i] = sample;
+      reversedData[length - 1 - i] = sample;
+    }
   }
+
+  trk1ScratchWindowBuffer = windowBuffer;
+  trk1ScratchWindowBufferReversed = reversedBuffer;
 }
 
 function createScratchSource(reversed) {
-  if (!trk1ScratchAudioCtx || !trk1ScratchAudioBuffer) return null;
+  if (!trk1ScratchAudioCtx) return null;
+
+  const buffer = reversed ? trk1ScratchWindowBufferReversed : trk1ScratchWindowBuffer;
+  if (!buffer) return null;
 
   const source = trk1ScratchAudioCtx.createBufferSource();
-
-  if (reversed) {
-    // Cria um buffer invertido em memória
-    const original = trk1ScratchAudioBuffer;
-    const revBuffer = trk1ScratchAudioCtx.createBuffer(
-      original.numberOfChannels,
-      original.length,
-      original.sampleRate
-    );
-
-    for (let ch = 0; ch < original.numberOfChannels; ch++) {
-      const originalData = original.getChannelData(ch);
-      const revData = revBuffer.getChannelData(ch);
-      for (let i = 0; i < originalData.length; i++) {
-        revData[i] = originalData[originalData.length - 1 - i];
-      }
-    }
-
-    source.buffer = revBuffer;
-  } else {
-    source.buffer = trk1ScratchAudioBuffer;
-  }
-
+  source.buffer = buffer;
   source.loop = true;
   source.connect(trk1ScratchGain);
   return source;
@@ -67,8 +90,10 @@ function createScratchSource(reversed) {
 
 function startTrack1ScratchSound() {
   if (!trk1ScratchAudioCtx) return;
-  if (!trk1ScratchAudioLoaded) return;
   if (trk1ScratchAudioCtx.state === 'suspended') trk1ScratchAudioCtx.resume();
+
+  buildTrack1ScratchWindow();
+  if (!trk1ScratchWindowBuffer) return;
 
   // Cria ambos os sources prontos, com gain 0
   // Só o ativo terá rate > 0; o outro fica em idle
@@ -442,5 +467,3 @@ function resetTrack1JogWheel(jogWheel) {
   resetTrack1JogPlaybackRate();
   trk1JogVisualRotation = 0;
 }
-
-initTrack1ScratchSound();

@@ -7,6 +7,13 @@
 #trk1 { /*Trk 1 - música da esquerda*/
     width: 536px; height: 84px; position: fixed; background-color: #131315; left: 28px; top: 194px; }
 
+#first-trk-number { /* botão onde tem "A" na borda do lado esquerdo do ecrã */
+    height: 80px; width: 18px; top: 194px; left: 0.27%; position: fixed; background-color:#9d278c; cursor: default; border: 2px solid #c98dc0; color: #ffffff; font-size: 16px; 
+    z-index: 1000; font-family: sans-serif; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease, border-color 0.3s ease; }
+
+#first-trk-number:hover { /* estado hover → cor mais clara */
+  background-color: #c34eb0; /* tom mais claro */ border-color: #e0b8da; /* borda também mais clara */ }
+
 #trk1-horizontal-line {
     width: 536px; height: 1px; position: fixed; background-color: #5f5f5f; left: 28px; top: 246px; }
 

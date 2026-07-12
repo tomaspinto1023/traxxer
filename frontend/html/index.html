@@ -91,61 +91,11 @@
   </div>
 
   <!-- Partials -->
-  <div data-include="./partials/waveforms.html"></div>
-  <div data-include="./partials/decks.html"></div>
-  <div data-include="./partials/middledeck.html"></div>
-  <div data-include="./partials/library.html"></div>
-
-  <script>
-    // Lógica JavaScript da janela personalizada
-    document.addEventListener('traxxer:partials-loaded', () => {
-
-      const sizeOrder = ['medium', 'large', 'small'];
-      const sizeIcons = { small: '⊡', medium: '⊟', large: '⊞' };
-
-      window.electronAPI.getWindowSize().then(size => {
-        currentSize = size;
-        document.getElementById('btn-cycle-size').textContent = sizeIcons[size];
-      });
-
-      let currentSize = 'medium';
-      document.getElementById('btn-cycle-size').addEventListener('click', () => {
-        const nextIndex = (sizeOrder.indexOf(currentSize) + 1) % sizeOrder.length;
-        currentSize = sizeOrder[nextIndex];
-        window.electronAPI.setWindowSize(currentSize);
-        document.getElementById('btn-cycle-size').textContent = sizeIcons[currentSize];
-      });
-
-      // Tamanho da janela
-      window.electronAPI.getWindowSize().then(size => {
-        document.querySelector(`[data-size="${size}"]`)?.classList.add('active');
-      });
-
-      document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const size = btn.dataset.size;
-          window.electronAPI.setWindowSize(size);
-          document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-        });
-      });
-
-      // Minimizar / Fechar
-      document.getElementById('btn-minimize').addEventListener('click', () => window.electronAPI.minimizeWindow());
-      document.getElementById('btn-close').addEventListener('click',    () => window.electronAPI.closeWindow());
-
-      // Relógio
-      function updateClock() {
-        const now = new Date();
-        const pad = n => String(n).padStart(2, '0');
-        const el = document.getElementById('tb-clock');
-        if (el) el.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
-
-    });
-  </script>
-
+  <div id="app-scale-wrapper">
+    <div data-include="./partials/waveforms.html"></div>
+    <div data-include="./partials/decks.html"></div>
+    <div data-include="./partials/middledeck.html"></div>
+    <div data-include="./partials/library.html"></div>
+  </div>
 </body>
 </html>

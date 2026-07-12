@@ -19,7 +19,8 @@ async function detectAndShowTrack1Scale(file, scaleText, loadId) {
   scaleText.textContent = '...';
 
   try {
-    const scale = await window.electronAPI.analyzeScaleLocal(file.path);
+    const filePath = window.electronAPI.getPathForFile(file);
+    const scale = await window.electronAPI.analyzeScaleLocal(filePath);
 
     if (loadId !== trk1LoadId) return;
     if (!trk1HasLoadedTrack) return;

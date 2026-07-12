@@ -16,6 +16,7 @@ function createTrack2WaveSurfer(playIcon, pauseIcon) {
   });
 
   trk2WaveSurfer.on('pause', () => {
+    if (trk2IsScratchingJog) return;
     setPlayPauseVisual(false, playIcon, pauseIcon);
   });
 
@@ -44,12 +45,29 @@ function loadTrack2File(file, elements) {
   trk2CuePoint = 0;
   trk2HasLoadedTrack = true;
 
+  // Decodifica a faixa para memória para servir de base ao som do scratch
+  // da jog wheel (em vez de um som genérico)
+  trk2TrackAudioBuffer = null;
+  file.arrayBuffer().then(async (arrayBuffer) => {
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      const decodeCtx = new AudioContextClass();
+      const decoded = await decodeCtx.decodeAudioData(arrayBuffer);
+      await decodeCtx.close();
+
+      if (currentLoadId !== trk2LoadId) return; // a faixa já mudou entretanto
+      trk2TrackAudioBuffer = decoded;
+    } catch (error) {
+      console.warn('Erro ao preparar áudio da faixa para o scratch:', error);
+    }
+  });
+
   musicName.textContent = removeMp3Extension(file.name);
   channelName.textContent = 'Artista desconhecido';
 
   if (bpmText) {
     bpmText.textContent = '';
-    bpmText.style.left = '470px';
+    bpmText.style.right = '540px';
   }
 
   if (scaleText) {
@@ -256,6 +274,7 @@ function ejectTrack2(elements, jogWheel) {
   trk2CuePoint = 0;
   trk2HasLoadedTrack = false;
   trk2LoadId++;
+  trk2TrackAudioBuffer = null;
 
   musicName.textContent = '';
   channelName.textContent = '';

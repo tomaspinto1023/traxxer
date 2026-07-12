@@ -120,3 +120,40 @@ trk1DropZone.addEventListener('drop', async (e) => {
 
   loadTrack1File(file, getTrack1Elements());
 });
+
+// ── Drop zone do deck 2 ───────────────────────────────────────
+
+const trk2DropZone = document.getElementById('trk2-drop-zone');
+
+trk2DropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  trk2DropZone.classList.add('drag-over');
+});
+
+trk2DropZone.addEventListener('dragleave', () => {
+  trk2DropZone.classList.remove('drag-over');
+});
+
+trk2DropZone.addEventListener('drop', async (e) => {
+  e.preventDefault();
+  trk2DropZone.classList.remove('drag-over');
+
+  // Drop de ficheiro externo (Windows Explorer)
+  if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    const file = e.dataTransfer.files[0];
+    if (!file.name.toLowerCase().match(/\.(mp3|wav|flac|ogg|aac|m4a)$/)) return;
+    loadTrack2File(file, getTrack2Elements());
+    return;
+  }
+
+  // Drop interno da biblioteca
+  const filePath = e.dataTransfer.getData('text/plain');
+  if (!filePath) return;
+
+  const response = await fetch(`file://${filePath.replace(/\\/g, '/')}`);
+  const blob = await response.blob();
+  const fileName = filePath.split(/[\\/]/).pop();
+  const file = new File([blob], fileName, { type: 'audio/mpeg' });
+
+  loadTrack2File(file, getTrack2Elements());
+});

@@ -46,6 +46,23 @@ function loadTrack1File(file, elements) {
   trk1CuePoint = 0;
   trk1HasLoadedTrack = true;
 
+  // Decodifica a faixa para memória para servir de base ao som do scratch
+  // da jog wheel (em vez de um som genérico)
+  trk1TrackAudioBuffer = null;
+  file.arrayBuffer().then(async (arrayBuffer) => {
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      const decodeCtx = new AudioContextClass();
+      const decoded = await decodeCtx.decodeAudioData(arrayBuffer);
+      await decodeCtx.close();
+
+      if (currentLoadId !== trk1LoadId) return; // a faixa já mudou entretanto
+      trk1TrackAudioBuffer = decoded;
+    } catch (error) {
+      console.warn('Erro ao preparar áudio da faixa para o scratch:', error);
+    }
+  });
+
   musicName.textContent = removeMp3Extension(file.name);
   channelName.textContent = 'Artista desconhecido';
 
@@ -261,6 +278,7 @@ function ejectTrack1(elements, jogWheel) {
   trk1CuePoint = 0;
   trk1HasLoadedTrack = false;
   trk1LoadId++;
+  trk1TrackAudioBuffer = null;
 
   musicName.textContent = '';
   channelName.textContent = '';

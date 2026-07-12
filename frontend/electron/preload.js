@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, webUtils } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
   onLayoutChange: (callback) => {
@@ -21,6 +21,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFolder:       ()             => ipcRenderer.invoke('open-folder'),
   readFolder:       (folderPath)   => ipcRenderer.invoke('read-folder', folderPath),
   analyzeScaleLocal: (filePath) => ipcRenderer.invoke('analyze-scale-local', filePath),
+  // Desde que o contextIsolation/sandbox está ativo, File.path deixou de vir preenchido nos
+  // ficheiros largados na app — é preciso pedir o caminho real ao processo principal.
+  getPathForFile:   (file)          => webUtils.getPathForFile(file),
   minimizeWindow:   ()             => ipcRenderer.send('minimize-window'),
   closeWindow:      ()             => ipcRenderer.send('close-window'),
 });

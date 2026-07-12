@@ -197,7 +197,8 @@
 }
  
 /* Highlight do deck ao fazer dragover */
-#trk1-drop-zone.drag-over {
+#trk1-drop-zone.drag-over,
+#trk2-drop-zone.drag-over {
     outline: 1px solid #9a3fbf;
     background-color: rgba(154, 63, 191, 0.05);
 }

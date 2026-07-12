@@ -76,8 +76,8 @@ function applyWindowSize(sizeName, animated = true) {
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 1440,
-    height: 900,
+    width: 1441,
+    height: 901,
     resizable: false,
     maximizable: false,
     frame: false,

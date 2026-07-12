@@ -254,16 +254,3 @@
     width: 1px; height: 34px; left: -12px; background-color: #646464; position: relative; z-index: 500;
 }
 
-#first-trk-letter { /* botão onde tem "A" na borda do lado esquerdo do ecrã */
-    height: 80px; width: 18px; top: 194px; left: 0.27%; position: fixed; background-color:#9d278c; cursor: default; border: 2px solid #c98dc0; color: #ffffff; font-size: 16px; 
-    z-index: 1000; font-family: sans-serif; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease, border-color 0.3s ease; }
-
-#first-trk-letter:hover { /* estado hover → cor mais clara */
-  background-color: #c34eb0; /* tom mais claro */ border-color: #e0b8da; /* borda também mais clara */ }
-
-#second-trk-letter { /* botão onde tem "B" na borda do lado direito do ecrã */
-    height: 80px; width: 18px; top: 194px; right: 0.27%; position: fixed; background-color: #9d278c; cursor: default; border: 2px solid #c98dc0; color: #ffffff; font-size: 16px; 
-    z-index: 1000; font-family: sans-serif; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease, border-color 0.3s ease;  }
-
-#second-trk-letter:hover { /* estado hover → cor mais clara */
-  background-color: #c34eb0; /* tom mais claro */ border-color: #e0b8da; /* borda também mais clara */ }

@@ -39,6 +39,8 @@ async function loadPartials() {
 
   await loadScriptOnce('../js/library/library.js');
 
+  await loadScriptOnce('../js/window.js');
+
   document.dispatchEvent(new Event('traxxer:partials-loaded'));
 }
 
