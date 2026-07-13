@@ -24,7 +24,5 @@ let trk1JogData = {
   pointerId: null,
   lastAngle: 0,
   lastMoveTime: 0,
-  wasPlayingBeforeScratch: false,
-  scratchResumeTimeout: null,
   jogResetTimeout: null
 };

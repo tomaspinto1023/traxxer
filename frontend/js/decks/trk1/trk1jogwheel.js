@@ -167,21 +167,17 @@ function setupTrack1JogWheel(jogWheel) {
 
     event.preventDefault();
 
-    const mode = getTrack1JogMode(jogWheel, event);
+    // Com a música a tocar, a roda funciona sempre como "jog" (ligeiro ajuste de
+    // velocidade) — o scratch com o áudio da faixa (zona central) só se aplica
+    // quando a música está parada.
+    const zoneMode = getTrack1JogMode(jogWheel, event);
+    const mode = trk1WaveSurfer.isPlaying() ? 'jog' : zoneMode;
 
     trk1JogData.isActive = true;
     trk1JogData.mode = mode;
     trk1JogData.pointerId = event.pointerId;
     trk1JogData.lastAngle = getTrack1PointerAngle(jogWheel, event);
     trk1JogData.lastMoveTime = performance.now();
-    trk1JogData.wasPlayingBeforeScratch = mode === 'scratch'
-      ? trk1WaveSurfer.isPlaying()
-      : false;
-
-    if (trk1JogData.scratchResumeTimeout) {
-      clearTimeout(trk1JogData.scratchResumeTimeout);
-      trk1JogData.scratchResumeTimeout = null;
-    }
 
     if (trk1JogData.jogResetTimeout) {
       clearTimeout(trk1JogData.jogResetTimeout);
@@ -189,13 +185,9 @@ function setupTrack1JogWheel(jogWheel) {
     }
 
     if (mode === 'scratch') {
-      trk1IsScratchingJog = true; // ← ativa flag antes de pausar
+      trk1IsScratchingJog = true;
       jogWheel.classList.add('is-scratching');
       startTrack1ScratchSound();
-
-      if (trk1WaveSurfer.isPlaying()) {
-        trk1WaveSurfer.pause();
-      }
     } else {
       jogWheel.classList.add('is-jogging');
     }
@@ -236,17 +228,9 @@ function setupTrack1JogWheel(jogWheel) {
     event.preventDefault();
 
     if (trk1JogData.mode === 'scratch') {
-      trk1IsScratchingJog = false; // ← desativa flag antes de retomar
+      trk1IsScratchingJog = false;
       jogWheel.classList.remove('is-scratching');
       stopTrack1ScratchSound();
-
-      if (trk1JogData.wasPlayingBeforeScratch) {
-        trk1JogData.scratchResumeTimeout = setTimeout(() => {
-          if (trk1WaveSurfer && trk1HasLoadedTrack && !trk1WaveSurfer.isPlaying()) {
-            trk1WaveSurfer.play();
-          }
-        }, 25);
-      }
     }
 
     if (trk1JogData.mode === 'jog') {
@@ -448,11 +432,6 @@ function resetTrack1JogWheel(jogWheel) {
   jogWheel.classList.remove('is-scratching', 'is-jogging');
 
   setTrack1JogWheelRotation(jogWheel, 0);
-
-  if (trk1JogData.scratchResumeTimeout) {
-    clearTimeout(trk1JogData.scratchResumeTimeout);
-    trk1JogData.scratchResumeTimeout = null;
-  }
 
   if (trk1JogData.jogResetTimeout) {
     clearTimeout(trk1JogData.jogResetTimeout);

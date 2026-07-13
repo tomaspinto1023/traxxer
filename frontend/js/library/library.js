@@ -117,6 +117,9 @@ trk1DropZone.addEventListener('drop', async (e) => {
   const blob = await response.blob();
   const fileName = filePath.split(/[\\/]/).pop();
   const file = new File([blob], fileName, { type: 'audio/mpeg' });
+  // File sintético não tem caminho real reconhecido pelo webUtils.getPathForFile —
+  // guardamos o caminho já conhecido para a análise de escala o poder usar.
+  file.traxxerRealPath = filePath;
 
   loadTrack1File(file, getTrack1Elements());
 });
@@ -154,6 +157,9 @@ trk2DropZone.addEventListener('drop', async (e) => {
   const blob = await response.blob();
   const fileName = filePath.split(/[\\/]/).pop();
   const file = new File([blob], fileName, { type: 'audio/mpeg' });
+  // File sintético não tem caminho real reconhecido pelo webUtils.getPathForFile —
+  // guardamos o caminho já conhecido para a análise de escala o poder usar.
+  file.traxxerRealPath = filePath;
 
   loadTrack2File(file, getTrack2Elements());
 });

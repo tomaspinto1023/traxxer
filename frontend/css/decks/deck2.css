@@ -32,12 +32,12 @@
     border: 1px solid #5f5f5f; z-index: 1000; }
 
 #trk2-track-title {
-    width: 300px; height: 20px; position: fixed; right: 82px; top: 190px; font-weight: bolder; background-color: #131315; 
-    color: #ffffff; font-size: 80%; font-family: Arial, Helvetica, sans-serif; text-align: right; }
+    width: 300px; height: 20px; position: fixed; right: 82px; top: 194px; font-weight: bolder; background-color: #131315; 
+    color: #ffffff; font-size: 74%; font-family: Arial, Helvetica, sans-serif; text-align: right; }
 
 #trk2-track-artist {
-    width: 300px; height: 12px; position: fixed; right: 82px; top: 210px; background-color: #131315; 
-    color: #ffffff; font-size: 77%; font-family: Arial, Helvetica, sans-serif; text-align: right; }
+    width: 300px; height: 12px; position: fixed; right: 82px; top: 214px; background-color: #131315; 
+    color: #ffffff; font-size: 65%; font-family: Arial, Helvetica, sans-serif; text-align: right; }
 
 #trk2-waveform {
     width: 390px; height: 30px; background: #131315; position: fixed; right: 29px; top: 247px; z-index: 1000;}
@@ -45,6 +45,14 @@
 #trk2-waveform ::part(wrapper) { height: 30px; background-color: #131315; }
 
 #trk2-waveform ::part(scroll) { height: 30px; background-color: #131315; }
+
+/* Esconde o cursor do WaveSurfer quando não há faixa carregada (evita a linha branca residual após ejetar).
+   O WaveSurfer cria um <div> interno (host da shadow DOM) dentro do container — daí o ">div" antes de ::part(). */
+#trk2-waveform.no-track > div::part(cursor) { display: none; }
+
+/* .empty() do WaveSurfer carrega uma faixa "fantasma" de 0.001s com pico a zero em vez de ficar
+   verdadeiramente vazio — isto deixa um tracinho residual nas canvases. Escondemos também. */
+#trk2-waveform.no-track > div::part(canvases) { display: none; }
 
 #trk2-bpm {
     background-color: #131315; right: 540px; top: 168px; position: fixed; width: 16px; height: 10px; 

@@ -46,6 +46,14 @@
 
 #trk1-waveform ::part(scroll) { height: 30px; background-color: #131315; }
 
+/* Esconde o cursor do WaveSurfer quando não há faixa carregada (evita a linha branca residual após ejetar).
+   O WaveSurfer cria um <div> interno (host da shadow DOM) dentro do container — daí o ">div" antes de ::part(). */
+#trk1-waveform.no-track > div::part(cursor) { display: none; }
+
+/* .empty() do WaveSurfer carrega uma faixa "fantasma" de 0.001s com pico a zero em vez de ficar
+   verdadeiramente vazio — isto deixa um tracinho residual nas canvases. Escondemos também. */
+#trk1-waveform.no-track > div::part(canvases) { display: none; }
+
 #trk1-bpm {
     background-color: #131315; left: 470px; top: 168px; position: fixed; width: 16px; height: 10px; 
     font-size: 177%; color: #c83cb0; text-align: right; font-family: Arial, Helvetica, sans-serif; }
@@ -62,7 +70,7 @@
 
 #trk1-scale {
     display: flex; align-items: center; justify-content: center; color: white; gap: 4px; width: max-content;
-    position: fixed; left: 461px; top: 229px; font-size: 70%; background-color: #131315; }
+    position: fixed; left: 460px; top: 229px; font-size: 70%; background-color: #131315; }
 
 #trk1-scale-text, #trk1-scale-itself { margin: 0; background-color: #131315; color: white; font-family: Arial, Helvetica, sans-serif; }
 

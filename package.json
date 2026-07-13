@@ -5,7 +5,8 @@
   "main": "frontend/electron/main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "cross-env NODE_ENV=development electron ."
+    "dev": "cross-env NODE_ENV=development electron .",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "chokidar": "^5.0.0",
     "cross-env": "^10.1.0",
     "electron": "^39.8.7",
+    "electron-builder": "^25.1.8",
     "electron-reload": "^2.0.0-alpha.1",
     "nodemon": "^3.1.14"
   },
@@ -37,5 +39,27 @@
     "jsmediatags": "^3.9.7",
     "soundtouchjs": "^0.3.0",
     "wavesurfer.js": "^7.12.5"
+  },
+  "build": {
+    "appId": "com.tomaspinto.traxxer",
+    "productName": "Traxxer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "frontend/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend/bin",
+        "to": "backend/bin",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": ["portable"],
+      "icon": "frontend/assets/icon/icon.ico"
+    }
   }
 }

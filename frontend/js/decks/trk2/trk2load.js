@@ -42,6 +42,9 @@ function loadTrack2File(file, elements) {
 
   trk2WaveSurfer.load(trk2CurrentObjectUrl);
 
+  const trk2WaveformElLoad = document.getElementById('trk2-waveform');
+  if (trk2WaveformElLoad) trk2WaveformElLoad.classList.remove('no-track');
+
   trk2CuePoint = 0;
   trk2HasLoadedTrack = true;
 
@@ -105,7 +108,7 @@ function loadTrack2File(file, elements) {
       console.log('Scale da tag:', metadataScale);
 
       if (metadataScale) {
-        if (scaleText) scaleText.textContent = metadataScale;
+        if (scaleText) scaleText.textContent = formatTrack2ScaleShort(metadataScale);
       } else {
         detectAndShowTrack2Scale(file, scaleText, currentLoadId);
       }
@@ -265,6 +268,9 @@ function ejectTrack2(elements, jogWheel) {
       media.load();
     }
   }
+
+  const trk2WaveformEl = document.getElementById('trk2-waveform');
+  if (trk2WaveformEl) trk2WaveformEl.classList.add('no-track');
 
   if (trk2CurrentObjectUrl) {
     URL.revokeObjectURL(trk2CurrentObjectUrl);

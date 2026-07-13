@@ -20,18 +20,46 @@ int main(int argc, char* argv[])
 
     if (!file)
     {
+        // [DEBUG] Vai para stderr, não interfere com o stdout que a app lê.
+        std::cerr << "[DEBUG] sf_open falhou para \"" << filePath << "\": "
+                   << sf_strerror(nullptr) << std::endl;
         std::cout << "--" << std::endl;
-        return 1;
+        // "--" e' um resultado valido (nao foi possivel ler o ficheiro), nao um
+        // erro do programa em si — sair com 0 para o main.js nao descartar o
+        // stdout (execFile trata qualquer codigo != 0 como falha e ignora o
+        // que foi impresso).
+        return 0;
     }
+
+    std::cerr << "[DEBUG] sf_open OK — samplerate=" << sfInfo.samplerate
+               << " channels=" << sfInfo.channels
+               << " frames=" << sfInfo.frames
+               << " format=0x" << std::hex << sfInfo.format << std::dec << std::endl;
 
     const int sampleRate = sfInfo.samplerate;
     const int channels   = sfInfo.channels;
     const long frames    = sfInfo.frames;
-    const long maxFrames = std::min(frames, (long)(sampleRate * 60));
+    // Analisa a faixa completa (em vez de só os primeiros 60s) para um resultado mais
+    // representativo em faixas com modulações/introduções tonalmente ambíguas.
+    // O keyOfAudio() do libkeyfinder já faz downsampling interno antes do chromagram,
+    // por isso o custo extra de ler a faixa toda mantém-se pequeno.
+    const long maxFrames = frames;
+
+    if (maxFrames <= 0)
+    {
+        std::cerr << "[DEBUG] maxFrames <= 0 (frames=" << frames
+                   << "), nada para analisar." << std::endl;
+        sf_close(file);
+        std::cout << "--" << std::endl;
+        return 0;
+    }
 
     std::vector<float> buffer(maxFrames * channels);
-    sf_readf_float(file, buffer.data(), maxFrames);
+    sf_count_t framesRead = sf_readf_float(file, buffer.data(), maxFrames);
     sf_close(file);
+
+    std::cerr << "[DEBUG] framesRead=" << framesRead
+               << " (pedidos " << maxFrames << ")" << std::endl;
 
     // Converte para mono
     std::vector<float> mono(maxFrames);
@@ -54,6 +82,9 @@ int main(int argc, char* argv[])
 
     KeyFinder::KeyFinder kf;
     KeyFinder::key_t key = kf.keyOfAudio(audio);
+
+    std::cerr << "[DEBUG] key_t retornado pelo keyfinder = "
+               << static_cast<int>(key) << std::endl;
 
     if (key == KeyFinder::SILENCE)
     {

@@ -8,6 +8,13 @@ let win;
 let backendProcess = null;
 let currentSizeName = 'large';
 
+// Em desenvolvimento os binários do backend estão em backend/bin (relativo ao código-fonte).
+// Já empacotada (electron-builder), ficam em resources/backend/bin (fora do app.asar,
+// porque um .exe dentro do asar não pode ser executado diretamente pelo Windows).
+const backendBinPath = app.isPackaged
+  ? path.join(process.resourcesPath, 'backend', 'bin')
+  : path.join(__dirname, '..', '..', 'backend', 'bin');
+
 // ── Aplica o tamanho à janela ─────────────────────────────────
 
 function applyWindowSize(sizeName, animated = true) {
@@ -106,7 +113,7 @@ function createWindow() {
 // ── Backend C++ ───────────────────────────────────────────────
 
 function startBackend() {
-  const backendExePath = path.join(__dirname, '..', '..', 'backend', 'bin', 'TraxxerBackend.exe');
+  const backendExePath = path.join(backendBinPath, 'TraxxerBackend.exe');
 
   backendProcess = spawn(backendExePath, [], { stdio: ['pipe', 'pipe', 'pipe'], detached: false });
 
@@ -141,9 +148,13 @@ ipcMain.handle('open-folder', async () => {
 });
 
 ipcMain.handle('analyze-scale-local', async (_, filePath) => {
-  const analyzerExePath = path.join(__dirname, '..', '..', 'backend', 'bin', 'TraxxerKeyAnalyzer.exe');
+  const analyzerExePath = path.join(backendBinPath, 'TraxxerKeyAnalyzer.exe');
+  console.log('[KeyAnalyzer] a correr:', analyzerExePath, '| ficheiro:', filePath);
   return await new Promise((resolve) => {
-    execFile(analyzerExePath, [filePath], (error, stdout) => {
+    execFile(analyzerExePath, [filePath], (error, stdout, stderr) => {
+      if (error) console.log('[KeyAnalyzer] ERRO:', error);
+      if (stderr) console.log('[KeyAnalyzer] stderr:', stderr);
+      console.log('[KeyAnalyzer] stdout:', JSON.stringify(stdout));
       resolve(error ? null : stdout.trim() || null);
     });
   });
