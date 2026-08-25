@@ -10,7 +10,9 @@ function createLibraryHeader() {
   header.innerHTML = `
     <span class="lib-col-title">Título</span>
     <span class="lib-col-artist">Artista</span>
-    <span class="lib-col-ext">Formato</span>
+    <span class="lib-col-time">Duração</span>
+    <span class="lib-col-bpm">Formato</span>
+    <span class="lib-col-tone">Tom</span>
   `;
   return header;
 }
@@ -22,11 +24,17 @@ function createTrackRow(track) {
   row.draggable = true;
   row.dataset.path = track.fullPath;
   row.dataset.name = track.name;
+  row.dataset.artist = track.artist;
+  row.dataset.time = track.time;
+  row.dataset.bpm = track.bpm;
+  row.dataset.tone = track.tone;
 
   row.innerHTML = `
     <span class="lib-col-title"><i class="bi bi-music-note"></i> ${track.name}</span>
-    <span class="lib-col-artist">—</span>
-    <span class="lib-col-ext">${track.ext.replace('.', '').toUpperCase()}</span>
+    <span class="lib-col-artist">${track.artist}</span>
+    <span class="lib-col-time">${track.time}</span>
+    <span class="lib-col-bpm">${track.bpm}</span>
+    <span class="lib-col-tone">${track.tone}</span>
   `;
 
   row.addEventListener('dragstart', (e) => {
