@@ -24,74 +24,97 @@
         <div id="side-bar-app-info" class="botao-info-container">
             <i id="info-logo" class="bi bi-info-lg"></i>
 
-            <div id="caixa-info-popup" class="info-popup-escondido">
-                <textarea placeholder=""></textarea>
+            <div id="caixa-info-popup" class="info-popup escondido">
+                <div class="info-popup-header">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <span class="info-popup-title">Informação</span>
+                    <button id="info-popup-close" class="info-popup-close" aria-label="Fechar">&times;</button>
+                </div>
+                <div class="info-popup-body">
+                    <textarea placeholder=""></textarea>
+                </div>
             </div>
+
             <style>
-                /* Torna o botão o ponto de referência para o posicionamento da caixa */
                 .botao-info-container {
-                position: relative;
-                display: inline-block;
-                cursor: pointer;
+                    position: relative;
+                    display: inline-block;
                 }
 
-                /* Estilo da caixa flutuante (Popup) */
                 .info-popup {
-                position: absolute;
-                top: 100%; /* Aparece logo abaixo do botão */
-                left: 0;
-                z-index: 100;
-                margin-top: 8px;
-                background-color: white;
-                padding: 10px;
-                border-radius: 8px;
-                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15); /* Sombra para dar efeito flutuante */
-                border: 1px solid #e0e0e0;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 360px;
+                    max-width: 90vw;
+                    z-index: 1000;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+                    overflow: hidden;
+                    font-family: sans-serif;
                 }
 
-                /* O textarea dentro do popup */
-                .info-popup textarea {
-                width: 200px;
-                height: 80px;
-                padding: 8px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                font-family: sans-serif;
-                font-size: 13px;
-                resize: none; /* Evita que o utilizador deforme o layout */
-                outline: none;
+                .info-popup-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 10px 12px;
+                    background-color: #f3f3f3;
+                    border-bottom: 1px solid #e0e0e0;
                 }
 
-                .info-popup textarea:focus {
-                border-color: #0066cc;
+                .info-popup-header i {
+                    color: #d9534f;
+                    font-size: 16px;
                 }
 
-                /* Classe utilitária para esconder */
+                .info-popup-title {
+                    flex: 1;
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #222;
+                }
+
+                .info-popup-close {
+                    border: none;
+                    background: transparent;
+                    font-size: 18px;
+                    line-height: 1;
+                    cursor: pointer;
+                    color: #555;
+                    padding: 0 4px;
+                }
+
+                .info-popup-close:hover {
+                    color: #000;
+                }
+
+                .info-popup-body {
+                    padding: 12px;
+                }
+
+                .info-popup-body textarea {
+                    width: 100%;
+                    height: 80px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    font-family: sans-serif;
+                    font-size: 13px;
+                    resize: none;
+                    outline: none;
+                    box-sizing: border-box;
+                }
+
+                .info-popup-body textarea:focus {
+                    border-color: #0066cc;
+                }
+
                 .escondido {
-                display: none !important;
+                    display: none !important;
                 }
             </style>
-            <script>
-                const botaoInfo = document.getElementById('side-bar-app-info');
-                const popupInfo = document.getElementById('caixa-info-popup');
-
-                // 1. Abre/Fecha ao clicar no botão
-                botaoInfo.addEventListener('click', (event) => {
-                popupInfo.classList.toggle('escondido');
-                });
-
-                // 2. Impede que o clique dentro da caixa de texto feche o popup por acidente
-                popupInfo.addEventListener('click', (event) => {
-                event.stopPropagation();
-                });
-
-                // 3. Opcional: Fecha o popup se clicar em qualquer outro lugar do ecrã
-                document.addEventListener('click', (event) => {
-                if (!botaoInfo.contains(event.target)) {
-                    popupInfo.classList.add('escondido');
-                }
-                });
-            </script>
         </div>
     </div>
     <footer class="footer"></footer>

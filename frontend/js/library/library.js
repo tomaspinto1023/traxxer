@@ -171,3 +171,29 @@ trk2DropZone.addEventListener('drop', async (e) => {
 
   loadTrack2File(file, getTrack2Elements());
 });
+
+// ─────────────────────────────────────────────────────────────
+// Lógica da abertura do botão de info
+
+const popupInfo = document.getElementById('caixa-info-popup');
+if (popupInfo) document.body.appendChild(popupInfo);
+
+document.addEventListener('click', (event) => {
+  const botaoInfo = document.getElementById('side-bar-app-info');
+  const fecharInfo = document.getElementById('info-popup-close');
+  if (!botaoInfo || !popupInfo) return;
+
+  if (botaoInfo.contains(event.target)) {
+    popupInfo.classList.toggle('escondido');
+    return;
+  }
+
+  if (fecharInfo && fecharInfo.contains(event.target)) {
+    popupInfo.classList.add('escondido');
+    return;
+  }
+
+  if (!popupInfo.contains(event.target)) {
+    popupInfo.classList.add('escondido');
+  }
+});

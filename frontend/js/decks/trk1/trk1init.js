@@ -54,14 +54,28 @@ function initTrack1() {
   setupTrack1DropZone(elements);
   setupTrack1TransportControls(elements);
   setupTrack1WaveSurferEvents(elements);
+  setupTrack1RepeatButton(elements);
 
   if (typeof setupTrack1EffectSlotN1 === 'function') {
     setupTrack1EffectSlotN1();
   }
 }
 
+let trk1IsLooping = false;
+
+function setupTrack1RepeatButton(elements) {
+  const { trk1Repeat } = elements;
+  if (!trk1Repeat) return;
+
+  trk1Repeat.addEventListener('click', () => {
+    trk1IsLooping = !trk1IsLooping;
+    trk1Repeat.classList.toggle('active', trk1IsLooping);
+  });
+}
+
 function getTrack1Elements() {
   const playPauseBtn = document.getElementById('trk1-play-pause-btn');
+  const trk1Repeat = document.getElementById('trk1-repeat');
 
   return {
     dropZone: document.getElementById('trk1-drop-zone'),
@@ -70,6 +84,7 @@ function getTrack1Elements() {
     channelName: document.getElementById('trk1-track-artist'),
     waveformContainer: document.getElementById('trk1-waveform'),
     playPauseBtn,
+    trk1Repeat,
     ejectBtn: document.getElementById('trk1-eject-btn'),
     playIcon: playPauseBtn?.querySelector('.bi-play-fill'),
     pauseIcon: playPauseBtn?.querySelector('.bi-pause-fill'),
@@ -116,5 +131,11 @@ function setupTrack1WaveSurferEvents(elements) {
   trk1WaveSurfer.on('pause', () => {
     stopTrack1JogWheelSync();
     updateTrack1JogWheelFromAudio(jogWheel);
+  });
+
+  trk1WaveSurfer.on('finish', () => {
+    if (trk1IsLooping) {
+      trk1WaveSurfer.play();
+    }
   });
 }
