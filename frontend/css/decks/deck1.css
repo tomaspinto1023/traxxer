@@ -244,7 +244,8 @@
     display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 38px; top: 33px; position: absolute; 
     background: #2A2A2A; color: #eeeeee; border-radius: 1.20px; border: 0.50px #0C0C0C solid; font-size: 130%; }
 
-/*#trk1-repeat:hover {}*/
+#trk1-repeat:hover {
+    color: rgb(170, 170, 170); }
 
 #trk1-sound-lock {
     display: flex; align-items: center; justify-content: center; width: 34px; height: 29px; left: 76px; top: 33px; position: absolute;
